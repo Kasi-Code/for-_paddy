@@ -1,0 +1,23 @@
+body {
+    align-items: center;
+    text-align: center;
+}
+.mainDiv {
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+table th {
+    text-align: center;
+    padding: 4px 30px 4px 8px;
+    border: 1px solid black;
+    padding: 20px 80px;
+}
+
+table td {
+    border: 1px solid black;
+    padding: 20px 80px;
+}
+

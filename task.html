@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Kasi" content="For tutor">
+
+    <title>Kasi | API Tasks</title>
+
+    <link rel="stylesheet" href="/libs/css/task.css">
+</head>
+<body>
+    <div class="mainDiv" id=”preloader”>
+        <table>
+            <tr>
+                <th>API name</th>
+                <th>API description</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>1. Name Abruzzo in:</td>
+                <td>
+                    <p>Select Language</p>
+                    <select id="selLang">
+                        <option value="Arabic">Arabic</option>
+                        <option value="Russian">Russian</option>
+                        <option value="Thai">Thai</option>
+                    </select>
+                </td>
+                <td><button id="btnSubmit1">Submit</button></td>
+            </tr>
+            <tr>
+                <td>2. US Earthquakes in:</td>
+                <td>
+                    <p>Select Year</p>
+                    <select id="selYear">
+                        <option value="2017">2017</option>
+                        <option value="2011">2011</option>
+                        <option value="2007">2007</option>
+                    </select>
+                </td>
+                <td><button id="btnSubmit2">Submit</button></td>
+            </tr>
+            <tr>
+                <td>3. Wikipedia Search:</td>
+                <td>
+                    <p>Select elevation</p>
+                    <select id="selElevation">
+                        <option value="8">8</option>
+                        <option value="60">60</option>
+                        <option value="262">262</option>
+                    </select>
+                </td>
+                <td><button id="btnSubmit3">Submit</button></td>
+            </tr>
+            <div class="results">
+                <tr class="result">
+                    <td colspan="3">
+                        <p><span id="selectedLang"></span></p>
+                        <span id="txtName"></span>
+
+                        <p><span id="selectedYear"></span></p>
+                        <span id="displayDatetime"></span>
+                        <span id="displayDepth"></span>
+                        <span id="displayMagnitude"></span>
+    
+                        <p><span id="selectedElevation"></span></p>
+                        <span id="display"></span>
+                        <br><br>
+                        <span id="thumnail">
+                            <img id="image" alt="">
+                        </span>
+                    </td>
+                </tr>
+            </div>
+        </table>
+    </div>
+    <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+    <script type="application/javascript" src="libs/js/apiScript.js"></script>
+    <script type="application/javascript" src="libs/js/apiElevation.js"></script>
+    <script type="application/javascript" src="libs/js/apiScript.js"></script>
+</body>
+</html>
