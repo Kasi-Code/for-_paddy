@@ -3,9 +3,11 @@ body {
     text-align: center;
 }
 .mainDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
 }
-
 table {
     border-collapse: collapse;
 }
@@ -15,9 +17,11 @@ table th {
     border: 1px solid black;
     padding: 20px 80px;
 }
-
 table td {
     border: 1px solid black;
     padding: 20px 80px;
+}
+.mainMenu {
+    margin-top: 10vh;
 }
 

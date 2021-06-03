@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasi's | Gazetteer</title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/css/gazetteer.css">
+</head>
+<body>
+    <div class="mainDiv" id="preloader">
+        <div class="w3-bar w3-black w3-top navBar">
+            <span class="w3-mobile">
+                <div class="siteLogo">
+                    <a href="/html/mojiFlight.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Gazetteer</a>
+                </div>      
+            </span>
+            <span class="w3-right w3-mobile navBar">
+                <a href="/index.html" class="w3-bar-item w3-button w3-mobile w3-hover-white" style="font-weight: bold;">Main Menu</a>
+                <a onclick="document.getElementById('singIn').style.display='block'" class="w3-bar-item w3-button w3-mobile w3-hover-white">Sign in</a>
+                <a href="#" class="w3-bar-item w3-button w3-mobile w3-hover-white">Help</a>
+                <a href="#" class="w3-bar-item w3-button w3-mobile w3-hover-white">Contact</a>
+            </span>            
+          </div>
+          <div class="exceptNav w3-mobile">
+            <div class="dataInfo">
+                
+                    <p>Country name: <span id="countryName"></span></p> 
+                    <p>Population: <span id="countryName"></span></p> 
+                    <p>City: <span id="CountryCity"></span></p>
+                    <p>Currency exchange rate: <span id="currency"></span></p>
+                    <p>Wikipedia links: <span id="wikipedia"></span></p> 
+                
+            </div>
+            <div class="weather">
+
+                <h3><span>Current weather</span></h3>
+                
+            </div>
+          </div>
+    </div>  
+
+    <script type="application/javascript" src="libs/js/apiWeather.js"></script>  
+
+</body>
+</html>
