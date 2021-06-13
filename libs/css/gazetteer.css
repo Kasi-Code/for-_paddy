@@ -24,3 +24,9 @@ body {
     justify-content: space-evenly;
     align-items: center;
 }
+.weatherResults {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}

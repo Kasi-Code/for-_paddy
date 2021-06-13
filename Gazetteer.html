@@ -11,39 +11,61 @@
     <link rel="stylesheet" href="/libs/css/gazetteer.css">
 </head>
 <body>
-    <div class="mainDiv" id="preloader">
+
+    <!-- <div class="loading" id="preloaderGaz"><iframe src="https://giphy.com/embed/3oEjI6SIIHBdRxXI40" 
+        width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>
+            <a href="https://giphy.com/gifs/mashable-3oEjI6SIIHBdRxXI40">via GIPHY</a></p></div>
+    <div class="mainDiv"> -->
+
         <div class="w3-bar w3-black w3-top navBar">
             <span class="w3-mobile">
                 <div class="siteLogo">
-                    <a href="/html/mojiFlight.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Gazetteer</a>
+                    <a href="/Gazetteer.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Gazetteer</a>
                 </div>      
             </span>
             <span class="w3-right w3-mobile navBar">
                 <a href="/index.html" class="w3-bar-item w3-button w3-mobile w3-hover-white" style="font-weight: bold;">Main Menu</a>
-                <a onclick="document.getElementById('singIn').style.display='block'" class="w3-bar-item w3-button w3-mobile w3-hover-white">Sign in</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-hover-white">Help</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-hover-white">Contact</a>
+                <button id="getLocationBtn" class="w3-bar-item w3-button w3-mobile w3-hover-white getLocationBtn">Get Location</button>
             </span>            
           </div>
+
           <div class="exceptNav w3-mobile">
             <div class="dataInfo">
-                
-                    <p>Country name: <span id="countryName"></span></p> 
-                    <p>Population: <span id="countryName"></span></p> 
-                    <p>City: <span id="CountryCity"></span></p>
-                    <p>Currency exchange rate: <span id="currency"></span></p>
+
+                <h3>You are here 📍</h3>
+                    <p>Country name: <span id="countryName"></span> <span id="flag"></span></p> 
+                    <p>City: <span id="cityName"></span></p>
+                    <p>Population: <span id="population"></span></p> 
+                    <p>Currency; 
+                        <span id="isoCode"></span>
+                        <span id="currencyName"></span>
+                    </p>
+                    <p>Exchange rate; <br>
+                        <span id="currencySymbal"></span><span id="localCurrency"></span>
+                    </p>
+                    <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
+                    <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
                     <p>Wikipedia links: <span id="wikipedia"></span></p> 
                 
             </div>
+            
             <div class="weather">
 
-                <h3><span>Current weather</span></h3>
+                <h3>Current Weather<span id="weatherIcon"></span></h3>
+                    <br>
+                    <div class="weatherResults">
+                        <p><span id="temperature"></p>
+                        <br>
+                        <p><span id="weatherCondition"></p>
+                    </div>
                 
             </div>
           </div>
     </div>  
 
-    <script type="application/javascript" src="libs/js/apiWeather.js"></script>  
+    <script type="application/javascript" src="libs/js/apiGazetteer.js"></script>  
+    <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+    <!-- <script type="application/javascript" src="libs/js/countryBorders.geo.json"></script> -->
 
 </body>
 </html>
