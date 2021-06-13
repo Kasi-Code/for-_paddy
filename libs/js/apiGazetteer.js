@@ -121,6 +121,12 @@ getLocationBtn.addEventListener('click', function () {
                 accessToken: 'your.mapbox.access.token'
                 }).addTo(mymap);
                 const marker = L.marker([lat, lng]).addTo(mymap)
+                const circle = L.circle([lat, lng], {
+                    color: "red",
+                    fillColor: "#f03",
+                    fillOpacity: 0.5,
+                    radius: 1000
+                }).addTo(mymap)
             }) 
             .catch(error => {console.log(error)})
     })
