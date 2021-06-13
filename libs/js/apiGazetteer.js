@@ -59,6 +59,27 @@ getLocationBtn.addEventListener('click', function () {
                     link.setAttribute('href', wikiLink);
                     link.innerHTML = wikiLink;
 
+                // WEATHER ICONS
+
+                const today = new Date()
+                const getHour = today.getHours()
+
+                if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
+                    $(".clearskyIcon").css("display", "block")
+                } else if (weatherDescription == "cloudy"){
+                    $(".clouds").css("display", "block")
+                } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
+                    $(".sunAndClouds").css("display", "block")
+                } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                    $(".overcastClouds").css("display", "block")
+                } else if (weatherDescription.includes("snow")){
+                    $(".snow").css("display", "block")
+                } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
+                    $(".thunder").css("display", "block")
+                }
+
+                // CURRENCY
+
                 const listOfCurrency = Object.entries(getCurrencies)
                 for (const [cName, cValue] of listOfCurrency) {
                     if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
@@ -106,6 +127,8 @@ getLocationBtn.addEventListener('click', function () {
                         }                    
                     }
                 }
+
+                // THE MAP
 
                 let lat = data.country.geometry.lat
                 let lng = data.country.geometry.lng

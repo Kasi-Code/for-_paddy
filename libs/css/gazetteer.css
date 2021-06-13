@@ -31,6 +31,9 @@ body {
     width: auto;
     height: auto;
 }
+.clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
+    display: none;
+}
 .navBar {
     z-index: 4;
 }
@@ -46,7 +49,7 @@ body {
     width: 100%;
     height: 100%;
 }
-.weatherResults {
+.weatherResults, .weatherIcons {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
