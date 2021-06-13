@@ -10,7 +10,7 @@ getLocationBtn.addEventListener('click', function () {
         long = position.coords.longitude
         lat = position.coords.latitude
 
-        fetch(`/libs/php/getLocation.php?lat=${lat}&long=${long}`)
+        fetch(`/libs/php/getGazetteer.php?lat=${lat}&long=${long}`)
             .then(res => {
                 return res.json()
             })
