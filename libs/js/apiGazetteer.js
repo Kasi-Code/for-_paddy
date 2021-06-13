@@ -34,24 +34,30 @@ getLocationBtn.addEventListener('click', function () {
                 let compareToGBP = "GBP"
 
                 // console.log(localCurrency)
+
+                let wikiLink = data.wikipedia.wikipediaUrl
                 
                 const kelvin = weatherTemp
-                const celsius = kelvin - 273
-                let newton = celsius * ( 33 / 100 )
-                newton = Math.floor(newton)
+                let celsius = kelvin - 273.15
+                // let newton = celsius * ( 23 / 100 )
+                celsius = Math.floor(celsius)
 
                 $('#countryName').html(countryName);
                 $('#cityName').html(cityName);
                 $('#flag').html(countryFlag);
 
                 $('#weatherCondition').html(weatherDescription.toUpperCase());
-                $('#temperature').append(newton + "˚C");
+                $('#temperature').append(celsius + "˚C");
 
                 $('#population').append(cityPopulation);
 
                 $('#isoCode').append(iso + ", ");
                 $('#currencyName').append(currencyName);
                 $('#currencySymbal').append(currencySymbol);
+
+                let link = document.querySelector('.wikipedia');
+                    link.setAttribute('href', wikiLink);
+                    link.innerHTML = wikiLink;
 
                 const listOfCurrency = Object.entries(getCurrencies)
                 for (const [cName, cValue] of listOfCurrency) {
@@ -100,6 +106,21 @@ getLocationBtn.addEventListener('click', function () {
                         }                    
                     }
                 }
+
+                let lat = data.country.geometry.lat
+                let lng = data.country.geometry.lng
+
+                const mymap = L.map('mapid').setView([lat, lng], 13);
+
+                L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=mFYXi7zo4EzHjijzbUxG', {
+                attribution: `<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>`,
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'your.mapbox.access.token'
+                }).addTo(mymap);
+                const marker = L.marker([lat, lng]).addTo(mymap)
             }) 
             .catch(error => {console.log(error)})
     })

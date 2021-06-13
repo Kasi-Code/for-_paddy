@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasi's | Gazetteer</title>
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/libs/css/gazetteer.css">
@@ -16,6 +23,7 @@
         width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>
             <a href="https://giphy.com/gifs/mashable-3oEjI6SIIHBdRxXI40">via GIPHY</a></p></div>
     <div class="mainDiv"> -->
+    <div class="main">
 
         <div class="w3-bar w3-black w3-top navBar">
             <span class="w3-mobile">
@@ -30,6 +38,19 @@
           </div>
 
           <div class="exceptNav w3-mobile">
+            
+            <div class="weather">
+
+                <h3>Current Weather<span id="weatherIcon"></span></h3>
+                    <br>
+                    <div class="weatherResults">
+                        <p><span id="temperature"></p>
+                        <br>
+                        <p><span id="weatherCondition"></p>
+                    </div>
+                
+            </div>
+            
             <div class="dataInfo">
 
                 <h3>You are here 📍</h3>
@@ -45,21 +66,13 @@
                     </p>
                     <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
                     <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
-                    <p>Wikipedia links: <span id="wikipedia"></span></p> 
+                    <p>Wikipedia links: <a href="" target="_blank" class="wikipedia"><span id="wikipedia"></span></a></p> 
                 
             </div>
             
-            <div class="weather">
-
-                <h3>Current Weather<span id="weatherIcon"></span></h3>
-                    <br>
-                    <div class="weatherResults">
-                        <p><span id="temperature"></p>
-                        <br>
-                        <p><span id="weatherCondition"></p>
-                    </div>
-                
-            </div>
+          </div>
+          <div class="map">
+            <div class="mapid" id="mapid"></div>
           </div>
     </div>  
 

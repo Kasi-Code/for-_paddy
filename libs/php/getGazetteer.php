@@ -70,7 +70,7 @@
 	$output["currency"] = $decode;	
 
 	// Get Wikipedia
-	$url = "https://http://api.geonames.org/findNearbyWikipedia?lat=47&lng=9&username=coder_k";
+	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$city."&maxRows=10&username=coder_k&style=full";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -82,7 +82,7 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["wikipedia"] = $decode;	
+	$output["wikipedia"] = $decode["geonames"][0];	
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
