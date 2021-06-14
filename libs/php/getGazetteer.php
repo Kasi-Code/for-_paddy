@@ -84,6 +84,16 @@
 	$decode = json_decode($result,true);
 	$output["wikipedia"] = $decode["geonames"][0];	
 
+	// Read JSON file
+	$json = file_get_contents('countryBorders.geo.json');
+
+	//Decode JSON
+	$json_data = json_decode($json,true);
+
+	//Print data
+	$output["countryBorders"] = $json_data;	
+	// print_r($json_data);
+
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";

@@ -23,17 +23,17 @@
         
     <div class="main">
 
-        <div class="w3-bar w3-black w3-top navBar">
+        <!-- <div class="w3-bar w3-black w3-top">
             <span class="w3-mobile">
                 <div class="siteLogo">
                     <a href="/Gazetteer.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Gazetteer</a>
                 </div>      
             </span>
-            <span class="w3-right w3-mobile navBar">
+            <span class="w3-right w3-mobile">
                 <a href="/index.html" class="w3-bar-item w3-button w3-mobile w3-hover-white" style="font-weight: bold;">Main Menu</a>
                 <button id="getLocationBtn" class="w3-bar-item w3-button w3-mobile w3-hover-white getLocationBtn">Get Location</button>
             </span>            
-          </div>
+          </div> -->
 
           <div class="exceptNav w3-mobile">
             
@@ -86,11 +86,19 @@
           <div class="map">
             <div class="mapid" id="mapid"></div>
           </div>
+
     </div>  
+
+        <div class="bottomPageSection">
+        <div class="navBar">
+            <a href="/Gazetteer.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Gazetteer</a>
+            <a href="/index.html" class="w3-bar-item w3-button w3-mobile w3-hover-white" style="font-weight: bold;">Main Menu</a>
+            <button id="getLocationBtn" class="w3-bar-item w3-button w3-mobile w3-hover-white getLocationBtn">Get Location</button>
+        </div>
+        </div>
 
     <script type="application/javascript" src="libs/js/apiGazetteer.js"></script>  
     <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
-    <script type="application/javascript" src="libs/js/countryBorders.geo.json"></script>
 
 </body>
 </html>

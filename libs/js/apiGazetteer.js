@@ -130,10 +130,10 @@ getLocationBtn.addEventListener('click', function () {
 
                 // THE MAP
 
-                let lat = data.country.geometry.lat
-                let lng = data.country.geometry.lng
+                var lat = data.country.geometry.lat
+                var lng = data.country.geometry.lng
 
-                const mymap = L.map('mapid').setView([lat, lng], 13);
+                var mymap = L.map('mapid').setView([lat, lng], 13);
 
                 L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=mFYXi7zo4EzHjijzbUxG', {
                 attribution: `<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>`,
@@ -143,13 +143,15 @@ getLocationBtn.addEventListener('click', function () {
                 zoomOffset: -1,
                 accessToken: 'your.mapbox.access.token'
                 }).addTo(mymap);
-                const marker = L.marker([lat, lng]).addTo(mymap)
-                const circle = L.circle([lat, lng], {
+                var marker = L.marker([lat, lng]).addTo(mymap)
+                var circle = L.circle([lat, lng], {
                     color: "red",
                     fillColor: "#f03",
                     fillOpacity: 0.5,
                     radius: 1000
                 }).addTo(mymap)
+                // var featureGroup = L.featureGroup(markers).addTo(map);
+                // map.fitBounds(featureGroup.getBounds());
             }) 
             .catch(error => {console.log(error)})
     })

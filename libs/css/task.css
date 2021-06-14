@@ -10,6 +10,7 @@ body {
 }
 table {
     border-collapse: collapse;
+    width: auto;
 }
 table th {
     text-align: center;
@@ -23,5 +24,13 @@ table td {
 }
 .mainMenu {
     margin-top: 10vh;
+}
+
+/* SCREEN SIZING */
+
+@media (max-width: 550px) {
+    .mainDiv {
+        width: 100%;
+    }
 }
 
