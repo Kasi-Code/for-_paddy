@@ -10,12 +10,11 @@ body {
     border: 1px solid black;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
-    padding-left: 10vh; padding-right: 10vh; padding-top: 2vh; padding-bottom: 2vh;
+    padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
     top: 55%;
-    right: 20%; left: 20%;
+    left: 35%; right: 40%;
     text-align: center;
-    /* width: auto;
-    height: auto; */
+    width: 450px;
 }
 .weather {
     border: 1px solid black;
@@ -24,10 +23,9 @@ body {
     border-radius: 20px;
     padding: 2vh;
     top: 5%;
-    right: 30%; left: 30%;
+    left: 40%; right: 40%; 
     text-align: center;
-    /* width: auto;
-    height: auto; */
+    width: 300px;
 }
 .clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
     display: none;
@@ -62,7 +60,7 @@ body {
 
 @media (max-width: 550px) {
     .weather {
-        right: 10%; left: 10%;
+        left: 20%; right: 10%; 
     }
     .dataInfo {
         right: 5%; left: 5%;
