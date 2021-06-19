@@ -72,10 +72,11 @@
 @media (max-width: 550px) {
     .topPageSection {
         margin-left: 10px; margin-right: 10px;
-        width: 400px;
+        width: 350px;
     }
     .dataInfo {
         /* right: 5%; left: 5%; */
         padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
+        width: 350px;
     }
 }

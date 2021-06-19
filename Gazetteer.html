@@ -68,8 +68,8 @@
                     <br>
 
                 <div class="search-container">
-                    <form action="/action_page.php">
-                      <input type="text" placeholder="Search Location.." name="search">
+                    <form action="/libs/php/getGazetteer.php" method="POST">
+                      <input type="text" id="search" class="search" placeholder="Search Location.." name="search">
                       <button type="submit">🔍</button>
                     </form>
                 </div>
@@ -101,6 +101,7 @@
         </div>
 
     <script type="application/javascript" src="libs/js/apiGazetteer.js"></script>  
+    <script type="application/javascript" src="libs/js/search.js"></script>  
     <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
 
 </body>
