@@ -3,10 +3,10 @@
 //         $("#countryName").html("")
 //         var searchField = $("search").val()
 //         var expression = new RegExp(searchField, "i")
-//         $.getJSON("/libs/php/getGazetteer.php", function(data) {
+//         $.getJSON("/libs/php/getGazetteerBySearch.php", function(data) {
 //             $.each(data, function(key, value) {
 
-//                 var searchFor = value.countryBorders.properties
+//                 var searchFor = value
 
 //                 if(searchFor.name.search(expression) != -1) {
 //                     $("#isoCode").append(searchFor.iso_a3)
@@ -23,7 +23,14 @@ const searchState = async searchText => {
     const res = await fetch("/libs/php/getGazetteerBySearch.php")
     const states = await res.json()
 
-    console.log(states)
+    // console.log(states)
+
+    let matches = states.filter(state => {
+        const regex = new RegExp(`^${searchText}`, "gi")
+        return state.name.match(regex) 
+        // || state.match(regex)
+    })
+    console.log(matches)
 }
 
 search.addEventListener("input", () => searchState(search.value))
