@@ -5,8 +5,11 @@ $(document).ready(function() {
         var expression = new RegExp(searchField, "i")
         $.getJSON("/libs/php/getGazetteer.php", function(data) {
             $.each(data, function(key, value) {
-                if(value.name.search(expression) != -1 || value.location.search(expression) != -1) {
-                    $("#countryName").append()
+
+                var searchFor = value.countryBorders.features.properties
+
+                if(searchFor.name.search(expression) != -1) {
+                    $("#countryName").append(searchFor.name)
                 }
             })
         })
