@@ -91,7 +91,7 @@
 	$json_data = json_decode($json,true);
 
 	//Print data
-	$output["countryBorders"] = $json_data;	
+	$output["countryBorders"] = $json_data["features"];	
 	// print_r($json_data);
 
 	$output['status']['code'] = "200";
