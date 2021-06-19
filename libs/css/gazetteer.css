@@ -3,41 +3,52 @@
     margin: 0;
     padding: 0;
 }
-body {
-    color: black;
+.main {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: center;
 }
 .dataInfo {
     border: 1px solid black;
     background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
-    top: 55%;
-    left: 35%; right: 40%;
+    bottom: 4.5%;
     text-align: center;
     width: 450px;
-}
-.weather {
-    border: 1px solid black;
-    background-color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 10px;
-    border-radius: 20px;
-    padding: 2vh;
-    top: 5%;
-    left: 40%; right: 40%; 
-    text-align: center;
-    width: 300px;
-}
-.clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
-    display: none;
-}
-.weather, .dataInfo {
     overflow: hidden;
     position: fixed;
     z-index: 2;
 }
+.weather {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: center;
+    z-index: 4;
+    /* padding: 5%; */
+}
+.clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
+    display: none;
+}
 .mapid { 
     z-index: 0;
     height: 100vh; 
+}
+.topPageSection {
+    /* position: sticky; */
+    overflow: hidden;
+    position: fixed;
+    top: 0; 
+    z-index: 4;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 1px solid black;
+    width: 500px;
 }
 .bottomPageSection {
     background: black;
@@ -59,11 +70,12 @@ body {
 /* SCREEN SIZING */
 
 @media (max-width: 550px) {
-    .weather {
-        left: 20%; right: 10%; 
+    .topPageSection {
+        margin-left: 10px; margin-right: 10px;
+        width: 400px;
     }
     .dataInfo {
-        right: 5%; left: 5%;
+        /* right: 5%; left: 5%; */
         padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
     }
 }

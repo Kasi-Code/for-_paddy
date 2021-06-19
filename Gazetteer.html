@@ -18,54 +18,39 @@
     <link rel="stylesheet" href="/libs/css/gazetteer.css">
 </head>
 <body>
-
-    
         
     <div class="main">
 
-        <!-- <div class="w3-bar w3-black w3-top">
-            <span class="w3-mobile">
-                <div class="siteLogo">
-                    <a href="/Gazetteer.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Gazetteer</a>
-                </div>      
-            </span>
-            <span class="w3-right w3-mobile">
-                <a href="/index.html" class="w3-bar-item w3-button w3-mobile w3-hover-white" style="font-weight: bold;">Main Menu</a>
-                <button id="getLocationBtn" class="w3-bar-item w3-button w3-mobile w3-hover-white getLocationBtn">Get Location</button>
-            </span>            
-          </div> -->
-
-          <div class="exceptNav w3-mobile">
-            
+        <div class="topPageSection">
             <div class="weather">
+    
+                <!-- <h3>Current Weather</h3> -->
+                <div class="icons">
+                    <h1 id="weatherIcons">
+                        <div class="weatherIcons">
+                            <span class="clearskyIcon">&#127774</span>
+                            <!-- <span class="clearSkyNight">&#127773</span> -->
+                            <span class="clouds">☁️</span>
+                            <span class="overcastClouds">&#127783</span>
+                            <span class="sunAndClouds">&#127780</span>
+                            <span class="snow">❄️</span>
+                            <span class="thunder">⛈</span>
+                        </div>
+                    </h1>
+                </div>
+                <div class="temp">
+                    <p><span id="temperature"></p>
+                </div>
+                <div class="weatherCondition">
+                    <p><span id="weatherCondition"></p>   
+                </div>  
 
-                <h3>Current Weather</h3>
-                <h1>
-                    <div class="weatherIcons">
-                        <span class="clearskyIcon">&#127774</span>
-                        <!-- <span class="clearSkyNight">&#127773</span> -->
-                        <span class="clouds">☁️</span>
-                        <span class="overcastClouds">&#127783</span>
-                        <span class="sunAndClouds">&#127780</span>
-                        <span class="snow">❄️</span>
-                        <span class="thunder">⛈</span>
-                    </div>
-                </h1>
-                    <div class="weatherResults">
-                        <p><span id="temperature"></p>
-                        <br>
-                        <p><span id="weatherCondition"></p>
-                    </div>
-                
             </div>
-
-            <!-- <div class="giphy-embed loading" id="preloader"><iframe src="https://giphy.com/embed/3oEjI6SIIHBdRxXI40" 
-                width="120" height="120" frameBorder="0"allowFullScreen></iframe></p>
-            </div> -->
+            </div>
 
             <div class="dataInfo">
 
-                <h3>You are here 📍</h3>
+                <h3>You are here 📍</h3> 
                     <p>Country name: <span id="countryName"></span> <span id="flag"></span></p> 
                     <p>City: <span id="cityName"></span></p>
                     <p>Population: <span id="population"></span></p> 
@@ -79,22 +64,40 @@
                     <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
                     <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
                     <p>Wikipedia links: <a href="" target="_blank" class="wikipedia"><span id="wikipedia"></span></a></p> 
+
+                    <br>
+
+                <div class="search-container">
+                    <form action="/action_page.php">
+                      <input type="text" placeholder="Search Location.." name="search">
+                      <button type="submit">🔍</button>
+                    </form>
+                </div>
                 
             </div>
+
+          <div class="infoSection w3-mobile">
+
+            <!-- <div class="giphy-embed loading" id="preloader"><iframe src="https://giphy.com/embed/3oEjI6SIIHBdRxXI40" 
+                width="120" height="120" frameBorder="0"allowFullScreen></iframe></p>
+            </div> -->
+
             
-          </div>
-          <div class="map">
-            <div class="mapid" id="mapid"></div>
+            
           </div>
 
     </div>  
 
-        <div class="bottomPageSection">
+    <div class="bottomPageSection">
         <div class="navBar">
             <a href="/Gazetteer.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Gazetteer</a>
             <a href="/index.html" class="w3-bar-item w3-button w3-mobile w3-hover-white" style="font-weight: bold;">Main Menu</a>
-            <button id="getLocationBtn" class="w3-bar-item w3-button w3-mobile w3-hover-white getLocationBtn">Get Location</button>
+            <button id="getLocationBtn" class="w3-bar-item w3-button w3-mobile w3-hover-white getLocationBtn">Get Location &#10148</button>
         </div>
+    </div>
+
+        <div class="map">
+            <div class="mapid" id="mapid"></div>
         </div>
 
     <script type="application/javascript" src="libs/js/apiGazetteer.js"></script>  

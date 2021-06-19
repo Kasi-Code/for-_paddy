@@ -68,10 +68,10 @@ getLocationBtn.addEventListener('click', function () {
                     $(".clearskyIcon").css("display", "block")
                 } else if (weatherDescription == "cloudy"){
                     $(".clouds").css("display", "block")
-                } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                    $(".sunAndClouds").css("display", "block")
                 } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
                     $(".overcastClouds").css("display", "block")
+                } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
+                    $(".sunAndClouds").css("display", "block")
                 } else if (weatherDescription.includes("snow")){
                     $(".snow").css("display", "block")
                 } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
