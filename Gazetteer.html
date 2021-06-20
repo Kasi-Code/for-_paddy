@@ -43,38 +43,41 @@
                 </div>
                 <div class="weatherCondition">
                     <p><span id="weatherCondition"></p>   
-                </div>  
+                </div> 
 
             </div>
+
+        </div>
+
+        <div class="searchResults" id="searchResults"></div> 
+
+        <div class="dataInfo">
+
+            <h3>You are here 📍</h3> 
+                <p>Country name: <span id="countryName"></span> <span id="flag"></span></p> 
+                <p>City: <span id="cityName"></span></p>
+                <p>Population: <span id="population"></span></p> 
+                <p>Currency; 
+                    <span id="isoCode"></span>
+                    <span id="currencyName"></span>
+                </p>
+                <p>Exchange rate; <br>
+                    <span id="currencySymbal"></span><span id="localCurrency"></span>
+                </p>
+                <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
+                <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
+                <p>Wikipedia links: <a href="" target="_blank" class="wikipedia"><span id="wikipedia"></span></a></p> 
+
+                <br>
+
+            <div class="search-container">
+                <form action="/libs/php/getGazetteerBySearch.php" method="POST">
+                    <input type="text" id="search" class="search" placeholder="Search Location.." name="search">
+                    <!-- <button type="submit">🔍</button> -->
+                </form>
             </div>
-
-            <div class="dataInfo">
-
-                <h3>You are here 📍</h3> 
-                    <p>Country name: <span id="countryName"></span> <span id="flag"></span></p> 
-                    <p>City: <span id="cityName"></span></p>
-                    <p>Population: <span id="population"></span></p> 
-                    <p>Currency; 
-                        <span id="isoCode"></span>
-                        <span id="currencyName"></span>
-                    </p>
-                    <p>Exchange rate; <br>
-                        <span id="currencySymbal"></span><span id="localCurrency"></span>
-                    </p>
-                    <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
-                    <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
-                    <p>Wikipedia links: <a href="" target="_blank" class="wikipedia"><span id="wikipedia"></span></a></p> 
-
-                    <br>
-
-                <div class="search-container">
-                    <form action="/libs/php/getGazetteerBySearch.php" method="POST">
-                      <input type="text" id="search" class="search" placeholder="Search Location.." name="search">
-                      <!-- <button type="submit">🔍</button> -->
-                    </form>
-                </div>
                 
-            </div>
+        </div>
 
           <div class="infoSection w3-mobile">
 
