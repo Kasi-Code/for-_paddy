@@ -14,22 +14,7 @@
 	//Print data
 	$output["countryBorders"] = $json_data["features"];	
 	// print_r($json_data);
-
-    // $url = "https://api.openweathermap.org/data/2.5/weather?q=london&appid=cb79b904798a1f67e15e9d71fb81bc11";
-
-	// $ch = curl_init();
-	// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	// curl_setopt($ch, CURLOPT_URL,$url);
-
-	// $result=curl_exec($ch);
-
-	// curl_close($ch);
-
-	// $decode = json_decode($result,true);
-	// $output["weather"] = $decode;	
-
-
+    
     header('Content-Type: application/json; charset=UTF-8');
 	// echo "Lat: ".$_REQUEST['lat']."long: ".$_REQUEST['long'];
 	// echo $result;

@@ -29,9 +29,14 @@ const outputHTML = matches => {
             // $('#searchName').html(`${match.properties.name} (${match.properties.iso_a2})`)
             `
             <div class="searchList">
-                <p style="font-weight: bold;">${match.properties.name} (${match.properties.iso_a2})</p>
+                <form method="post">
+                <button type="searchListButton" id="searchListButton" class="searchListButton" name="searchListButton" value="${match.properties.name}" style="font-weight: bold;">
+                ${match.properties.name} (${match.properties.iso_a2})</button>
+                </form>
                 <hr>
             </div>
+
+            
             `
         )
         .join("")
