@@ -55,7 +55,7 @@
 
             <h3>You are here 📍</h3> 
                 <p>Country name: <span id="countryName"></span> <span id="flag"></span></p> 
-                <p>City: <span id="cityName"></span></p>
+                <!-- <p>City: <span id="cityName"></span></p> -->
                 <p>Population: <span id="population"></span></p> 
                 <p>Currency; 
                     <span id="isoCode"></span>
@@ -66,15 +66,23 @@
                 </p>
                 <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
                 <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
+                <p class="wikipediaInfo"><span id="wikipediaInfo"></span></p>
                 <p>Wikipedia links: <a href="" target="_blank" class="wikipedia"><span id="wikipedia"></span></a></p> 
 
                 <br>
 
             <div class="search-container">
-                <form action="/libs/php/getGazetteerBySearch.php" method="POST">
+                <form autocomplete="off" onsubmit="event.preventDefault();">
+                    <div class="autocomplete" style="width:300px;">
+                      <input id="myInput" class="myInput" type="text" name="selCountry" placeholder="Country">
+                    </div>
+                    <button id="submit" class="submit">🔍</button>
+                    <!-- <input type="submit" id="submit" class="submit"> -->
+                  </form>
+                <!-- <form action="/libs/php/getGazetteerBySearch.php" method="POST">
                     <input type="text" id="search" class="search" placeholder="Search Location.." name="search">
-                    <!-- <button type="submit">🔍</button> -->
-                </form>
+                    <button type="submit">🔍</button>
+                </form> -->
             </div>
                 
         </div>
@@ -103,7 +111,8 @@
 
     <script type="application/javascript" src="libs/js/apiGazetteer.js"></script>  
     <script type="application/javascript" src="libs/js/search.js"></script>  
-    <script type="application/javascript" src="libs/js/apiGazetteerSearch.js"></script>  
+    <script type="application/javascript" src="libs/js/selCountry.js"></script>  
+    <!-- <script type="application/javascript" src="libs/js/apiGazetteerSearch.js"></script>   -->
     <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
 
 </body>

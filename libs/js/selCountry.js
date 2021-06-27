@@ -1,16 +1,11 @@
-// $(window).on('load', function () { if ($('#preloader').length) {
-//     $('#preloader').delay(100).fadeOut('slow', function () { $(this).remove();
-//     }); }
-// });
+document.querySelector('.submit').addEventListener('click', function(event) {
+    // event.preventDefault();
 
-const getLocationBtn = document.querySelector(".getLocationBtn");
+    var selCountry = document.getElementById("myInput").value;
 
-getLocationBtn.addEventListener('click', function () {
-    navigator.geolocation.getCurrentPosition(position => {
-        long = position.coords.longitude
-        lat = position.coords.latitude
+        // console.log(selCountry)
 
-        fetch(`/libs/php/getGazetteer.php?lat=${lat}&long=${long}`)
+        fetch(`/libs/php/selCountry.php?selCountry=${selCountry}`)
             .then(res => {
                 return res.json()
             })
@@ -152,8 +147,11 @@ getLocationBtn.addEventListener('click', function () {
                 }).addTo(mymap)
                 // var featureGroup = L.featureGroup(markers).addTo(map);
                 // map.fitBounds(featureGroup.getBounds());
-            }) 
+            })
             .catch(error => {console.log(error)})
-    })
-})
+  });
+ 
+//  function getCountry () {
 
+        
+//         }
