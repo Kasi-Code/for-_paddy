@@ -23,18 +23,11 @@
 
         <div class="topPageSection">
             <div class="weather">
-    
-                <!-- <h3>Current Weather</h3> -->
+ 
                 <div class="icons">
                     <h1 id="weatherIcons">
                         <div class="weatherIcons">
-                            <span class="clearskyIcon">&#127774</span>
-                            <!-- <span class="clearSkyNight">&#127773</span> -->
-                            <span class="clouds">☁️</span>
-                            <span class="overcastClouds">&#127783</span>
-                            <span class="sunAndClouds">&#127780</span>
-                            <span class="snow">❄️</span>
-                            <span class="thunder">⛈</span>
+                            <span class="changeIcon" id="changeIcon"></span>
                         </div>
                     </h1>
                 </div>
@@ -46,16 +39,17 @@
                 </div> 
 
             </div>
-
         </div>
 
-        <div class="searchResults" id="searchResults"></div> 
+        <div class="giphyEmbed" id="preloader"><img id="frame" src="/libs/media/loading.gif" 
+            width="180" height="180" frameBorder="0">
+        </div>
 
         <div class="dataInfo">
 
-            <h3>You are here 📍</h3> 
+            <!-- <h3>You are here 📍</h3>  -->
                 <p>Country name: <span id="countryName"></span> <span id="flag"></span></p> 
-                <!-- <p>City: <span id="cityName"></span></p> -->
+                <p>City: <span id="cityName"></span></p>
                 <p>Population: <span id="population"></span></p> 
                 <p>Currency; 
                     <span id="isoCode"></span>
@@ -76,7 +70,7 @@
                     <div class="autocomplete" style="width:300px;">
                       <input id="myInput" class="myInput" type="text" name="selCountry" placeholder="Country">
                     </div>
-                    <button id="submit" class="submit">🔍</button>
+                    <button id="submit" class="submit" >🔍</button>
                     <!-- <input type="submit" id="submit" class="submit"> -->
                   </form>
                 <!-- <form action="/libs/php/getGazetteerBySearch.php" method="POST">
@@ -99,9 +93,9 @@
 
     <div class="bottomPageSection">
         <div class="navBar">
-            <a href="/Gazetteer.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Gazetteer</a>
+            <a href="/Gazetteer.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Current Location &#10148</a>
             <a href="/index.html" class="w3-bar-item w3-button w3-mobile w3-hover-white" style="font-weight: bold;">Main Menu</a>
-            <button id="getLocationBtn" class="w3-bar-item w3-button w3-mobile w3-hover-white getLocationBtn">Get Location &#10148</button>
+            <!-- <button id="getLocationBtn" class="w3-bar-item w3-button w3-mobile w3-hover-white getLocationBtn">Get Location &#10148</button> -->
         </div>
     </div>
 

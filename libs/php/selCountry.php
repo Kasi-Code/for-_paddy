@@ -34,6 +34,9 @@
 
 	$decode = json_decode($result,true);
 	$output["population"] = $decode;	
+	$lat = $decode[0]["latlng"][0];	
+    $lng = $decode[0]["latlng"][1];	
+	$capitalCity = $decode[0]["capital"];	
 
 	// Get Currency
 	$url = "https://openexchangerates.org/api/latest.json?app_id=4b8acff9591e4f8d8864ef8ca25aea3b";
@@ -51,7 +54,7 @@
 	$output["currency"] = $decode;	
 
 	// Get Wikipedia
-	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$_REQUEST['selCountry']."&maxRows=10&username=coder_k&style=full";
+	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$capitalCity."&maxRows=10&username=coder_k&style=full";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -64,8 +67,8 @@
 
 	$decode = json_decode($result,true);
 	$output["wikipedia"] = $decode["geonames"][0];	
-    $lat = $decode["geonames"][0]["lat"];	
-    $lng = $decode["geonames"][0]["lng"];	
+    // $lat = $decode["geonames"][0]["lat"];	
+    // $lng = $decode["geonames"][0]["lng"];	
 
     // Get Location
 	$url = "https://api.opencagedata.com/geocode/v1/json?q=".$lat."+".$lng."&key=87c637778f19465f89895cad4bf83cfa";

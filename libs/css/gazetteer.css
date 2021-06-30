@@ -3,6 +3,12 @@
     margin: 0;
     padding: 0;
 }
+.giphyEmbed {
+  margin-top: 40vh;
+  overflow: hidden;
+  position: fixed;
+  z-index: 2;
+}
 .main {
     display: flex;
     justify-content: space-evenly;
@@ -38,6 +44,7 @@
 .mapid { 
     z-index: 0;
     height: 100vh; 
+    margin-bottom: 300px;
 }
 .topPageSection {
     /* position: sticky; */
@@ -143,7 +150,7 @@ button {
 @media (max-width: 550px) {
     .topPageSection {
         margin-left: 10px; margin-right: 10px;
-        width: 350px;
+        width: 300px;
     }
     .dataInfo {
         padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;

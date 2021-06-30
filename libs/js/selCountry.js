@@ -1,18 +1,18 @@
+
 document.querySelector('.submit').addEventListener('click', function(event) {
     // event.preventDefault();
 
     var selCountry = document.getElementById("myInput").value;
-
         // console.log(selCountry)
 
-        fetch(`/libs/php/selCountry.php?selCountry=${selCountry}`)
+        fetch(`/libs/php/selCountry.php?selCountry=${selCountry.replaceAll(" ", "%20")}`)
             .then(res => {
                 return res.json()
             })
             .then(data => {
                 console.log(data)
                 let countryName = data.country.components.country
-                let cityName = data.country.components.city
+                let cityName = data.population[0].capital
                 let countryFlag = data.country.annotations.flag
 
                 let weatherDescription = data.weather.weather[0].description
@@ -42,13 +42,13 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                 $('#flag').html(countryFlag);
 
                 $('#weatherCondition').html(weatherDescription.toUpperCase());
-                $('#temperature').append(celsius + "˚C");
+                $('#temperature').html(celsius + "˚C");
 
-                $('#population').append(cityPopulation);
+                $('#population').html(cityPopulation);
 
-                $('#isoCode').append(iso + ", ");
-                $('#currencyName').append(currencyName);
-                $('#currencySymbal').append(currencySymbol);
+                $('#isoCode').html(iso + ", ");
+                $('#currencyName').html(currencyName);
+                $('#currencySymbal').html(currencySymbol);
 
                 let link = document.querySelector('.wikipedia');
                     link.setAttribute('href', wikiLink);
@@ -60,17 +60,17 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                 const getHour = today.getHours()
 
                 if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                    $(".clearskyIcon").css("display", "block")
+                    $("#changeIcon").html("&#127774")
                 } else if (weatherDescription == "cloudy"){
-                    $(".clouds").css("display", "block")
+                    $("#changeIcon").html("☁️")
                 } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
-                    $(".overcastClouds").css("display", "block")
+                    $("#changeIcon").html("&#127783")
                 } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                    $(".sunAndClouds").css("display", "block")
+                    $("#changeIcon").html("&#127780")
                 } else if (weatherDescription.includes("snow")){
-                    $(".snow").css("display", "block")
+                    $("#changeIcon").html("❄️")
                 } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-                    $(".thunder").css("display", "block")
+                    $("#changeIcon").html("⛈")
                 }
 
                 // CURRENCY
@@ -79,43 +79,43 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                 for (const [cName, cValue] of listOfCurrency) {
                     if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
                         // console.log(cValue)
-                        $('#localCurrency').append(cValue);    
+                        $('#localCurrency').html(cValue);    
 
                         for (const [cName, cValue] of listOfCurrency) {
                             if (compareToUSD == cName) {  
-                                $('#secondCurrency').append("To USD $" + cValue); 
+                                $('#secondCurrency').html("To USD $" + cValue); 
                                 
                                 for (const [cName, cValue] of listOfCurrency) {
                                     if (compareToEUR == cName) {  
-                                        $('#thirdCurrency').append("To EUR €" + cValue);                        
+                                        $('#thirdCurrency').html("To EUR €" + cValue);                        
                                     }
                                 }                           
                             }
                         }                    
                     } else if (iso == cName && iso != compareToGBP && iso != compareToEUR) {
-                        $('#localCurrency').append(cValue);    
+                        $('#localCurrency').html(cValue);    
 
                         for (const [cName, cValue] of listOfCurrency) {
                             if (compareToGBP == cName) {  
-                                $('#secondCurrency').append("To GBP £" + cValue); 
+                                $('#secondCurrency').html("To GBP £" + cValue); 
                                 
                                 for (const [cName, cValue] of listOfCurrency) {
                                     if (compareToEUR == cName) {  
-                                        $('#thirdCurrency').append("To EUR €" + cValue);                        
+                                        $('#thirdCurrency').html("To EUR €" + cValue);                        
                                     }
                                 }                           
                             }
                         }                    
                     } else if (iso == cName && iso != compareToGBP && iso != compareToUSD) {
-                        $('#localCurrency').append(cValue);    
+                        $('#localCurrency').html(cValue);    
 
                         for (const [cName, cValue] of listOfCurrency) {
                             if (compareToUSD == cName) {  
-                                $('#secondCurrency').append("To USD $" + cValue); 
+                                $('#secondCurrency').html("To USD $" + cValue); 
                                 
                                 for (const [cName, cValue] of listOfCurrency) {
                                     if (compareToGBP == cName) {  
-                                        $('#thirdCurrency').append("To BGP £" + cValue);                        
+                                        $('#thirdCurrency').html("To BGP £" + cValue);                        
                                     }
                                 }                           
                             }
@@ -128,16 +128,8 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                 var lat = data.country.geometry.lat
                 var lng = data.country.geometry.lng
 
-                var mymap = L.map('mapid').setView([lat, lng], 13);
+                mymap.setView([lat, lng], 5);
 
-                L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=mFYXi7zo4EzHjijzbUxG', {
-                attribution: `<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>`,
-                maxZoom: 18,
-                id: 'mapbox/streets-v11',
-                tileSize: 512,
-                zoomOffset: -1,
-                accessToken: 'your.mapbox.access.token'
-                }).addTo(mymap);
                 var marker = L.marker([lat, lng]).addTo(mymap)
                 var circle = L.circle([lat, lng], {
                     color: "red",
@@ -151,7 +143,14 @@ document.querySelector('.submit').addEventListener('click', function(event) {
             .catch(error => {console.log(error)})
   });
  
-//  function getCountry () {
 
-        
-//         }
+            var mymap = L.map('mapid').setView([0, 0], 13);
+
+            L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=mFYXi7zo4EzHjijzbUxG', {
+            attribution: `<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>`,
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'your.mapbox.access.token'
+            }).addTo(mymap);
