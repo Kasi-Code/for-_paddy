@@ -4,6 +4,8 @@
     padding: 0;
 }
 .giphyEmbed {
+  align-items: center;
+  text-align: center;
   margin-top: 40vh;
   overflow: hidden;
   position: fixed;
@@ -21,12 +23,12 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
-    bottom: 4.5%;
+    bottom: 40px;
     text-align: center;
     width: 450px;
     overflow: hidden;
     position: fixed;
-    z-index: 2;
+    z-index: 4;
 }
 .weather {
     background-color: rgba(255, 255, 255, 0.8);
@@ -35,7 +37,7 @@
     justify-content: space-evenly;
     flex-direction: row;
     align-items: center;
-    z-index: 4;
+    z-index: 3;
     /* padding: 5%; */
 }
 .clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
@@ -44,7 +46,7 @@
 .mapid { 
     z-index: 0;
     height: 100vh; 
-    margin-bottom: 300px;
+    /* margin-bottom: 300px; */
 }
 .topPageSection {
     /* position: sticky; */
@@ -83,7 +85,7 @@
     color: white;
     display: flex;
     justify-content: space-evenly;
-    z-index: 4;
+    z-index: 5;
 }
 .searchList {
     margin-top: 20px;
@@ -134,6 +136,7 @@ button {
     background-color: black;
     border-bottom: 1px solid #d4d4d4;
     color: white;
+    position: sticky;
     z-index: 7;
   }
   .autocomplete-items div:hover {
@@ -145,6 +148,22 @@ button {
     /*when navigating through the items using the arrow keys:*/
     background-color: DodgerBlue !important;
     color: #ffffff;
+  }
+  .panel {
+    padding: 10px;
+    display: none;
+  }
+  .flip {
+    margin-top: -20px;
+  }
+  .buttonUp {
+    margin-bottom: 10px;
+    text-shadow: 1px 2px 2px black;
+    font-size: 20px;
+    /* color: red; */
+  }
+  .search-container {
+    top: 0%;
   }
 
 /* SCREEN SIZING */

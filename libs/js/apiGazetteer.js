@@ -11,6 +11,12 @@ window.onload = function () {
             $('#preloader').delay(1000).fadeOut('slow', function () { 
                 $(this).remove();
 
+                // TOGGLE
+
+                $(".flip").click(function(){
+                    $(".panel").slideToggle("slow");
+                  });
+
                 navigator.geolocation.getCurrentPosition(position => {
                     long = position.coords.longitude
                     lat = position.coords.latitude
@@ -40,14 +46,15 @@ window.onload = function () {
             
                             // console.log(localCurrency)
             
-                            // let wikiLink = data.wikipedia.wikipediaUrl
+                            let wikiLink = data.wikipedia.wikipediaUrl
+                            let wikiSummary = data.wikipedia.summary
                             
                             const kelvin = weatherTemp
                             let celsius = kelvin - 273.15
                             // let newton = celsius * ( 23 / 100 )
                             celsius = Math.floor(celsius)
             
-                            $('#countryName').html("Country name: " + countryName);
+                            $('#countryName').html("Country: " + countryName);
                             $('#cityName').html("City: " + cityName);
                             $('#flag').html(countryFlag);
             
@@ -59,10 +66,12 @@ window.onload = function () {
                             $('#isoCode').html("Currency; " + iso + ", ");
                             $('#currencyName').html(currencyName);
                             $('#currencySymbal').html(currencySymbol);
+
+                            $('#wikiSummary').html("📜 " + wikiSummary);
             
-                            // let link = document.querySelector('.wikipedia');
-                            //     link.setAttribute('href', wikiLink);
-                            //     link.innerHTML = wikiLink;
+                            let link = document.querySelector('.wikipedia');
+                                link.setAttribute('href', wikiLink);
+                                link.innerHTML = wikiLink;
             
                             // WEATHER ICONS
             
@@ -193,14 +202,16 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
 
                 // console.log(localCurrency)
 
-                // let wikiLink = data.wikipedia.wikipediaUrl
+                let wikiLink = data.wikipedia.wikipediaUrl
+                let wikiSummary = data.wikipedia.summary
+                let wikiThumnail = data.wikipedia.thumbnailImg
                 
                 const kelvin = weatherTemp
                 let celsius = kelvin - 273.15
                 // let newton = celsius * ( 23 / 100 )
                 celsius = Math.floor(celsius)
 
-                $('#countryName').html("Country name: " + countryName);
+                $('#countryName').html("Country: " + countryName);
                 $('#cityName').html("City: " + cityName);
                 $('#flag').html(countryFlag);
 
@@ -213,9 +224,25 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                 $('#currencyName').html(currencyName);
                 $('#currencySymbal').html(currencySymbol);
 
-                // let link = document.querySelector('.wikipedia');
-                //     link.setAttribute('href', wikiLink);
-                //     link.innerHTML = wikiLink;
+                $('#wikiSummary').html("📜 " + wikiSummary);
+
+                let link = document.querySelector('.wikipedia');
+                    link.setAttribute('href', wikiLink);
+                    link.innerHTML = wikiLink;
+
+                // IMAGE
+                    
+                var img = document.createElement("img");
+
+                img.src = wikiThumnail;
+                var src = document.getElementById("thumnail");
+                $(src).html(img)
+
+                // TOGGLE
+
+                $("#flip").click(function(){
+                    $("#panel").slideToggle("slow");
+                  });
 
                 // WEATHER ICONS
 
@@ -291,18 +318,23 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
 
                 // THE MAP
 
-                var lat = data.country.geometry.lat
-                var lng = data.country.geometry.lng
-
+                var lat = data.wikipedia.lat
+                var lng = data.wikipedia.lng
+            
                 mymap.setView([lat, lng], 5);
-
+            
                 var marker = L.marker([lat, lng]).addTo(mymap)
-                var circle = L.circle([lat, lng], {
-                    color: "red",
-                    fillColor: "#f03",
-                    fillOpacity: 0.5,
-                    radius: 1000
-                }).addTo(mymap)
+                marker.bindPopup(
+                        `<img class="thumnail" id="thumnail" src="${wikiThumnail}" alt="Picture of the location">
+                        <p>Picture of ${cityName} City</p>`
+                        ).openPopup()
+
+                        var circle = L.circle([lat, lng], {
+                                color: "red",
+                                fillColor: "#f03",
+                                fillOpacity: 0.5,
+                                radius: 1000
+                        }).addTo(mymap)
                 // var featureGroup = L.featureGroup(markers).addTo(map);
                 // map.fitBounds(featureGroup.getBounds());
             })
