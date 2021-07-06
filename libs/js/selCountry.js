@@ -37,16 +37,16 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                 // let newton = celsius * ( 23 / 100 )
                 celsius = Math.floor(celsius)
 
-                $('#countryName').html(countryName);
-                $('#cityName').html(cityName);
+                $('#countryName').html("Country name: " + countryName);
+                $('#cityName').html("City: " + cityName);
                 $('#flag').html(countryFlag);
 
                 $('#weatherCondition').html(weatherDescription.toUpperCase());
                 $('#temperature').html(celsius + "˚C");
 
-                $('#population').html(cityPopulation);
+                $('#population').html("Population: " + cityPopulation);
 
-                $('#isoCode').html(iso + ", ");
+                $('#isoCode').html("Currency;" + iso + ", ");
                 $('#currencyName').html(currencyName);
                 $('#currencySymbal').html(currencySymbol);
 
@@ -77,6 +77,7 @@ document.querySelector('.submit').addEventListener('click', function(event) {
 
                 const listOfCurrency = Object.entries(getCurrencies)
                 for (const [cName, cValue] of listOfCurrency) {
+                    $('#exchangeRate').html("Exchange rate;");   
                     if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
                         // console.log(cValue)
                         $('#localCurrency').html(cValue);    
