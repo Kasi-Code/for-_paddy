@@ -69,9 +69,9 @@ window.onload = function () {
 
                             $('#wikiSummary').html("📜 " + wikiSummary);
             
-                            let link = document.querySelector('.wikipedia');
-                                link.setAttribute('href', wikiLink);
-                                link.innerHTML = wikiLink;
+                            var a = document.querySelector('.wikipedia');
+                                a.href = `http://${wikiLink}`;
+                            $('#wikiLink').html(`Wikipedia links`);
             
                             // WEATHER ICONS
             
@@ -226,9 +226,9 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
 
                 $('#wikiSummary').html("📜 " + wikiSummary);
 
-                let link = document.querySelector('.wikipedia');
-                    link.setAttribute('href', wikiLink);
-                    link.innerHTML = wikiLink;
+                var a = document.querySelector('.wikipedia');
+                    a.href = `http://${wikiLink}`;
+                $('#wikiLink').html(`Wikipedia links`);
 
                 // IMAGE
                     
