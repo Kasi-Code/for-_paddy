@@ -40,29 +40,29 @@ window.onload = function () {
             
                             // console.log(localCurrency)
             
-                            let wikiLink = data.wikipedia.wikipediaUrl
+                            // let wikiLink = data.wikipedia.wikipediaUrl
                             
                             const kelvin = weatherTemp
                             let celsius = kelvin - 273.15
                             // let newton = celsius * ( 23 / 100 )
                             celsius = Math.floor(celsius)
             
-                            $('#countryName').html(countryName);
-                            $('#cityName').html(cityName);
+                            $('#countryName').html("Country name: " + countryName);
+                            $('#cityName').html("City: " + cityName);
                             $('#flag').html(countryFlag);
             
                             $('#weatherCondition').html(weatherDescription.toUpperCase());
                             $('#temperature').html(celsius + "˚C");
             
-                            $('#population').html(cityPopulation);
+                            $('#population').html("Population: " + cityPopulation);
             
-                            $('#isoCode').html(iso + ", ");
+                            $('#isoCode').html("Currency; " + iso + ", ");
                             $('#currencyName').html(currencyName);
                             $('#currencySymbal').html(currencySymbol);
             
-                            let link = document.querySelector('.wikipedia');
-                                link.setAttribute('href', wikiLink);
-                                link.innerHTML = wikiLink;
+                            // let link = document.querySelector('.wikipedia');
+                            //     link.setAttribute('href', wikiLink);
+                            //     link.innerHTML = wikiLink;
             
                             // WEATHER ICONS
             
@@ -87,6 +87,9 @@ window.onload = function () {
             
                             const listOfCurrency = Object.entries(getCurrencies)
                             for (const [cName, cValue] of listOfCurrency) {
+
+                                $('#exchangeRate').html("Exchange rate; ");  
+
                                 if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
                                     // console.log(cValue)
                                     $('#localCurrency').html(cValue);    
@@ -159,7 +162,7 @@ window.onload = function () {
 }
 
 
-document.querySelector('.submit').addEventListener('click', function(event) {
+document.querySelector('.autocomplete').addEventListener('click', function(event) {
     // event.preventDefault();
 
     var selCountry = document.getElementById("myInput").value;
@@ -190,7 +193,7 @@ document.querySelector('.submit').addEventListener('click', function(event) {
 
                 // console.log(localCurrency)
 
-                let wikiLink = data.wikipedia.wikipediaUrl
+                // let wikiLink = data.wikipedia.wikipediaUrl
                 
                 const kelvin = weatherTemp
                 let celsius = kelvin - 273.15
@@ -206,13 +209,13 @@ document.querySelector('.submit').addEventListener('click', function(event) {
 
                 $('#population').html("Population: " + cityPopulation);
 
-                $('#isoCode').html("Currency;" + iso + ", ");
+                $('#isoCode').html("Currency; " + iso + ", ");
                 $('#currencyName').html(currencyName);
                 $('#currencySymbal').html(currencySymbol);
 
-                let link = document.querySelector('.wikipedia');
-                    link.setAttribute('href', wikiLink);
-                    link.innerHTML = wikiLink;
+                // let link = document.querySelector('.wikipedia');
+                //     link.setAttribute('href', wikiLink);
+                //     link.innerHTML = wikiLink;
 
                 // WEATHER ICONS
 
@@ -237,7 +240,9 @@ document.querySelector('.submit').addEventListener('click', function(event) {
 
                 const listOfCurrency = Object.entries(getCurrencies)
                 for (const [cName, cValue] of listOfCurrency) {
-                    $('#exchangeRate').html("Exchange rate;");   
+
+                    $('#exchangeRate').html("Exchange rate; ");   
+                    
                     if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
                         // console.log(cValue)
                         $('#localCurrency').html(cValue);    

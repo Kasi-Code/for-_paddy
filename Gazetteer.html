@@ -48,48 +48,36 @@
         <div class="dataInfo">
 
             <!-- <h3>You are here 📍</h3>  -->
-                <p>Country name: <span id="countryName"></span> <span id="flag"></span></p> 
-                <p>City: <span id="cityName"></span></p>
-                <p>Population: <span id="population"></span></p> 
-                <p>Currency; 
+                <p><span id="countryName"></span> <span id="flag"></span></p> 
+                <p><span id="cityName"></span></p>
+                <p><span id="population"></span></p> 
+                <p>
                     <span id="isoCode"></span>
                     <span id="currencyName"></span>
                 </p>
-                <p>Exchange rate;<span id="exchangeRate"></span> <br>
+                <p><span id="exchangeRate"></span> <br>
                     <span id="currencySymbal"></span><span id="localCurrency"></span>
                 </p>
                 <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
                 <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
                 <p class="wikipediaInfo"><span id="wikipediaInfo"></span></p>
-                <p>Wikipedia links: <a href="" target="_blank" class="wikipedia"><span id="wikipedia"></span></a></p> 
-
+                <!-- <p>Wikipedia links: <a href="" target="_blank" class="wikipedia"><span id="wikipedia"></span></a></p>  -->
+                
                 <br>
 
             <div class="search-container">
                 <form autocomplete="off" onsubmit="event.preventDefault();">
-                    <div class="autocomplete" style="width:300px;">
-                      <input id="myInput" class="myInput" type="text" name="selCountry" placeholder="Country">
+                    <div class="autocomplete"  style="width:300px;">
+                        <input id="myInput" class="myInput" type="text" name="selCountry" placeholder="Country">
                     </div>
-                    <button id="submit" class="submit" >🔍</button>
+                        <!-- <button id="submit" class="submit" >🔍</button> -->
                     <!-- <input type="submit" id="submit" class="submit"> -->
-                  </form>
-                <!-- <form action="/libs/php/getGazetteerBySearch.php" method="POST">
-                    <input type="text" id="search" class="search" placeholder="Search Location.." name="search">
-                    <button type="submit">🔍</button>
-                </form> -->
+            </form>
             </div>
-                
-        </div>
 
-          <div class="infoSection w3-mobile">
+        </div> 
 
-            <!-- <div class="giphy-embed loading" id="preloader"><iframe src="https://giphy.com/embed/3oEjI6SIIHBdRxXI40" 
-                width="120" height="120" frameBorder="0"allowFullScreen></iframe></p>
-            </div> -->
-
-          </div>
-
-    </div>  
+    </div> 
 
     <div class="bottomPageSection">
         <div class="navBar">
@@ -106,6 +94,7 @@
     <script type="application/javascript" src="libs/js/apiGazetteer.js"></script>  
     <script type="application/javascript" src="libs/js/search.js"></script>  
     <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </body>
 </html>
