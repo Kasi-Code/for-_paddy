@@ -53,22 +53,9 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
+	$lat = $decode[0]["latlng"][0];	
+    $lng = $decode[0]["latlng"][1];	
 	$output["population"] = $decode;	
-
-	// Get Currency
-	$url = "https://openexchangerates.org/api/latest.json?app_id=4b8acff9591e4f8d8864ef8ca25aea3b";
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_URL,$url);
-
-	$result=curl_exec($ch);
-
-	curl_close($ch);
-
-	$decode = json_decode($result,true);
-	$output["currency"] = $decode;	
 
 	// Get Wikipedia
 	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$city."&maxRows=10&username=coder_k&style=full";
@@ -85,6 +72,21 @@
 	$decode = json_decode($result,true);
 	$output["wikipedia"] = $decode["geonames"][0];	
 
+	// Get Currency
+	$url = "https://openexchangerates.org/api/latest.json?app_id=4b8acff9591e4f8d8864ef8ca25aea3b";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["currency"] = $decode;	
+
 	// COUNTRY BORDER - READ JSON FILE
 
 	$json = file_get_contents('countryBorders.geo.json');
@@ -95,6 +97,21 @@
 	//Print data
 	$output["countryBorders"] = $json_data["features"];	
 	// print_r($json_data);
+
+	// Near by Places
+	$url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$_REQUEST['lat']."&lng=".$_REQUEST['long']."&username=coder_k&style=full";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["poi_nearByPlaces"] = $decode["poi"];	
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";

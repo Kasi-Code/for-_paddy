@@ -3,6 +3,9 @@
     margin: 0;
     padding: 0;
 }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
 .giphyEmbed {
   align-items: center;
   text-align: center;
@@ -26,7 +29,7 @@
     bottom: 40px;
     text-align: center;
     width: 450px;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: fixed;
     z-index: 4;
 }
@@ -43,8 +46,12 @@
 .clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
     display: none;
 }
+.map {
+  position: relative;
+  z-index: 0;
+}
 .mapid { 
-    z-index: 0;
+    /* z-index: 0; */
     height: 100vh; 
     /* margin-bottom: 300px; */
 }
@@ -86,6 +93,7 @@
     display: flex;
     justify-content: space-evenly;
     z-index: 5;
+    margin-top: 10px;
 }
 .searchList {
     margin-top: 20px;
@@ -136,8 +144,9 @@ button {
     background-color: black;
     border-bottom: 1px solid #d4d4d4;
     color: white;
-    position: sticky;
+    position: relative;
     z-index: 7;
+    /* overflow: visible; */
   }
   .autocomplete-items div:hover {
     /*when hovering an item:*/
@@ -156,7 +165,7 @@ button {
   .flip {
     margin-top: -20px;
   }
-  .buttonUp {
+  .buttonUpStyle {
     margin-bottom: 10px;
     text-shadow: 1px 2px 2px black;
     font-size: 20px;
@@ -164,6 +173,12 @@ button {
   }
   .search-container {
     top: 0%;
+  }
+  a:link, a:visited {
+    text-decoration: none; color: inherit;
+  }
+  a:hover {
+    transform: scale(1.2);
   }
 
 /* SCREEN SIZING */

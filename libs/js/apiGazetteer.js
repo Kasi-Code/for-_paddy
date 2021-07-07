@@ -13,7 +13,7 @@ window.onload = function () {
 
                 // TOGGLE
 
-                $(".flip").click(function(){
+                $(".buttonUp").click(function(){
                     $(".panel").slideToggle("slow");
                   });
 
@@ -55,7 +55,7 @@ window.onload = function () {
                             celsius = Math.floor(celsius)
             
                             $('#countryName').html("Country: " + countryName);
-                            $('#cityName').html("City: " + cityName);
+                            $('#cityName').html("Capital City: " + cityName);
                             $('#flag').html(countryFlag);
             
                             $('#weatherCondition').html(weatherDescription.toUpperCase());
@@ -66,6 +66,8 @@ window.onload = function () {
                             $('#isoCode').html("Currency; " + iso + ", ");
                             $('#currencyName').html(currencyName);
                             $('#currencySymbal').html(currencySymbol);
+
+                            // WIKI
 
                             $('#wikiSummary').html("📜 " + wikiSummary);
             
@@ -146,23 +148,37 @@ window.onload = function () {
                             }
             
                             // THE MAP
+
+                            const poi = data.poi_nearByPlaces
+
+                            for (let i = 0; i < poi.length; i++) {
+                                var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
+
+                                var nearByName = poi[i].name
+                                var nearByTypeClass = poi[i].typeClass
+                                var nearByTypeName = poi[i].typeName
+                                
+                                markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${nearByTypeClass}</p><p>${nearByTypeName}</p>`).openPopup()
+
+                            }
             
                             var lat = data.country.geometry.lat
                             var lng = data.country.geometry.lng
             
-                            mymap.setView([lat, lng], 13);
+                            mymap.setView([lat, lng], 16.5);
             
                             var marker = L.marker([lat, lng]).addTo(mymap)
-                            marker.bindPopup("<h5>Hey! 🐾</h5>You are here 📍").openPopup()
+                                marker.bindPopup("<h5>Hey! 🐾</h5>You are here 📍").openPopup()
 
                             var circle = L.circle([lat, lng], {
                                 color: "red",
                                 fillColor: "#f03",
                                 fillOpacity: 0.5,
-                                radius: 1000
+                                radius: 10
                             }).addTo(mymap)
                             // var featureGroup = L.featureGroup(markers).addTo(map);
                             // map.fitBounds(featureGroup.getBounds());
+
                         })
                         .catch(error => {console.log(error)})
               });
@@ -212,7 +228,7 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                 celsius = Math.floor(celsius)
 
                 $('#countryName').html("Country: " + countryName);
-                $('#cityName').html("City: " + cityName);
+                $('#cityName').html("Capital City: " + cityName);
                 $('#flag').html(countryFlag);
 
                 $('#weatherCondition').html(weatherDescription.toUpperCase());
@@ -223,6 +239,8 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                 $('#isoCode').html("Currency; " + iso + ", ");
                 $('#currencyName').html(currencyName);
                 $('#currencySymbal').html(currencySymbol);
+
+                // WIKI
 
                 $('#wikiSummary').html("📜 " + wikiSummary);
 
@@ -237,12 +255,6 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                 img.src = wikiThumnail;
                 var src = document.getElementById("thumnail");
                 $(src).html(img)
-
-                // TOGGLE
-
-                $("#flip").click(function(){
-                    $("#panel").slideToggle("slow");
-                  });
 
                 // WEATHER ICONS
 
@@ -317,14 +329,27 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                 }
 
                 // THE MAP
+                
+                const poi = data.poi_nearByPlaces
+
+                for (let i = 0; i < poi.length; i++) {
+                    var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
+
+                    var nearByName = poi[i].name
+                    var nearByTypeClass = poi[i].typeClass
+                    var nearByTypeName = poi[i].typeName
+                    
+                    markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${nearByTypeClass}</p><p>${nearByTypeName}</p>`).openPopup()
+
+                }
 
                 var lat = data.wikipedia.lat
                 var lng = data.wikipedia.lng
             
-                mymap.setView([lat, lng], 5);
+                mymap.setView([lat, lng], 14);
             
                 var marker = L.marker([lat, lng]).addTo(mymap)
-                marker.bindPopup(
+                    marker.bindPopup(
                         `<img class="thumnail" id="thumnail" src="${wikiThumnail}" alt="Picture of the location">
                         <p>Picture of ${cityName} City</p>`
                         ).openPopup()
@@ -333,7 +358,7 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                                 color: "red",
                                 fillColor: "#f03",
                                 fillOpacity: 0.5,
-                                radius: 1000
+                                radius: 50
                         }).addTo(mymap)
                 // var featureGroup = L.featureGroup(markers).addTo(map);
                 // map.fitBounds(featureGroup.getBounds());

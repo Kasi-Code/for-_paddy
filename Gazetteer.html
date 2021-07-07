@@ -13,8 +13,8 @@
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="/libs/css/gazetteer.css">
 </head>
 <body>
@@ -51,8 +51,8 @@
         <div class="dataInfo">
 
             <!-- <h3>You are here 📍</h3>  -->
-            <div class="flip">
-                <button class="buttonUp">&#8212</button>
+            <div class="flip buttonUp">
+                <button class="buttonUpStyle">&#8212</button>
                 <p><span id="countryName"></span> <span id="flag"></span></p> 
             </div>
 
@@ -71,7 +71,7 @@
                 <br>
                 <p><span id="wikiSummary"></span></p>
                 <p class="wikipediaInfo"><span id="wikipediaInfo"></span></p>
-                <p><a target="_blank" class="wikipedia" id="wikipedia"><span id="wikiLink"></span></a></p> 
+                <p><a target="_blank" class="wikipedia" id="wikipedia" style="text-decoration: underline;"><span id="wikiLink"></span></a></p> 
                 <br>
                 <!-- <div class="thumnail" id="thumnail" alt="Picture of the location"></div> -->
             </div>
@@ -83,7 +83,7 @@
                     <div class="autocomplete"  style="width:300px;">
                         <input id="myInput" class="myInput" type="text" name="selCountry" placeholder="Country">
                     </div>
-                        <!-- <button id="submit" class="submit" >🔍</button> -->
+                <!-- <button id="submit" class="submit" >🔍</button> -->
             </form>
             </div>
 
