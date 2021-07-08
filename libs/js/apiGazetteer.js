@@ -5,6 +5,7 @@ window.onload = function () {
     if ($('#preloader').length) {
 
         $('#preloader').delay(1000).fadeOut('slow', function () { 
+
             $(this).remove();
 
                 // TOGGLE
@@ -22,7 +23,9 @@ window.onload = function () {
                             return res.json()
                         })
                         .then(data => {
+
                             console.log(data)
+
                             let countryName = data.country.components.country
                             let cityName = data.country.components.city
                             let countryFlag = data.country.annotations.flag
@@ -76,9 +79,9 @@ window.onload = function () {
                             // WEATHER ICONS
             
                             const today = new Date()
-                            const getHour = today.getHours()
+                            var getHour = today.getHours()
 
-                            console.log(getHour)
+                            // console.log(getHour)
             
                             if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
                                     if (getHour >= 6 && getHour <= 18) {
@@ -275,11 +278,12 @@ document.querySelector('.submit').addEventListener('click', function(event) {
 
                 // WEATHER ICONS
 
-                const today = new Date()
-                const getHour = today.getHours()
-
                 if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                    $("#changeIcon").html("&#127774")
+                    if (getHour >= 6 && getHour <= 18) {
+                        $("#changeIcon").html("&#127774")
+                    } else {
+                        $("#changeIcon").html("🌕")
+                    }
                 } else if (weatherDescription == "cloudy"){
                     $("#changeIcon").html("☁️")
                 } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
