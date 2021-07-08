@@ -199,6 +199,8 @@ window.onload = function () {
 document.querySelector('.submit').addEventListener('click', function(event) {
     // event.preventDefault();
 
+    $(".loading").css("display", "block");
+
     var selCountry = document.getElementById("myInput").value;
         // console.log(selCountry)
 
@@ -207,7 +209,11 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                 return res.json()
             })
             .then(data => {
+
+                $(".loading").css("display", "none");
+
                 console.log(data)
+
                 let countryName = data.country.components.country
                 let cityName = data.population[0].capital
                 let countryFlag = data.country.annotations.flag
@@ -257,6 +263,7 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                 var a = document.querySelector('.wikipedia');
                     a.href = `http://${wikiLink}`;
                 $('#wikiLink').html(`Wikipedia links`);
+                $('#wikiLinkIcon').html(`🌐 `);
 
                 // IMAGE FOR PIN LOCATION
                     
@@ -376,8 +383,10 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                         }).addTo(mymap)
                 // var featureGroup = L.featureGroup(markers).addTo(map);
                 // map.fitBounds(featureGroup.getBounds());
+
             })
             .catch(error => {
+                $(".loading").css("display", "none");
                 $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
                 $('#flag').html(`😔`);
                 console.log(error)

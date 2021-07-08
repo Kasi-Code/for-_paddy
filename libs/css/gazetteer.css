@@ -104,6 +104,12 @@ button {
     outline: none;
     cursor: pointer;
  }
+ .loading {
+  display: none;
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  font-size: 16px /* Set a font size */
+}
 .submit:hover {
   transform: scale(1.2);
  }
