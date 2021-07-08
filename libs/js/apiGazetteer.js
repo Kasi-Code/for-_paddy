@@ -65,11 +65,13 @@ window.onload = function () {
 
                             // WIKI
 
-                            $('#wikiSummary').html("📜 " + wikiSummary);
+                            $('#essayIcon').html("&#128220 ");
+                            $('#wikiSummary').html(wikiSummary);
             
                             var a = document.querySelector('.wikipedia');
                                 a.href = `http://${wikiLink}`;
                             $('#wikiLink').html(`Wikipedia links`);
+                            $('#wikiLinkIcon').html(`🌐 `);
             
                             // WEATHER ICONS
             
@@ -94,6 +96,10 @@ window.onload = function () {
                                     $("#changeIcon").html("❄️")
                                 } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
                                     $("#changeIcon").html("⛈")
+                                } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
+                                    $("#changeIcon").html("🌫")
+                                } else {
+                                    $("#changeIcon").html("🌍")
                             }
             
                             // CURRENCY COMPARING
@@ -245,7 +251,8 @@ document.querySelector('.submit').addEventListener('click', function(event) {
 
                 // WIKI LINK
 
-                $('#wikiSummary').html("📜 " + wikiSummary);
+                $('#essayIcon').html("&#128220 ");
+                $('#wikiSummary').html(wikiSummary);
 
                 var a = document.querySelector('.wikipedia');
                     a.href = `http://${wikiLink}`;
@@ -276,6 +283,10 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                     $("#changeIcon").html("❄️")
                 } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
                     $("#changeIcon").html("⛈")
+                } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
+                    $("#changeIcon").html("🌫")
+                } else {
+                    $("#changeIcon").html("🌍")
                 }
 
                 // CURRENCY COMPARING
