@@ -8,14 +8,14 @@ window.onload = function () {
 
     if ($('#preloader').length) {
 
-            $('#preloader').delay(1000).fadeOut('slow', function () { 
-                $(this).remove();
+        $('#preloader').delay(1000).fadeOut('slow', function () { 
+            $(this).remove();
 
                 // TOGGLE
 
                 $(".buttonUp").click(function(){
                     $(".panel").slideToggle("slow");
-                  });
+                });
 
                 navigator.geolocation.getCurrentPosition(position => {
                     long = position.coords.longitude
@@ -79,19 +79,25 @@ window.onload = function () {
             
                             const today = new Date()
                             const getHour = today.getHours()
+
+                            console.log(getHour)
             
                             if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                                $("#changeIcon").html("&#127774")
-                            } else if (weatherDescription == "cloudy"){
-                                $("#changeIcon").html("☁️")
-                            } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
-                                $("#changeIcon").html("&#127783")
-                            } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                                $("#changeIcon").html("&#127780")
-                            } else if (weatherDescription.includes("snow")){
-                                $("#changeIcon").html("❄️")
-                            } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-                                $("#changeIcon").html("⛈")
+                                    if (getHour >= 6 && getHour <= 18) {
+                                        $("#changeIcon").html("&#127774")
+                                    } else {
+                                        $("#changeIcon").html("🌕")
+                                    }
+                                } else if (weatherDescription == "cloudy"){
+                                    $("#changeIcon").html("☁️")
+                                } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                                    $("#changeIcon").html("&#127783")
+                                } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
+                                    $("#changeIcon").html("&#127780")
+                                } else if (weatherDescription.includes("snow")){
+                                    $("#changeIcon").html("❄️")
+                                } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
+                                    $("#changeIcon").html("⛈")
                             }
             
                             // CURRENCY
@@ -181,7 +187,7 @@ window.onload = function () {
 
                         })
                         .catch(error => {console.log(error)})
-              });
+                });
             }); 
         }
 }
