@@ -1,8 +1,4 @@
-// $(window).on('load', function () { if ($('#preloader').length) {
-//     $('#preloader').delay(100).fadeOut('slow', function () { $(this).remove();
-//     }); }
-// });
-
+// AUTO LOAD USING X LOACTION
 
 window.onload = function () {
 
@@ -100,7 +96,7 @@ window.onload = function () {
                                     $("#changeIcon").html("⛈")
                             }
             
-                            // CURRENCY
+                            // CURRENCY COMPARING
             
                             const listOfCurrency = Object.entries(getCurrencies)
                             for (const [cName, cValue] of listOfCurrency) {
@@ -192,8 +188,9 @@ window.onload = function () {
         }
 }
 
+// WHEN X SELECTS COUNTRY FROM SEARCH
 
-document.querySelector('.autocomplete').addEventListener('click', function(event) {
+document.querySelector('.submit').addEventListener('click', function(event) {
     // event.preventDefault();
 
     var selCountry = document.getElementById("myInput").value;
@@ -246,7 +243,7 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                 $('#currencyName').html(currencyName);
                 $('#currencySymbal').html(currencySymbol);
 
-                // WIKI
+                // WIKI LINK
 
                 $('#wikiSummary').html("📜 " + wikiSummary);
 
@@ -254,7 +251,7 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                     a.href = `http://${wikiLink}`;
                 $('#wikiLink').html(`Wikipedia links`);
 
-                // IMAGE
+                // IMAGE FOR PIN LOCATION
                     
                 var img = document.createElement("img");
 
@@ -281,7 +278,7 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                     $("#changeIcon").html("⛈")
                 }
 
-                // CURRENCY
+                // CURRENCY COMPARING
 
                 const listOfCurrency = Object.entries(getCurrencies)
                 for (const [cName, cValue] of listOfCurrency) {
@@ -369,7 +366,11 @@ document.querySelector('.autocomplete').addEventListener('click', function(event
                 // var featureGroup = L.featureGroup(markers).addTo(map);
                 // map.fitBounds(featureGroup.getBounds());
             })
-            .catch(error => {console.log(error)})
+            .catch(error => {
+                $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
+                $('#flag').html(`😔`);
+                console.log(error)
+            })
   });
                 var mymap = L.map('mapid').setView([0, 0], 13);
 

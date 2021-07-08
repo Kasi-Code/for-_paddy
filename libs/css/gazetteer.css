@@ -104,8 +104,8 @@ button {
     outline: none;
     cursor: pointer;
  }
- #submitBtn {
-    cursor: pointer;
+.submit:hover {
+  transform: scale(1.2);
  }
  .autocomplete {
     /*the container must be positioned relative:*/
@@ -164,6 +164,9 @@ button {
   }
   .flip {
     margin-top: -20px;
+  }
+  .flip button:hover {
+    transform: scale(1.2);
   }
   .buttonUpStyle {
     margin-bottom: 10px;
