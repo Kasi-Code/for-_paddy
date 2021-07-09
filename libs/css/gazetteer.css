@@ -14,183 +14,202 @@ body {
   position: fixed;
   z-index: 2;
 }
+.frame {
+  width: 180px; 
+  height: 180px; 
+}
 .main {
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  align-items: center;
 }
 .dataInfo {
-    border: 1px solid black;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
-    bottom: 40px;
-    text-align: center;
-    width: 450px;
-    /* overflow: hidden; */
-    position: fixed;
-    z-index: 4;
+  border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
+  bottom: 40px;
+  text-align: center;
+  width: 450px;
+  /* overflow: hidden; */
+  position: fixed;
+  z-index: 4;
 }
 .weather {
-    background-color: rgba(255, 255, 255, 0.8);
-    color: black;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
-    align-items: center;
-    z-index: 3;
-    /* padding: 5%; */
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  align-items: center;
+  z-index: 3;
+  /* padding: 5%; */
 }
 .clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
-    display: none;
+  display: none;
 }
 .map {
   position: relative;
   z-index: 0;
 }
 .mapid { 
-    /* z-index: 0; */
-    height: 100vh; 
-    /* margin-bottom: 300px; */
+  /* z-index: 0; */
+  height: 100vh; 
+  /* margin-bottom: 300px; */
 }
 .topPageSection {
-    /* position: sticky; */
-    overflow: hidden;
-    position: fixed;
-    top: 0; 
-    z-index: 4;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    border: 1px solid black;
-    width: 500px;
+  /* position: sticky; */
+  overflow: hidden;
+  position: fixed;
+  top: 0; 
+  z-index: 4;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid black;
+  width: 500px;
 }
 .searchResults {
-    background-color: rgba(255, 255, 255);
-    overflow: hidden;
-    position: fixed;
-    margin-top: 480px;
-    text-align: center;
-    z-index: 5;
-    border-radius: 20px;
-    /* border: 1px solid black; */
-    width: 300px;
-    max-height: 315px;
+  background-color: rgba(255, 255, 255);
+  overflow: hidden;
+  position: fixed;
+  margin-top: 480px;
+  text-align: center;
+  z-index: 5;
+  border-radius: 20px;
+  /* border: 1px solid black; */
+  width: 300px;
+  max-height: 315px;
 }
 .bottomPageSection {
-    background: black;
-    /* position: sticky; */
-    overflow: hidden;
-    position: fixed;
-    bottom: 0; 
-    height: 40px;
-    width: 100%;
-    z-index: 4;
+  background: black;
+  /* position: sticky; */
+  overflow: hidden;
+  position: fixed;
+  bottom: 0; 
+  height: 40px;
+  width: 100%;
+  z-index: 4;
 }
 .navBar {
-    color: white;
-    display: flex;
-    justify-content: space-evenly;
-    z-index: 5;
-    margin-top: 10px;
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  z-index: 5;
+  margin-top: 10px;
+}
+.navBtn {
+  font-weight: bold;
 }
 .searchList {
-    margin-top: 20px;
+  margin-top: 20px;
+}
+.wikiLink {
+  text-decoration: underline;
 }
 button {
-    border: none;
-    background-color: transparent;
-    outline: none;
-    cursor: pointer;
- }
- .loading {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+.loading {
+  height: 20px;
   display: none;
   border: none; /* Remove borders */
-  color: white; /* White text */
   font-size: 16px /* Set a font size */
+}
+#loadingSmall {
+  margin-right: 10px;
+}
+.showLoading {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 .submit:hover {
   transform: scale(1.2);
  }
- .autocomplete {
-    /*the container must be positioned relative:*/
-    position: relative;
-    display: inline-block;
-  }
-  input {
-    border: 1px solid transparent;
-    background-color: #f1f1f1;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-  }
-  input[type=text] {
-    background-color: #f1f1f1;
-    width: 100%;
-  }
-  /* input[type=submit] {
-    background-color: DodgerBlue;
-    color: #fff;
-  } */
-  .autocomplete-items {
-    position: absolute;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    /*position the autocomplete items to be the same width as the container:*/
-    bottom: 100%;
-    left: 0;
-    right: 0;
-  }
-  .autocomplete-items div {
-    padding: 10px;
-    cursor: pointer;
-    background-color: black;
-    border-bottom: 1px solid #d4d4d4;
-    color: white;
-    position: relative;
-    z-index: 7;
-    /* overflow: visible; */
-  }
-  .autocomplete-items div:hover {
-    /*when hovering an item:*/
-    background-color: #e9e9e9;
-    color: black;
-  }
-  .autocomplete-active {
-    /*when navigating through the items using the arrow keys:*/
-    background-color: DodgerBlue !important;
-    color: #ffffff;
-  }
-  .panel {
-    padding: 10px;
-    display: none;
-  }
-  .flip {
-    margin-top: -20px;
-  }
-  .flip button:hover {
-    transform: scale(1.2);
-  }
-  .buttonUpStyle {
-    margin-bottom: 10px;
-    font-size: 20px;
-    /* color: red; */
-  }
-  .flag, .essayIcon, .buttonUpStyle, .submit, .wikiLinkIcon {
-    text-shadow: 1px 2px 2px black;
-  }
-  .search-container {
-    top: 0%;
-  }
-  a:link, a:visited {
-    text-decoration: none; color: inherit;
-  }
-  a:hover, .wikipedia:hover {
-    transform: scale(1.2);
-  }
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+  width: 300px;
+}
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+/* input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+} */
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  bottom: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: black;
+  border-bottom: 1px solid #d4d4d4;
+  color: white;
+  position: relative;
+  z-index: 7;
+  /* overflow: visible; */
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+  color: black;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+.panel {
+  padding: 10px;
+  display: none;
+}
+.flip {
+  margin-top: -20px;
+}
+.flip button:hover {
+  transform: scale(1.2);
+}
+.buttonUpStyle {
+  margin-bottom: 10px;
+  font-size: 20px;
+  /* color: red; */
+}
+.flag, .essayIcon, .buttonUpStyle, .submit, .wikiLinkIcon {
+  text-shadow: 1px 2px 2px black;
+}
+.search-container {
+  top: 0%;
+}
+a:link, a:visited {
+  text-decoration: none; color: inherit;
+}
+a:hover, .wikipedia:hover {
+  transform: scale(1.2);
+}
 
 /* SCREEN SIZING */
 

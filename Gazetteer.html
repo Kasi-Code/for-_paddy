@@ -13,102 +13,100 @@
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
 
-    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/libs/css/gazetteer.css">
 </head>
 <body>
         
-    <div class="main">
+<div class="main">
 
-        <div class="topPageSection">
-            <div class="weather">
- 
-                <div class="icons">
-                    <h1 id="weatherIcons">
-                        <div class="weatherIcons">
-                            <span class="changeIcon" id="changeIcon"></span>
-                        </div>
-                    </h1>
-                </div>
-                <div class="temp">
-                    <p><span id="temperature"></p>
-                </div>
-                <div class="weatherCondition">
-                    <p><span id="weatherCondition"></p>   
-                </div> 
-
-            </div>
-        </div>
-
-        <div class="giphyEmbed" id="preloader">
-            <br><br><br><br>
-            <img id="frame" src="/libs/media/loading.gif" width="180" height="180" frameBorder="0">
-            <br><br><br><br>
-            <p>Loading Info...</p>
-        </div>
-
-        <div class="dataInfo">
-
-            <!-- <h3>You are here 📍</h3>  -->
-            <div class="flip buttonUp">
-                <button class="buttonUpStyle">&#8212</button>
-                <p><span id="countryName"></span> <span id="flag" class="flag"></span></p> 
-            </div>
-
-            <div class="panel">
-                <p><span id="cityName"></span></p>
-                <p><span id="population"></span></p> 
-                <p>
-                    <span id="isoCode"></span>
-                    <span id="currencyName"></span>
-                </p>
-                <p><span id="exchangeRate"></span> <br>
-                    <span id="currencySymbal"></span><span id="localCurrency"></span>
-                </p>
-                <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
-                <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
-                <br>
-                <p><span class="essayIcon" id="essayIcon"></span><span id="wikiSummary"></span></p>
-                <p class="wikipediaInfo"><span id="wikipediaInfo"></span></p>
-                <p><a target="_blank" class="wikipedia" id="wikipedia"><span id="wikiLinkIcon" class="wikiLinkIcon"></span><span id="wikiLink" style="text-decoration: underline;"></span></a></p> 
-                <br>
-                <!-- <div class="thumnail" id="thumnail" alt="Picture of the location"></div> -->
-            </div>
-            
-                <br>
-
-            <div class="search-container">
-                <form autocomplete="off" onsubmit="event.preventDefault();">
-                    <div class="autocomplete"  style="width:300px;">
-                        <input id="myInput" class="myInput" type="text" name="selCountry" placeholder="Country">
+    <div class="topPageSection">
+        <div class="weather">
+            <div class="icons">
+                <h1 id="weatherIcons">
+                    <div class="weatherIcons">
+                        <span class="changeIcon" id="changeIcon"></span>
                     </div>
-                <button id="submit" class="submit" ><h3>🔍</h3></button>
-            </form>
+                </h1>
             </div>
-
-        </div> 
-
-    </div> 
-
-    <div class="bottomPageSection">
-        <div class="navBar">
-            <a href="/Gazetteer.html" class="w3-bar-item w3-button w3-mobile w3-hover-white"  style="font-weight: bold;">Current Location &#10148</a>
-            <span class="loading"><i class="fa fa-spinner fa-spin"></i>Loading</span>
-            <a href="/index.html" class="w3-bar-item w3-button w3-mobile w3-hover-white" style="font-weight: bold;">Main Menu</a>
-            <!-- <button id="getLocationBtn" class="w3-bar-item w3-button w3-mobile w3-hover-white getLocationBtn">Get Location &#10148</button> -->
+            <div class="temp">
+                <p><span id="temperature"></p>
+            </div>
+            <div class="weatherCondition">
+                <p><span id="weatherCondition"></p>   
+            </div>
         </div>
     </div>
 
-        <div class="map">
-            <div class="mapid" id="mapid"></div>
-        </div>
+    <div class="giphyEmbed" id="preloader">
+        <br><br><br><br>
+        <img class="frame" id="frame" src="/libs/media/loading.gif" frameBorder="0">
+        <br><br><br><br>
+        <p>Loading Info...</p>
+    </div>
 
+    <div class="dataInfo">
+        <div class="flip buttonUp">
+            <button class="buttonUpStyle">&#8212</button>
+            <div class="showCountryName">
+                <p class="showCountryName"><span id="countryName"></span> <span id="flag" class="flag"></span></p>
+            </div>
+            <div class="showLoading">   
+                <img class="loading" id="loadingSmall" src="/libs/media/loading.gif">              
+                <span class="loading" id="loading"></span>
+            </div>
+        </div>
+        <div class="panel">
+            <p><span id="cityName"></span></p>
+            <p><span id="population"></span></p> 
+            <p>
+                <span id="isoCode"></span>
+                <span id="currencyName"></span>
+            </p>
+            <p><span id="exchangeRate"></span> <br>
+                <span id="currencySymbal"></span><span id="localCurrency"></span>
+            </p>
+            <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
+            <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
+            <br>
+            <p><span class="essayIcon" id="essayIcon"></span><span id="wikiSummary"></span></p>
+            <p class="wikipediaInfo"><span id="wikipediaInfo"></span></p>
+            <p>
+                <a target="_blank" class="wikipedia" id="wikipedia"></a>
+                    <span id="wikiLinkIcon" class="wikiLinkIcon"></span>
+                    <span class="wikiLink" id="wikiLink"></span>
+            </p> 
+        </div>
+        
+            <br>
+
+        <div class="search-container">
+            <form autocomplete="off">
+                <div class="autocomplete">
+                    <input id="myInput" class="myInput" type="text" name="selCountry" placeholder="Country">
+                </div>
+                <button id="submit" class="submit" ><h3>🔍</h3></button>
+            </form>
+        </div>
+    </div> 
+
+</div> 
+
+<div class="bottomPageSection">
+    <div class="navBar">
+        <a href="/Gazetteer.html" class="navBtn">Current Location &#10148</a>
+        <a href="/index.html" class="navBtn">Main Menu</a>
+    </div>
+</div>
+
+<div class="map">
+    <div class="mapid" id="mapid"></div>
+</div>
+     
+    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
     <script type="application/javascript" src="libs/js/apiGazetteer.js"></script>  
     <script type="application/javascript" src="libs/js/search.js"></script>  
-    <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
-    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </body>
 </html>
