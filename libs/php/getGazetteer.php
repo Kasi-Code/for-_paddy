@@ -89,7 +89,7 @@
 
 	// COUNTRY BORDER - READ JSON FILE
 
-	$json = file_get_contents('countryBorders.geo.json');
+	$json = file_get_contents("countryBorders.geo.json");
 
 	//Decode JSON
 	$json_data = json_decode($json,true);

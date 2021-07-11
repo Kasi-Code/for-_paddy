@@ -50,15 +50,12 @@ body {
 .clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
   display: none;
 }
-.map {
-  position: relative;
-  z-index: 0;
-}
 .mapid { 
-  /* z-index: 0; */
+  z-index: 0;
   height: 100vh; 
-  /* margin-bottom: 300px; */
-}
+  /* width: 100vh; */
+  /* position: absolute; */
+ }
 .topPageSection {
   /* position: sticky; */
   overflow: hidden;
