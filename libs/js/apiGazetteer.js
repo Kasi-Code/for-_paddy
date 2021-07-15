@@ -51,6 +51,8 @@ window.onload = function () {
                             let countryName = data.country.components.country
                             let cityName = data.country.components.city
                             let countryFlag = data.country.annotations.flag
+
+                            let showTime = data.countryTime.slice(11, 16)
             
                             let weatherDescription = data.weather.weather[0].description
                             let weatherTemp = data.weather.main.temp
@@ -78,6 +80,7 @@ window.onload = function () {
                             $('#countryName').html("Country: " + countryName);
                             $('#cityName').html("City: " + cityName);
                             $('#flag').html(countryFlag);
+                            $('#time').html(`(${showTime})`);
             
                             $('#weatherCondition').html(weatherDescription.toUpperCase());
                             $('#temperature').html(celsius + "˚C");
@@ -102,8 +105,10 @@ window.onload = function () {
             
                             const today = new Date()
                             const getHour = today.getHours()
-
                             // console.log(getHour)
+
+                            // const getTime = data.countryTime.slice(11, 13)
+                            // console.log(getTime)
             
                             if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
                                     if (getHour >= 6 && getHour <= 18) {
@@ -342,7 +347,8 @@ fetch("/libs/php/getGazetteerBySearch.php")
                 a.appendChild(b);
               }
             }
-              // WHEN X SELECTS COUNTRY FROM SEARCH
+              
+// WHEN X SELECTS COUNTRY FROM SEARCH
 
 a.addEventListener('click', function(event) {
     
@@ -369,6 +375,8 @@ a.addEventListener('click', function(event) {
                 let countryName = data.country.components.country
                 let cityName = data.population[0].capital
                 let countryFlag = data.country.annotations.flag
+
+                let showTime = data.countryTime.slice(11, 16)
 
                 let weatherDescription = data.weather.weather[0].description
                 let weatherTemp = data.weather.main.temp
@@ -397,6 +405,7 @@ a.addEventListener('click', function(event) {
                 $('#countryName').html("Country: " + countryName);
                 $('#cityName').html("Capital City: " + cityName);
                 $('#flag').html(countryFlag);
+                $('#time').html(`(${showTime})`);
 
                 $('#weatherCondition').html(weatherDescription.toUpperCase());
                 $('#temperature').html(celsius + "˚C");
@@ -427,11 +436,12 @@ a.addEventListener('click', function(event) {
 
                 // WEATHER ICONS
 
-                const today = new Date()
-                const getHour = today.getHours()
+                const getTime = data.countryTime.slice(11, 13)
+
+                // console.log(getTime)
 
                 if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                    if (getHour >= 6 && getHour <= 18) {
+                    if (getTime >= 6 && getTime <= 18) {
                         $("#changeIcon").html("&#127774")
                     } else {
                         $("#changeIcon").html("🌕")
@@ -623,7 +633,7 @@ a.addEventListener('click', function(event) {
                 
                 L.polygon(bounds, {color: "#ff7800", weight: 1}).addTo(mymap)
                 
-                mymap.fitBounds(bounds);
+                // mymap.fitBounds(bounds);
 
             })
             .catch(error => {

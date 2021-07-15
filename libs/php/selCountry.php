@@ -94,6 +94,21 @@
 	$decode = json_decode($result,true);
 	$output["currency"] = $decode;	
 
+	// Time
+	$url = "http://api.geonames.org/timezoneJSON?formatted=true&lat=".$latPOI."&lng=".$lngPOI."&username=coder_k&style=full";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["countryTime"] = $decode["time"];	
+
 	// Near by Places
 	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$latPOI."&lng=".$lngPOI."&username=coder_k&style=full";
 

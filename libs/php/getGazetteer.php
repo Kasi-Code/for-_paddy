@@ -115,6 +115,21 @@
 	$decode = json_decode($result,true);
 	$output["poi_nearByPlaces"] = $decode["geonames"];	
 
+	// Time
+	$url = "http://api.geonames.org/timezoneJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["countryTime"] = $decode["time"];	
+
 	// $url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
 
 	// $ch = curl_init();
