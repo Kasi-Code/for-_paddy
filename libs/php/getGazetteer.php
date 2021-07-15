@@ -24,6 +24,8 @@
 
 	$city = $decode["results"][0]["components"]["city"];
 	$country = $decode["results"][0]["components"]["country"];
+	$lat1 = $decode["results"][0]["geometry"]["lat"];
+	$lng1 = $decode["results"][0]["geometry"]["lng"];
 
 	// Use City to get Weather
 	$url = "https://api.openweathermap.org/data/2.5/weather?q=".$country."&appid=cb79b904798a1f67e15e9d71fb81bc11";
@@ -40,24 +42,24 @@
 	$decode = json_decode($result,true);
 	$output["weather"] = $decode;	
 
-	// Get Population
-	$url = "https://restcountries.eu/rest/v2/capital/".$city;
+	// // Get Population
+	// $url = "https://restcountries.eu/rest/v2/capital/".$city;
 
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_URL,$url);
+	// $ch = curl_init();
+	// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	// curl_setopt($ch, CURLOPT_URL,$url);
 
-	$result=curl_exec($ch);
+	// $result=curl_exec($ch);
 
-	curl_close($ch);
+	// curl_close($ch);
 
-	$decode = json_decode($result,true);
-	$lat = $decode[0]["latlng"][0];	
-    $lng = $decode[0]["latlng"][1];	
-	$output["population"] = $decode;	
+	// $decode = json_decode($result,true);
+	// $lat = $decode[0]["latlng"][0];	
+    // $lng = $decode[0]["latlng"][1];	
+	// $output["population"] = $decode;	
 
-	// Get Wikipedia
+	// // Get Wikipedia
 	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$city."&maxRows=10&username=coder_k&style=full";
 
 	$ch = curl_init();
@@ -72,7 +74,7 @@
 	$decode = json_decode($result,true);
 	$output["wikipedia"] = $decode["geonames"][0];	
 
-	// Get Currency
+	// // Get Currency
 	$url = "https://openexchangerates.org/api/latest.json?app_id=4b8acff9591e4f8d8864ef8ca25aea3b";
 
 	$ch = curl_init();
@@ -98,8 +100,8 @@
 	$output["countryBorders"] = $json_data["features"];	
 	// print_r($json_data);
 
-	// Near by Places
-	$url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$_REQUEST['lat']."&lng=".$_REQUEST['long']."&username=coder_k&style=full";
+	// // Near by Places
+	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -111,7 +113,21 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["poi_nearByPlaces"] = $decode["poi"];	
+	$output["poi_nearByPlaces"] = $decode["geonames"];	
+
+	// $url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
+
+	// $ch = curl_init();
+	// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	// curl_setopt($ch, CURLOPT_URL,$url);
+
+	// $result=curl_exec($ch);
+
+	// curl_close($ch);
+
+	// $decode = json_decode($result,true);
+	// $output["poi"] = $decode["poi"];	
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";

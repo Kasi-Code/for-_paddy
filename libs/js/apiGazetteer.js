@@ -55,7 +55,7 @@ window.onload = function () {
                             let weatherDescription = data.weather.weather[0].description
                             let weatherTemp = data.weather.main.temp
             
-                            let cityPopulation = data.population[0].population
+                            // let cityPopulation = data.population[0].population
             
                             let iso = data.country.annotations.currency.iso_code
                             let currencyName = data.country.annotations.currency.name
@@ -76,13 +76,13 @@ window.onload = function () {
                             celsius = Math.floor(celsius)
             
                             $('#countryName').html("Country: " + countryName);
-                            $('#cityName').html("Capital City: " + cityName);
+                            $('#cityName').html("City: " + cityName);
                             $('#flag').html(countryFlag);
             
                             $('#weatherCondition').html(weatherDescription.toUpperCase());
                             $('#temperature').html(celsius + "˚C");
             
-                            $('#population').html("Population: " + cityPopulation);
+                            // $('#population').html("Population: " + cityPopulation);
             
                             $('#isoCode').html("Currency; " + iso + ", ");
                             $('#currencyName').html(currencyName);
@@ -183,22 +183,33 @@ window.onload = function () {
                             // THE MAP
 
                             const poi = data.poi_nearByPlaces
+                            // const poi2 = data.poi
 
                             for (let i = 0; i < poi.length; i++) {
                                 var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
 
-                                var nearByName = poi[i].name
-                                var nearByTypeClass = poi[i].typeClass
-                                var nearByTypeName = poi[i].typeName
+                                var nearByName = poi[i].title
+                                var summary = poi[i].summary
                                 
-                                markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${nearByTypeClass}</p><p>${nearByTypeName}</p>`).openPopup()
+                                markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${summary}</p>`).openPopup()
 
                             }
+
+                            // for (let i = 0; i < poi2.length; i++) {
+                            //     var markerPlaces = L.marker([poi2[i].lat, poi2[i].lng]).addTo(mymap)
+            
+                            //     var nearByName = poi2[i].name
+                            //     var nearByTypeClass = poi2[i].typeClass
+                            //     var nearByTypeName = poi2[i].typeName
+                                
+                            //     markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${nearByTypeClass}</p><p>${nearByTypeName}</p>`).openPopup()
+            
+                            // }
             
                             var lat = data.country.geometry.lat
                             var lng = data.country.geometry.lng
             
-                            mymap.setView([lat, lng], 16.5);
+                            mymap.setView([lat, lng], 14);
             
                             var marker = L.marker([lat, lng]).addTo(mymap)
                                 marker.bindPopup("<h5>Hey! 🐾</h5>You are here 📍").openPopup()
@@ -209,8 +220,59 @@ window.onload = function () {
                                 fillOpacity: 0.5,
                                 radius: 10
                             }).addTo(mymap)
-                            // var featureGroup = L.featureGroup(markers).addTo(map);
-                            // map.fitBounds(featureGroup.getBounds());
+
+                            // var featureGroup = L.featureGroup(marker).addTo(mymap);
+                            // mymap.fitBounds(featureGroup.getBounds());
+
+                            // HIGHLIGHT COUNTRY BORDER
+
+
+                            // const getCountryArr = data.countryBorders
+                            
+                            // var bounds = [];
+
+                            // for (var i = 0; i < getCountryArr.length; i++) {
+
+                            //     var polygonType = getCountryArr[i].geometry.type
+                            //     var multiCoordinates = getCountryArr[i].geometry.coordinates
+
+                            //     if (polygonType == "MultiPolygon") {
+                                    
+                            //         for (var mc = 0; mc < multiCoordinates.length; i++) {
+
+                            //             var multiCoordinates1 = multiCoordinates[mc]
+
+                            //             for (var mc1 = 0; mc1 < multiCoordinates1.length; i++) {
+
+                            //                 var multiCoordinates2 = multiCoordinates[mc1]
+
+                            //                 for (var mc2 = 0; mc2 < multiCoordinates2.length; i++) {
+
+                            //                     console.log(multiCoordinates2[mc2])
+
+                            //                 }
+
+                            //             }
+
+                            //         }
+
+                            //     } else if (polygonType == "Polygon") {
+                            //         for (var p = 0; p < getCountryArr.length; i++) {
+
+                            //         }
+                            //         var polygonArr = getCountryArr[i].geometry.coordinates
+                            //     }
+
+
+                                
+
+                            // }
+
+                            // create an orange rectangle
+                            // L.polygon(bounds, {color: "#ff7800", weight: 1}).addTo(mymap);
+
+                            // // zoom the map to the rectangle bounds
+                            // mymap.fitBounds(bounds);
 
                         })
                         .catch(error => {console.log(error)})
@@ -219,9 +281,70 @@ window.onload = function () {
         }
 }
 
-// WHEN X SELECTS COUNTRY FROM SEARCH
+// SEARCH INPUT
 
-document.querySelector('.submit').addEventListener('click', function(event) {
+fetch("/libs/php/getGazetteerBySearch.php")
+  .then(response => response.json())
+  .then(data => {
+
+    
+
+    //   console.log(data)
+
+    const countryObject = data.countryBorders
+    let countries = []
+
+    for ( var i = 0; i < countryObject.length; i++ ) {
+      
+      let country = countryObject[i].properties.name
+      countries.push(country)
+      
+      autocomplete(document.getElementById("myInput"), countries);
+
+      function autocomplete(inp, arr) {
+        
+        var currentFocus;
+        
+        inp.addEventListener("input", function(e) {
+            var a, b, i, val = this.value;
+           
+            closeAllLists();
+            if (!val) { return false;}
+            currentFocus = -1;
+            
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            a.style.overflow = "auto";
+            a.style.maxHeight = "80vh"; 
+            a.style.borderTopLeftRadius = "20px";
+            a.style.borderTopRightRadius = "20px";
+            
+            this.parentNode.appendChild(a);
+            
+            for (i = 0; i < arr.length; i++) {
+              
+              if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                
+                b = document.createElement("DIV");
+                
+                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                b.innerHTML += arr[i].substr(val.length);
+               
+                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                
+                    b.addEventListener("click", function(e) {
+                    
+                    inp.value = this.getElementsByTagName("input")[0].value;
+                    
+                    closeAllLists();
+                });
+                a.appendChild(b);
+              }
+            }
+              // WHEN X SELECTS COUNTRY FROM SEARCH
+
+a.addEventListener('click', function(event) {
     
     event.preventDefault();
 
@@ -385,17 +508,30 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                 // THE MAP
                 
                 const poi = data.poi_nearByPlaces
+                // const poi2 = data.poi
+
+                // console.log(poi2)
 
                 for (let i = 0; i < poi.length; i++) {
                     var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
 
-                    var nearByName = poi[i].name
-                    var nearByTypeClass = poi[i].typeClass
-                    var nearByTypeName = poi[i].typeName
+                    var nearByName = poi[i].title
+                    var summary = poi[i].summary
                     
-                    markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${nearByTypeClass}</p><p>${nearByTypeName}</p>`).openPopup()
+                    markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${summary}</p>`).openPopup()
 
                 }
+
+                // for (let i = 0; i < poi2.length; i++) {
+                //     var markerPlaces = L.marker([poi2[i].lat, poi2[i].lng]).addTo(mymap)
+
+                //     var nearByName = poi2[i].name
+                //     var nearByTypeClass = poi2[i].typeClass
+                //     var nearByTypeName = poi2[i].typeName
+                    
+                //     markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${nearByTypeClass}</p><p>${nearByTypeName}</p>`).openPopup()
+
+                // }
 
                 var lat = data.wikipedia.lat
                 var lng = data.wikipedia.lng
@@ -417,6 +553,78 @@ document.querySelector('.submit').addEventListener('click', function(event) {
                 // var featureGroup = L.featureGroup(markers).addTo(map);
                 // map.fitBounds(featureGroup.getBounds());
 
+                // HIGHLIGHT COUNTRY BORDER
+
+                let getCountryArr = data.countryBorders
+                
+                var bounds = []
+
+                for (let i = 0; i < getCountryArr.length; i++) {
+
+                    var polygonType = getCountryArr[i].geometry.type
+                    let countryNameArr = getCountryArr[i].properties.name
+                    var multiCoordinates = getCountryArr[i].geometry.coordinates
+
+                    if (polygonType == "MultiPolygon" && countryNameArr == countryName) {
+
+                        // console.log(countryNameArr + " is MultiPolygon")
+
+                        // console.log(multiCoordinates)
+                        
+                        for (let mc = 0; mc < multiCoordinates.length; mc++) {
+
+                            var multiCoordinates1 = multiCoordinates[mc]
+
+                            for (let mc1 = 0; mc1 < multiCoordinates1.length; mc1++) {
+
+                                var multiCoordinates2 = multiCoordinates[mc1]
+                                // bounds.push(multiCoordinates2)
+                                // console.log(multiCoordinates2)
+
+                                for (let mc2 = 0; mc2 < multiCoordinates2.length; mc2++) {
+
+                                    var multiCoordinates3 = multiCoordinates[mc2]
+
+                                    // bounds.push(multiCoordinates3)
+                                    // console.log(multiCoordinates3)
+
+                                    for (let mc3 = 0; mc3 < multiCoordinates3.length; mc3++) {
+
+                                        var multiCoordinates4 = multiCoordinates[mc3]
+        
+                                        // bounds.push(multiCoordinates4)
+                                        // console.log(multiCoordinates4)
+                                    }
+                                }
+                            }
+                        }
+                    
+                    } else if (polygonType == "Polygon" && countryNameArr == countryName) {
+
+                        // console.log(countryNameArr + " is Polygon")
+
+                        // console.log(multiCoordinates)
+
+                        for (let c = 0; c < multiCoordinates.length; c++) {
+
+                            var multiCoordinates1 = multiCoordinates[c]
+
+                            for (let c1 = 0; c1 < multiCoordinates1.length; c1++) {
+
+                                let polygonArr = multiCoordinates1[c1]
+                                // bounds.push(polygonArr)
+                                // console.log(polygonArr)
+
+                            }
+                        }
+                    }
+                }
+                
+                
+                L.polygon(bounds, {color: "#ff7800", weight: 1}).addTo(mymap)
+                
+                mymap.fitBounds(bounds);
+
             })
             .catch(error => {
                 $(".loading").css("display", "none");
@@ -427,61 +635,6 @@ document.querySelector('.submit').addEventListener('click', function(event) {
             })
   });
 
-// SEARCH INPUT
-
-fetch("/libs/php/getGazetteerBySearch.php")
-  .then(response => response.json())
-  .then(data => {
-
-    //   console.log(data)
-
-    const countryObject = data.countryBorders
-    let countries = []
-
-    for ( var i = 0; i < countryObject.length; i++ ) {
-      
-      let country = countryObject[i].properties.name
-      countries.push(country)
-      
-      autocomplete(document.getElementById("myInput"), countries);
-
-      function autocomplete(inp, arr) {
-        
-        var currentFocus;
-        
-        inp.addEventListener("input", function(e) {
-            var a, b, i, val = this.value;
-           
-            closeAllLists();
-            if (!val) { return false;}
-            currentFocus = -1;
-            
-            a = document.createElement("DIV");
-            a.setAttribute("id", this.id + "autocomplete-list");
-            a.setAttribute("class", "autocomplete-items");
-            
-            this.parentNode.appendChild(a);
-            
-            for (i = 0; i < arr.length; i++) {
-              
-              if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                
-                b = document.createElement("DIV");
-                
-                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(val.length);
-               
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                
-                    b.addEventListener("click", function(e) {
-                    
-                    inp.value = this.getElementsByTagName("input")[0].value;
-                    
-                    closeAllLists();
-                });
-                a.appendChild(b);
-              }
-            }
         });
         
         inp.addEventListener("keydown", function(e) {

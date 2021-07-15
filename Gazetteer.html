@@ -10,8 +10,10 @@
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+    <!-- <link rel="stylesheet" href="/Leaflet-master/dist/leaflet.css" /> -->
 
     <link rel="stylesheet" href="/libs/css/gazetteer.css">
 </head>
@@ -48,7 +50,7 @@
         <div class="flip buttonUp">
             <button class="buttonUpStyle">&#8212</button>
             <div class="showCountryName">
-                <p class="showCountryName"><span id="countryName"></span> <span id="flag" class="flag"></span></p>
+                <p class="showCountryName"><span id="countryName"></span><span id="flag" class="flag"></span></p>
             </div>
             <div class="showLoading">   
                 <img class="loading" id="loadingSmall" src="/libs/media/loading.gif">              
@@ -71,9 +73,10 @@
             <p><span class="essayIcon" id="essayIcon"></span><span id="wikiSummary"></span></p>
             <p class="wikipediaInfo"><span id="wikipediaInfo"></span></p>
             <p>
-                <a target="_blank" class="wikipedia" id="wikipedia"></a>
+                <a target="_blank" class="wikipedia" id="wikipedia">
                     <span id="wikiLinkIcon" class="wikiLinkIcon"></span>
                     <span class="wikiLink" id="wikiLink"></span>
+                </a>
             </p> 
         </div>
         
@@ -84,7 +87,7 @@
                 <div class="autocomplete">
                     <input id="myInput" class="myInput" type="text" name="selCountry" placeholder="Country">
                 </div>
-                <button id="submit" class="submit" ><h3>🔍</h3></button>
+                <!-- <button id="submit" class="submit" ><h3>🔍</h3></button> -->
             </form>
         </div>
     </div> 
@@ -98,11 +101,13 @@
     </div>
 </div>
 
-<div class="mapid" id="mapid"></div>
-
+<div class="map">
+    <div class="mapid" id="mapid"></div>
+</div>
 
     <!-- <script src="http://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
     <script src="/vendors/js/leafletProviders.js"></script> -->
+    <!-- <script src="/Leaflet-master/src/Leaflet.js"></script> -->
     <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
     <script type="application/javascript" src="libs/js/apiGazetteer.js"></script>  
 

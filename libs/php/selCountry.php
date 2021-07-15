@@ -5,6 +5,14 @@
 
     $executionStartTime = microtime(true); 
 
+	$json = file_get_contents("countryBorders.geo.json");
+
+	//Decode JSON
+	$json_data = json_decode($json,true);
+
+	//Print data
+	$output["countryBorders"] = $json_data["features"];	
+
 	// Use City to get Weather
 	$url = "https://api.openweathermap.org/data/2.5/weather?q=".$_REQUEST['selCountry']."&appid=cb79b904798a1f67e15e9d71fb81bc11";
 
@@ -87,6 +95,20 @@
 	$output["currency"] = $decode;	
 
 	// Near by Places
+	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$latPOI."&lng=".$lngPOI."&username=coder_k&style=full";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["poi_nearByPlaces"] = $decode["geonames"];	
+
 	$url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$latPOI."&lng=".$lngPOI."&username=coder_k&style=full";
 
 	$ch = curl_init();
@@ -99,7 +121,7 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["poi_nearByPlaces"] = $decode["poi"];	
+	$output["poi"] = $decode["poi"];	
 
     $output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
