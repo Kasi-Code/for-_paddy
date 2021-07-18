@@ -33,8 +33,39 @@ window.onload = function () {
                 // TOGGLE
 
                 $(".buttonUp").click(function(){
+
                     $(".panel").slideToggle("slow");
+
+                        if ($(".panel").is(":visible")) {
+                            $("#map").click(function(){
+                            $(".panel").hide("slow")
+                        })
+                    }
+
                 });
+
+                // OPTIONS
+
+                $(".covidButton").click(function(){
+
+                    $(".covid").slideToggle("slow");
+
+                        if ($(".covid").is(":visible")) {
+                            $("#map").click(function(){
+                            $(".covid").hide("slow")
+                            })
+                        }
+
+                });
+
+                // $(".covidButton").click(function(){
+                //     $(".covid").css("display", "block");
+                //     $(".weather").css("display", "none");
+                // })
+                // $(".weatherButton").click(function(){
+                //     $(".weather").css("display", "block");
+                //     $(".covid").css("display", "none");
+                // })
 
                 navigator.geolocation.getCurrentPosition(position => {
                     long = position.coords.longitude
@@ -100,6 +131,15 @@ window.onload = function () {
                                 a.href = `http://${wikiLink}`;
                             $('#wikiLink').html(`Wikipedia links`);
                             $('#wikiLinkIcon').html(`🌐 `);
+
+                            // COVID
+
+                            let covidData = data.covid[0]
+
+                            $('#active').html("<h5>Active: </h5>" + covidData.Active);
+                            $('#confirmed').html("<h5>Confirmed: </h5>" + covidData.Confirmed);
+                            $('#deaths').html("<h5>Deaths: <h5>" + covidData.Deaths);
+                            $('#recovered').html("<h5>Recovered: </h5>" + covidData.Recovered);
             
                             // WEATHER ICONS
             
@@ -228,11 +268,27 @@ window.onload = function () {
 
                             // var featureGroup = L.featureGroup(marker).addTo(mymap);
                             // mymap.fitBounds(featureGroup.getBounds());
+                            
 
                             // HIGHLIGHT COUNTRY BORDER
 
 
                             // const getCountryArr = data.countryBorders
+
+                            let geojsonFeature = data.countryBorders
+                            // console.log(geojsonFeature)
+
+                            for (i = 0; i < geojsonFeature.length; i++) {
+
+                                const name = geojsonFeature[i].properties.name
+
+                                if (countryName == name) {
+                                    geojsonFeature = geojsonFeature[i]
+                                }
+
+                            }
+
+                            L.geoJSON(geojsonFeature).addTo(mymap)
                             
                             // var bounds = [];
 
@@ -462,6 +518,15 @@ a.addEventListener('click', function(event) {
                     $("#changeIcon").html("🌍")
                 }
 
+                // COVID
+
+                let covidData = data.covid[0]
+
+                $('#active').html("Active: " + covidData.Active);
+                $('#confirmed').html("Confirmed: " + covidData.Confirmed);
+                $('#deaths').html("Deaths: " + covidData.Deaths);
+                $('#recovered').html("Recovered: " + covidData.Recovered);
+
                 // CURRENCY COMPARING
 
                 const listOfCurrency = Object.entries(getCurrencies)
@@ -565,73 +630,88 @@ a.addEventListener('click', function(event) {
 
                 // HIGHLIGHT COUNTRY BORDER
 
-                let getCountryArr = data.countryBorders
-                
-                var bounds = []
+                let geojsonFeature = data.countryBorders
+                // console.log(geojsonFeature)
 
-                for (let i = 0; i < getCountryArr.length; i++) {
+                    for (i = 0; i < geojsonFeature.length; i++) {
 
-                    var polygonType = getCountryArr[i].geometry.type
-                    let countryNameArr = getCountryArr[i].properties.name
-                    var multiCoordinates = getCountryArr[i].geometry.coordinates
+                        const name = geojsonFeature[i].properties.name
 
-                    if (polygonType == "MultiPolygon" && countryNameArr == countryName) {
-
-                        // console.log(countryNameArr + " is MultiPolygon")
-
-                        // console.log(multiCoordinates)
-                        
-                        for (let mc = 0; mc < multiCoordinates.length; mc++) {
-
-                            var multiCoordinates1 = multiCoordinates[mc]
-
-                            for (let mc1 = 0; mc1 < multiCoordinates1.length; mc1++) {
-
-                                var multiCoordinates2 = multiCoordinates[mc1]
-                                // bounds.push(multiCoordinates2)
-                                // console.log(multiCoordinates2)
-
-                                for (let mc2 = 0; mc2 < multiCoordinates2.length; mc2++) {
-
-                                    var multiCoordinates3 = multiCoordinates[mc2]
-
-                                    // bounds.push(multiCoordinates3)
-                                    // console.log(multiCoordinates3)
-
-                                    for (let mc3 = 0; mc3 < multiCoordinates3.length; mc3++) {
-
-                                        var multiCoordinates4 = multiCoordinates[mc3]
-        
-                                        // bounds.push(multiCoordinates4)
-                                        // console.log(multiCoordinates4)
-                                    }
-                                }
+                            if (countryName == name) {
+                                geojsonFeature = geojsonFeature[i]
                             }
-                        }
-                    
-                    } else if (polygonType == "Polygon" && countryNameArr == countryName) {
 
-                        // console.log(countryNameArr + " is Polygon")
-
-                        // console.log(multiCoordinates)
-
-                        for (let c = 0; c < multiCoordinates.length; c++) {
-
-                            var multiCoordinates1 = multiCoordinates[c]
-
-                            for (let c1 = 0; c1 < multiCoordinates1.length; c1++) {
-
-                                let polygonArr = multiCoordinates1[c1]
-                                // bounds.push(polygonArr)
-                                // console.log(polygonArr)
-
-                            }
-                        }
                     }
-                }
+
+                L.geoJSON(geojsonFeature).addTo(mymap)
+
+                // let getCountryArr = data.countryBorders
+                
+                // var bounds = []
+
+                // for (let i = 0; i < getCountryArr.length; i++) {
+
+                //     var polygonType = getCountryArr[i].geometry.type
+                //     let countryNameArr = getCountryArr[i].properties.name
+                //     var multiCoordinates = getCountryArr[i].geometry.coordinates
+
+                //     if (polygonType == "MultiPolygon" && countryNameArr == countryName) {
+
+                //         // console.log(countryNameArr + " is MultiPolygon")
+
+                //         // console.log(multiCoordinates)
+                        
+                //         for (let mc = 0; mc < multiCoordinates.length; mc++) {
+
+                //             var multiCoordinates1 = multiCoordinates[mc]
+
+                //             for (let mc1 = 0; mc1 < multiCoordinates1.length; mc1++) {
+
+                //                 var multiCoordinates2 = multiCoordinates[mc1]
+                //                 // bounds.push(multiCoordinates2)
+                //                 // console.log(multiCoordinates2)
+
+                //                 for (let mc2 = 0; mc2 < multiCoordinates2.length; mc2++) {
+
+                //                     var multiCoordinates3 = multiCoordinates[mc2]
+
+                //                     // bounds.push(multiCoordinates3)
+                //                     // console.log(multiCoordinates3)
+
+                //                     for (let mc3 = 0; mc3 < multiCoordinates3.length; mc3++) {
+
+                //                         var multiCoordinates4 = multiCoordinates[mc3]
+        
+                //                         // bounds.push(multiCoordinates4)
+                //                         // console.log(multiCoordinates4)
+                //                     }
+                //                 }
+                //             }
+                //         }
+                    
+                //     } else if (polygonType == "Polygon" && countryNameArr == countryName) {
+
+                //         // console.log(countryNameArr + " is Polygon")
+
+                //         // console.log(multiCoordinates)
+
+                //         for (let c = 0; c < multiCoordinates.length; c++) {
+
+                //             var multiCoordinates1 = multiCoordinates[c]
+
+                //             for (let c1 = 0; c1 < multiCoordinates1.length; c1++) {
+
+                //                 let polygonArr = multiCoordinates1[c1]
+                //                 // bounds.push(polygonArr)
+                //                 // console.log(polygonArr)
+
+                //             }
+                //         }
+                //     }
+                // }
                 
                 
-                L.polygon(bounds, {color: "#ff7800", weight: 1}).addTo(mymap)
+                // L.polygon(bounds, {color: "#ff7800", weight: 1}).addTo(mymap)
                 
                 // mymap.fitBounds(bounds);
 

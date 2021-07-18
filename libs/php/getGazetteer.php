@@ -74,6 +74,22 @@
 	$decode = json_decode($result,true);
 	$output["wikipedia"] = $decode["geonames"][0];	
 
+	// COVID
+
+	$url = "https://api.covid19api.com/live/country/".$country;
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["covid"] = $decode;
+
 	// // Get Currency
 	$url = "https://openexchangerates.org/api/latest.json?app_id=4b8acff9591e4f8d8864ef8ca25aea3b";
 
@@ -129,6 +145,21 @@
 
 	$decode = json_decode($result,true);
 	$output["countryTime"] = $decode["time"];	
+
+	// News
+	$url = "http://api.mediastack.com/v1/news?access_key=5e058f99ba0b202d6f48cdec9773be90";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["News"] = $decode;	
 
 	// $url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
 

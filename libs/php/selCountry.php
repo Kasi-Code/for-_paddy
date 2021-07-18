@@ -124,6 +124,8 @@
 	$decode = json_decode($result,true);
 	$output["poi_nearByPlaces"] = $decode["geonames"];	
 
+	// POI
+
 	$url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$latPOI."&lng=".$lngPOI."&username=coder_k&style=full";
 
 	$ch = curl_init();
@@ -137,6 +139,22 @@
 
 	$decode = json_decode($result,true);
 	$output["poi"] = $decode["poi"];	
+
+	// COVID
+
+	$url = "https://api.covid19api.com/live/country/".$_REQUEST['selCountry'];
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["covid"] = $decode;
 
     $output['status']['code'] = "200";
 	$output['status']['name'] = "ok";

@@ -38,7 +38,6 @@ body {
   z-index: 4;
 }
 .weather {
-  background-color: rgba(255, 255, 255, 0.8);
   color: black;
   display: flex;
   justify-content: space-evenly;
@@ -46,6 +45,22 @@ body {
   align-items: center;
   z-index: 3;
   /* padding: 5%; */
+}
+.covid {
+  color: black;
+  display: none;
+  /* justify-content: space-evenly; */
+  /* flex-direction: row;  */
+  text-align: center;
+  /* padding-left: 15vh; */
+  align-items: center;
+  z-index: 3;
+}
+.covid p {
+  margin: 5px;
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-evenly;
 }
 .clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
   display: none;
@@ -62,6 +77,7 @@ body {
  }
 .topPageSection {
   /* position: sticky; */
+  background-color: rgba(255, 255, 255, 0.8);
   overflow: hidden;
   position: fixed;
   top: 0; 
@@ -70,6 +86,27 @@ body {
   border-bottom-right-radius: 20px;
   border: 1px solid black;
   width: 500px;
+}
+.options {
+  overflow: hidden;
+  position: fixed;
+  right: 0; 
+  top: 45vh;
+  z-index: 3;
+  max-height: 100%;
+}
+.eachBtn {
+  background-color: white;  
+  margin-bottom: 5px;
+  padding: 5px;
+  border-top-left-radius: 20px; border-bottom-left-radius: 20px;
+  box-shadow: 1px 2px 2px black;
+}
+.eachBtn button {
+  font-size: 10px;
+}
+.options {
+  padding-left: 3px; padding-top: 3px; padding-bottom: 3px;
 }
 .searchResults {
   background-color: rgba(255, 255, 255);
@@ -131,6 +168,21 @@ button {
 }
 .submit:hover {
   transform: scale(1.2);
+ }
+ .eachBtn:hover {
+  transform: scale(1.1);
+ }
+ /* .weatherButton:hover {
+  background-color: yellow;
+ } */
+ .covidButton:hover {
+  background-color: red;
+ }
+ .covidButton::backdrop {
+  background-color: red;
+ }
+ .newsButton:hover {
+  background-color: green;
  }
 .autocomplete {
   /*the container must be positioned relative:*/
@@ -222,5 +274,8 @@ a:hover, .wikipedia:hover {
     .dataInfo {
         padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
         width: 380px;
+    }
+    .covid {
+      padding-left: 2vh;
     }
 }
