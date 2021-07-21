@@ -33,39 +33,49 @@ window.onload = function () {
                 // TOGGLE
 
                 $(".buttonUp").click(function(){
-
-                    $(".panel").slideToggle("slow");
-
-                        if ($(".panel").is(":visible")) {
-                            $("#map").click(function(){
-                            $(".panel").hide("slow")
-                        })
-                    }
-
+                    $(".panel").slideToggle("fast");
                 });
 
-                // OPTIONS
+                // OPTIONS TOGGLE
 
-                $(".covidButton").click(function(){
+                $(".covidSlide").click(function(){
 
-                    $(".covid").slideToggle("slow");
+                    $(".covid").slideToggle("fast");
+                        if ($(".newsBox").is(":visible")) {
+                            $(".newsBox").hide("fast")
+                        }
+                });
 
+                // NEWS TOGGLE
+
+                $(".newsSlide").click(function(){
+
+                    $(".newsBox").slideToggle("fast");
                         if ($(".covid").is(":visible")) {
-                            $("#map").click(function(){
-                            $(".covid").hide("slow")
-                            })
+                            $(".covid").hide("fast")
+                        }
+                        if ($(".panel").is(":visible")) {
+                            $(".panel").hide("fast")
+                        }
+                });
+
+                // INFO TOGGLE
+
+                $(".infoSlide").click(function(){
+
+                    $(".panel").slideToggle("fast");
+
+                        if ($(".newsBox").is(":visible")) {
+                            $(".newsBox").hide("fast")
                         }
 
                 });
-
-                // $(".covidButton").click(function(){
-                //     $(".covid").css("display", "block");
-                //     $(".weather").css("display", "none");
-                // })
-                // $(".weatherButton").click(function(){
-                //     $(".weather").css("display", "block");
-                //     $(".covid").css("display", "none");
-                // })
+                
+                $("#map").click(function(){
+                    if ($(".panel, .newsBox, .covid").is(":visible")) {
+                        $(".panel, .newsBox, .covid").hide("fast")
+                    }
+                })
 
                 navigator.geolocation.getCurrentPosition(position => {
                     long = position.coords.longitude
@@ -224,7 +234,30 @@ window.onload = function () {
                                     }                    
                                 }
                             }
-            
+
+                            // NEWS
+
+                            const newsArr = data.news.articles
+
+                            for (var i = 0; i < newsArr.length; i++){ 
+
+                                // Create DOM element
+                                let childNode = document.createElement('li')
+                                let parentNode = document.getElementById('parentList')
+
+                                childNode.setAttribute("class", "childList")
+                          
+                                // Set content to current element
+                                childNode.innerHTML = `<a href="${newsArr[i].url}" target="_blank"><span><h5>${newsArr[i].author}</h5></span><span><p>${newsArr[i].title}</p></span></a>` 
+                                parentNode.style.overflow = "auto";
+                                parentNode.style.maxHeight = "85vh"; 
+                                // childNode.style.borderTopLeftRadius = "20px";
+                                // childNode.style.borderTopRightRadius = "20px";
+                          
+                                // Add DOM Node to list
+                                parentNode.appendChild(childNode);
+                              }
+             
                             // THE MAP
 
                             const poi = data.poi_nearByPlaces
@@ -239,17 +272,6 @@ window.onload = function () {
                                 markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${summary}</p>`).openPopup()
 
                             }
-
-                            // for (let i = 0; i < poi2.length; i++) {
-                            //     var markerPlaces = L.marker([poi2[i].lat, poi2[i].lng]).addTo(mymap)
-            
-                            //     var nearByName = poi2[i].name
-                            //     var nearByTypeClass = poi2[i].typeClass
-                            //     var nearByTypeName = poi2[i].typeName
-                                
-                            //     markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${nearByTypeClass}</p><p>${nearByTypeName}</p>`).openPopup()
-            
-                            // }
             
                             var lat = data.country.geometry.lat
                             var lng = data.country.geometry.lng
@@ -289,51 +311,6 @@ window.onload = function () {
                             }
 
                             L.geoJSON(geojsonFeature).addTo(mymap)
-                            
-                            // var bounds = [];
-
-                            // for (var i = 0; i < getCountryArr.length; i++) {
-
-                            //     var polygonType = getCountryArr[i].geometry.type
-                            //     var multiCoordinates = getCountryArr[i].geometry.coordinates
-
-                            //     if (polygonType == "MultiPolygon") {
-                                    
-                            //         for (var mc = 0; mc < multiCoordinates.length; i++) {
-
-                            //             var multiCoordinates1 = multiCoordinates[mc]
-
-                            //             for (var mc1 = 0; mc1 < multiCoordinates1.length; i++) {
-
-                            //                 var multiCoordinates2 = multiCoordinates[mc1]
-
-                            //                 for (var mc2 = 0; mc2 < multiCoordinates2.length; i++) {
-
-                            //                     console.log(multiCoordinates2[mc2])
-
-                            //                 }
-
-                            //             }
-
-                            //         }
-
-                            //     } else if (polygonType == "Polygon") {
-                            //         for (var p = 0; p < getCountryArr.length; i++) {
-
-                            //         }
-                            //         var polygonArr = getCountryArr[i].geometry.coordinates
-                            //     }
-
-
-                                
-
-                            // }
-
-                            // create an orange rectangle
-                            // L.polygon(bounds, {color: "#ff7800", weight: 1}).addTo(mymap);
-
-                            // // zoom the map to the rectangle bounds
-                            // mymap.fitBounds(bounds);
 
                         })
                         .catch(error => {console.log(error)})

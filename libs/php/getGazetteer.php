@@ -147,7 +147,7 @@
 	$output["countryTime"] = $decode["time"];	
 
 	// News
-	$url = "http://api.mediastack.com/v1/news?access_key=5e058f99ba0b202d6f48cdec9773be90";
+	$url = "https://newsapi.org/v2/everything?q=apple&from=2021-07-20&to=2021-07-20&sortBy=popularity&apiKey=f6da9dbb1b344948aa2545a0fe23c83f";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -159,7 +159,7 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["News"] = $decode;	
+	$output["news"] = $decode;	
 
 	// $url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
 

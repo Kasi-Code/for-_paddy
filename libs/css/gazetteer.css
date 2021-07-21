@@ -24,6 +24,45 @@ body {
   flex-direction: row;
   align-items: center;
 }
+.topPageSection {
+  /* position: sticky; */
+  background-color: rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  position: fixed;
+  top: 0; 
+  z-index: 4;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid black;
+  width: 500px;
+}
+.newsBox {
+  display: none;
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 7;
+  width: 83%;
+  max-width: 800px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 1px 2px 4px black;
+}
+.newsBoxInner {
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+}
+.childList {
+  padding-top: 10px; padding-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 2vh;
+}
+.childList:hover {
+  background-color: white;
+  color: black;
+}
 .dataInfo {
   border: 1px solid black;
   background-color: rgba(255, 255, 255, 0.8);
@@ -32,7 +71,7 @@ body {
   padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
   bottom: 40px;
   text-align: center;
-  width: 450px;
+  width: 500px;
   /* overflow: hidden; */
   position: fixed;
   z-index: 4;
@@ -68,31 +107,18 @@ body {
 .map {
   z-index: 0;
   position: relative;
+  height: 100vh; 
 }
 .mapid { 
-  /* z-index: 0; */
   height: 100vh; 
-  /* width: 100vh; */
-  /* position: absolute; */
  }
-.topPageSection {
-  /* position: sticky; */
-  background-color: rgba(255, 255, 255, 0.8);
-  overflow: hidden;
-  position: fixed;
-  top: 0; 
-  z-index: 4;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  border: 1px solid black;
-  width: 500px;
-}
 .options {
   overflow: hidden;
   position: fixed;
   right: 0; 
-  top: 45vh;
-  z-index: 3;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 7;
   max-height: 100%;
 }
 .eachBtn {
@@ -178,8 +204,8 @@ button {
  .covidButton:hover {
   background-color: red;
  }
- .covidButton::backdrop {
-  background-color: red;
+ .infoButton:hover {
+  background-color: yellow;
  }
  .newsButton:hover {
   background-color: green;
@@ -256,6 +282,12 @@ input[type=text] {
 }
 .search-container {
   top: 0%;
+}
+.covidSlide:hover, .newsSlide:hover, .infoButton:hover {
+  cursor: pointer;
+}
+.covidButton, .newsButton, .infoButton {
+  padding-top: 10px; padding-bottom: 10px;
 }
 a:link, a:visited {
   text-decoration: none; color: inherit;
