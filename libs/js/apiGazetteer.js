@@ -1,14 +1,5 @@
 // INITIATE MAP
 
-// var mymap = L.map('mapid').setView([0, 0], 13);
-
-// L.tileLayer.provider('MapTiler.Streets', {
-//     key: 'mFYXi7zo4EzHjijzbUxG',
-//     tileSize: 512,
-//     zoomOffset: -1,
-//     maxZoom: 18
-// }).addTo(mymap);
-
 var mymap = L.map('mapid').setView([0, 0], 13);
 
             L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=mFYXi7zo4EzHjijzbUxG', {
@@ -24,11 +15,7 @@ var mymap = L.map('mapid').setView([0, 0], 13);
 
 window.onload = function () {
 
-    if ($('#preloader').length) {
-
-        $('#preloader').delay(1000).fadeOut('slow', function () { 
-
-            $(this).remove();
+        $("#preloader").css("display", "block");
 
                 // TOGGLE
 
@@ -88,6 +75,8 @@ window.onload = function () {
                         .then(data => {
 
                             console.log(data)
+
+                            $("#preloader").css("display", "none");
 
                             let countryName = data.country.components.country
                             let cityName = data.country.components.city
@@ -161,11 +150,9 @@ window.onload = function () {
                             // console.log(getTime)
             
                             if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                                    if (getHour >= 6 && getHour <= 18) {
-                                        $("#changeIcon").html("&#127774")
-                                    } else {
-                                        $("#changeIcon").html("🌕")
-                                    }
+
+                                    return (getHour >= 6 && getHour <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
+
                                 } else if (weatherDescription == "cloudy"){
                                     $("#changeIcon").html("☁️")
                                 } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
@@ -315,8 +302,6 @@ window.onload = function () {
                         })
                         .catch(error => {console.log(error)})
                 });
-            }); 
-        }
 }
 
 // SEARCH INPUT
@@ -324,8 +309,6 @@ window.onload = function () {
 fetch("/libs/php/getGazetteerBySearch.php")
   .then(response => response.json())
   .then(data => {
-
-    
 
     //   console.log(data)
 
@@ -474,11 +457,9 @@ a.addEventListener('click', function(event) {
                 // console.log(getTime)
 
                 if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                    if (getTime >= 6 && getTime <= 18) {
-                        $("#changeIcon").html("&#127774")
-                    } else {
-                        $("#changeIcon").html("🌕")
-                    }
+
+                    return (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
+                    
                 } else if (weatherDescription == "cloudy"){
                     $("#changeIcon").html("☁️")
                 } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
@@ -574,17 +555,6 @@ a.addEventListener('click', function(event) {
 
                 }
 
-                // for (let i = 0; i < poi2.length; i++) {
-                //     var markerPlaces = L.marker([poi2[i].lat, poi2[i].lng]).addTo(mymap)
-
-                //     var nearByName = poi2[i].name
-                //     var nearByTypeClass = poi2[i].typeClass
-                //     var nearByTypeName = poi2[i].typeName
-                    
-                //     markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${nearByTypeClass}</p><p>${nearByTypeName}</p>`).openPopup()
-
-                // }
-
                 var lat = data.wikipedia.lat
                 var lng = data.wikipedia.lng
             
@@ -621,76 +591,6 @@ a.addEventListener('click', function(event) {
                     }
 
                 L.geoJSON(geojsonFeature).addTo(mymap)
-
-                // let getCountryArr = data.countryBorders
-                
-                // var bounds = []
-
-                // for (let i = 0; i < getCountryArr.length; i++) {
-
-                //     var polygonType = getCountryArr[i].geometry.type
-                //     let countryNameArr = getCountryArr[i].properties.name
-                //     var multiCoordinates = getCountryArr[i].geometry.coordinates
-
-                //     if (polygonType == "MultiPolygon" && countryNameArr == countryName) {
-
-                //         // console.log(countryNameArr + " is MultiPolygon")
-
-                //         // console.log(multiCoordinates)
-                        
-                //         for (let mc = 0; mc < multiCoordinates.length; mc++) {
-
-                //             var multiCoordinates1 = multiCoordinates[mc]
-
-                //             for (let mc1 = 0; mc1 < multiCoordinates1.length; mc1++) {
-
-                //                 var multiCoordinates2 = multiCoordinates[mc1]
-                //                 // bounds.push(multiCoordinates2)
-                //                 // console.log(multiCoordinates2)
-
-                //                 for (let mc2 = 0; mc2 < multiCoordinates2.length; mc2++) {
-
-                //                     var multiCoordinates3 = multiCoordinates[mc2]
-
-                //                     // bounds.push(multiCoordinates3)
-                //                     // console.log(multiCoordinates3)
-
-                //                     for (let mc3 = 0; mc3 < multiCoordinates3.length; mc3++) {
-
-                //                         var multiCoordinates4 = multiCoordinates[mc3]
-        
-                //                         // bounds.push(multiCoordinates4)
-                //                         // console.log(multiCoordinates4)
-                //                     }
-                //                 }
-                //             }
-                //         }
-                    
-                //     } else if (polygonType == "Polygon" && countryNameArr == countryName) {
-
-                //         // console.log(countryNameArr + " is Polygon")
-
-                //         // console.log(multiCoordinates)
-
-                //         for (let c = 0; c < multiCoordinates.length; c++) {
-
-                //             var multiCoordinates1 = multiCoordinates[c]
-
-                //             for (let c1 = 0; c1 < multiCoordinates1.length; c1++) {
-
-                //                 let polygonArr = multiCoordinates1[c1]
-                //                 // bounds.push(polygonArr)
-                //                 // console.log(polygonArr)
-
-                //             }
-                //         }
-                //     }
-                // }
-                
-                
-                // L.polygon(bounds, {color: "#ff7800", weight: 1}).addTo(mymap)
-                
-                // mymap.fitBounds(bounds);
 
             })
             .catch(error => {
