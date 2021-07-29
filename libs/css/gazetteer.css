@@ -56,7 +56,7 @@ body {
 }
 .childList {
   padding-top: 10px; padding-bottom: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 0.5px solid rgba(0, 0, 0, 0.3);
   padding: 2vh;
 }
 .childList:hover {
