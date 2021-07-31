@@ -69,9 +69,13 @@ window.onload = function () {
         navigator.geolocation.getCurrentPosition(position => {
             long = position.coords.longitude
             lat = position.coords.latitude
-            
-                return $.ajax({url: `/libs/php/getGazetteer.php?lat=${lat}&long=${long}`, success: function(data) {
-                    
+
+                fetch(`/libs/php/getGazetteer.php?lat=${lat}&long=${long}`)
+                .then(res => {
+                    return res.json()
+                })
+                .then(data => {
+
                     console.log(data)
 
                         $("#preloader").css("display", "none").fadeOut('slow')
@@ -269,24 +273,8 @@ window.onload = function () {
     
                         }
                         L.geoJSON(geojsonFeature).addTo(mymap)
-                },
-                error: function(data) {
-                    $(".loading").css("display", "none");
-                    $(".showCountryName").css("display", "block");
-                    $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
-                    $('#flag').html(`😔`);
-                    console.log(data)
-                }
-            })
-                //     .then(res => {
-                //         return res.json()
-                //     })
-                //     .then(data => {
-
-                        
-                //     })
-                //     .catch(error => {console.log(error)})
-                // });
+                })
+                .catch(error => {console.log(error)})            
     })
 
 
