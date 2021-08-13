@@ -22,10 +22,32 @@
 	// echo $result;
 	// print_r($decode["results"][0]["components"]["city"]);
 
-	$city = $decode["results"][0]["components"]["city"];
 	$country = $decode["results"][0]["components"]["country"];
-	$lat1 = $decode["results"][0]["geometry"]["lat"];
-	$lng1 = $decode["results"][0]["geometry"]["lng"];
+	$city = $decode["results"][0]["components"]["city"];
+    $city;
+
+    if(array_key_exists("city",$decode["results"][0]["components"])){
+
+        // "City  Found!
+
+        $city = $decode["results"][0]["components"]["city"];
+
+    }else{              
+
+        // City not found, getting capital city from Rest Countries
+
+        $url = "https://restcountries.eu/rest/v2/alpha/".$decode["results"][0]["components"]["country_code"];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL,$url);
+        $result=curl_exec($ch);
+        curl_close($ch);
+
+        $decode = json_decode($result,true);
+        $city = $decode["capital"];
+    }
 
 	// Use City to get Weather
 	$url = "https://api.openweathermap.org/data/2.5/weather?q=".$country."&appid=cb79b904798a1f67e15e9d71fb81bc11";
@@ -41,6 +63,8 @@
 
 	$decode = json_decode($result,true);
 	$output["weather"] = $decode;	
+	$lat1 = $decode["coord"]["lat"];
+	$lng1 = $decode["coord"]["lon"];
 
 	// // Get Population
 	// $url = "https://restcountries.eu/rest/v2/capital/".$city;
@@ -73,6 +97,7 @@
 
 	$decode = json_decode($result,true);
 	$output["wikipedia"] = $decode["geonames"][0];	
+	$output["placesNearBy"] = $decode["geonames"];	
 
 	// COVID
 

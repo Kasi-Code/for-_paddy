@@ -13,23 +13,10 @@
 	//Print data
 	$output["countryBorders"] = $json_data["features"];	
 
-	// Use City to get Weather
-	$url = "https://api.openweathermap.org/data/2.5/weather?q=".$_REQUEST['selCountry']."&appid=cb79b904798a1f67e15e9d71fb81bc11";
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_URL,$url);
-
-	$result=curl_exec($ch);
-
-	curl_close($ch);
-
-	$decode = json_decode($result,true);
-	$output["weather"] = $decode;	
-
 	// Get Population
-	$url = "https://restcountries.eu/rest/v2/name/".$_REQUEST['selCountry'];
+	$url = "https://restcountries.eu/rest/v2/alpha/".$_REQUEST['selCountry'];
+
+	// echo $url;
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -37,14 +24,21 @@
 	curl_setopt($ch, CURLOPT_URL,$url);
 
 	$result=curl_exec($ch);
+
+	// echo $result;
+	// echo "==================";
 
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
 	$output["population"] = $decode;	
-	$lat = $decode[0]["latlng"][0];	
-    $lng = $decode[0]["latlng"][1];	
-	$capitalCity = $decode[0]["capital"];	
+	$lat = $decode["latlng"][0];	
+    $lng = $decode["latlng"][1];	
+	$capitalCity = $decode["capital"];	
+
+	if ($_REQUEST['selCountry'] == "USA") {
+		$capitalCity = "washington";
+	}
 
 	// Get Wikipedia
 	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$capitalCity."&maxRows=10&username=coder_k&style=full";
@@ -59,9 +53,25 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["wikipedia"] = $decode["geonames"][0];	
-	$latPOI = $decode["geonames"][0]["lat"];	
-    $lngPOI = $decode["geonames"][0]["lng"];	
+	$output["wikipedia"] = $decode["geonames"][0];
+	$output["placesNearBy"] = $decode["geonames"];	
+	// $latPOI = $decode["geonames"][0]["lat"];	
+    // $lngPOI = $decode["geonames"][0]["lng"];
+
+	// Use City to get Weather
+	$url = "https://api.openweathermap.org/data/2.5/weather?q=".$capitalCity."&appid=cb79b904798a1f67e15e9d71fb81bc11";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["weather"] = $decode;		
 
     // Get Location
 	$url = "https://api.opencagedata.com/geocode/v1/json?q=".$lat."+".$lng."&key=87c637778f19465f89895cad4bf83cfa";
@@ -110,7 +120,7 @@
 	$output["countryTime"] = $decode["time"];	
 
 	// Near by Places
-	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$latPOI."&lng=".$lngPOI."&username=coder_k&style=full";
+	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$lat."&lng=".$lng."&username=coder_k&style=full";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -126,7 +136,7 @@
 
 	// POI
 
-	$url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$latPOI."&lng=".$lngPOI."&username=coder_k&style=full";
+	$url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$lat."&lng=".$lng."&username=coder_k&style=full";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -134,11 +144,17 @@
 	curl_setopt($ch, CURLOPT_URL,$url);
 
 	$result=curl_exec($ch);
+	
 
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["poi"] = $decode["poi"];	
+
+	if(isset($decode['poi'])){
+		$output["poi"] = $decode["poi"];
+	} else {
+		$output["poi"] = NULL;
+	}
 
 	// COVID
 

@@ -1,3 +1,7 @@
+// GLOBAL
+
+let countries = []
+
 // INITIATE MAP
 
 var mymap = L.map('mapid').setView([0, 0], 13);
@@ -70,13 +74,12 @@ window.onload = function () {
             long = position.coords.longitude
             lat = position.coords.latitude
 
-                fetch(`/libs/php/getGazetteer.php?lat=${lat}&long=${long}`)
-                .then(res => {
-                    return res.json()
-                })
-                .then(data => {
+                $.ajax({
+                    type: "GET",
+                    url: `/libs/php/getGazetteer.php?lat=${lat}&long=${long}`,
+                    success: function(data) {
 
-                    console.log(data)
+                        console.log(data)
 
                         $("#preloader").css("display", "none").fadeOut('slow')
     
@@ -146,23 +149,23 @@ window.onload = function () {
                         // const getTime = data.countryTime.slice(11, 13)
                         // console.log(getTime)
                         
-                        if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                                return (getHour >= 6 && getHour <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
-                            } else if (weatherDescription == "cloudy"){
-                                $("#changeIcon").html("☁️")
-                            } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
-                                $("#changeIcon").html("&#127783")
-                            } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                                $("#changeIcon").html("&#127780")
-                            } else if (weatherDescription.includes("snow")){
-                                $("#changeIcon").html("❄️")
-                            } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-                                $("#changeIcon").html("⛈")
-                            } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
-                                $("#changeIcon").html("🌫")
-                            } else {
-                                $("#changeIcon").html("🌍")
-                        }
+                        // if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
+                        //         return (getHour >= 6 && getHour <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
+                        //     } else if (weatherDescription == "cloudy"){
+                        //         $("#changeIcon").html("☁️")
+                        //     } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                        //         $("#changeIcon").html("&#127783")
+                        //     } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
+                        //         $("#changeIcon").html("&#127780")
+                        //     } else if (weatherDescription.includes("snow")){
+                        //         $("#changeIcon").html("❄️")
+                        //     } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
+                        //         $("#changeIcon").html("⛈")
+                        //     } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
+                        //         $("#changeIcon").html("🌫")
+                        //     } else {
+                        //         $("#changeIcon").html("🌍")
+                        // }
                     
                         // CURRENCY COMPARING
                     
@@ -233,14 +236,41 @@ window.onload = function () {
                         }
                       
                         // THE MAP
+
                         const poi = data.poi_nearByPlaces
+                        const poiFromWiki = data.placesNearBy
                         // const poi2 = data.poi
+
+                        for (let i = 0; i < poiFromWiki.length; i++) {
+                            var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng]).addTo(mymap)
+                                    
+                            var nearByName = poiFromWiki[i].title
+                            var summary = poiFromWiki[i].summary
+                            var thumnail = poiFromWiki[i].thumbnailImg
+                            var linkClick = poiFromWiki[i].wikipediaUrl
+    
+                            markerPlaces.bindPopup(
+                                `<div style="text-align: center;">
+                                <a href="https://${linkClick}" target="blank">
+                                <img class="thumnail" id="thumnail" src="${thumnail}" alt="Picture of the location">
+                                </a>
+                                <h4>${nearByName}</h4>
+                                <p>${summary}</p>
+                                </div>`
+                            ).openPopup()
+                                    
+                        }
     
                         for (let i = 0; i < poi.length; i++) {
                             var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
                             var nearByName = poi[i].title
                             var summary = poi[i].summary
-                            markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${summary}</p>`).openPopup()
+                            markerPlaces.bindPopup(
+                                `<div style="text-align: center;">
+                                <h4>${nearByName}</h4>
+                                <p>${summary}</p>
+                                </div>`
+                            ).openPopup()
                         }
                     
                         var lat = data.country.geometry.lat
@@ -273,28 +303,34 @@ window.onload = function () {
     
                         }
                         L.geoJSON(geojsonFeature).addTo(mymap)
-                })
-                .catch(error => {console.log(error)})            
+                    },
+                    error: function(error) {
+                        alert(`loading failed: ${error}`)
+                }
+            })          
     })
 
 
     // SEARCH INPUT
 
-    fetch("/libs/php/getGazetteerBySearch.php")
-        .then(response => response.json())
-        .then(data => {
+    $.ajax({
+        type: "GET",
+        url: "/libs/php/getGazetteerBySearch.php",
+        success: function(data) {
 
             // console.log(data)
 
             const countryObject = data.countryBorders
-            let countries = []
             
             for ( var i = 0; i < countryObject.length; i++ ) {
             
                 let country = countryObject[i].properties.name
-                countries.push(country)
-            
-                autocomplete(document.getElementById("myInput"), countries);
+
+                countries.push({
+                    name: country, 
+                    code: countryObject[i].properties.iso_a3})
+ 
+                autocomplete(document.getElementById("myInput"), countries.map(country => country.name));
             
                 function autocomplete(inp, arr) {
                 
@@ -349,230 +385,261 @@ window.onload = function () {
                             $(".showCountryName").css("display", "none");
                         
                             var selCountry = document.getElementById("myInput").value;
+                            
                             // console.log(selCountry)
-                        
-                            fetch(`/libs/php/selCountry.php?selCountry=${selCountry.replaceAll(" ", "%20")}`)
-                            .then(res => {
-                                return res.json()
-                            })
-                            .then(data => {
-                            
-                                $(".loading").css("display", "none");
-                                $(".showCountryName").css("display", "block");
-                            
-                                console.log(data)
-                            
-                                let countryName = data.country.components.country
-                                let cityName = data.population[0].capital
-                                let countryFlag = data.country.annotations.flag
-                            
-                                let showTime = data.countryTime.slice(11, 16)
-                            
-                                let weatherDescription = data.weather.weather[0].description
-                                let weatherTemp = data.weather.main.temp
-                            
-                                let cityPopulation = data.population[0].population
-                            
-                                let iso = data.country.annotations.currency.iso_code
-                                let currencyName = data.country.annotations.currency.name
-                                let currencySymbol = data.country.annotations.currency.symbol   
-                                let getCurrencies = data.currency.rates
-                                let compareToUSD = data.currency.base
-                                let compareToEUR = "EUR"
-                                let compareToGBP = "GBP"
-                            
-                                // console.log(localCurrency)
-                            
-                                let wikiLink = data.wikipedia.wikipediaUrl
-                                let wikiSummary = data.wikipedia.summary
-                                let wikiThumnail = data.wikipedia.thumbnailImg
 
-                                const kelvin = weatherTemp
-                                let celsius = kelvin - 273.15
-                                // let newton = celsius * ( 23 / 100 )
-                                celsius = Math.floor(celsius)
-                            
-                                $('#countryName').html("Country: " + countryName);
-                                $('#cityName').html("Capital City: " + cityName);
-                                $('#flag').html(countryFlag);
-                                $('#time').html(`(${showTime})`);
-                            
-                                $('#weatherCondition').html(weatherDescription.toUpperCase());
-                                $('#temperature').html(celsius + "˚C");
-                            
-                                $('#population').html("Population: " + cityPopulation);
-                            
-                                $('#isoCode').html("Currency; " + iso + ", ");
-                                $('#currencyName').html(currencyName);
-                                $('#currencySymbal').html(currencySymbol);
-                            
-                                // WIKI LINK
-                            
-                                $('#essayIcon').html("&#128220 ");
-                                $('#wikiSummary').html(wikiSummary);
-                            
-                                var a = document.querySelector('.wikipedia');
-                                    a.href = `http://${wikiLink}`;
-                                $('#wikiLink').html(`Wikipedia links`);
-                                $('#wikiLinkIcon').html(`🌐 `);
-                            
-                                // IMAGE FOR PIN LOCATION
-                            
-                                var img = document.createElement("img");
-                            
-                                img.src = wikiThumnail;
-                                var src = document.getElementById("thumnail");
-                                $(src).html(img)
-                            
-                                // WEATHER ICONS
-                            
-                                const getTime = data.countryTime.slice(11, 13)
-                            
-                                // console.log(getTime)
-                            
-                                if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                                
-                                    return (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
-                                
-                                } else if (weatherDescription == "cloudy"){
-                                    $("#changeIcon").html("☁️")
-                                } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
-                                    $("#changeIcon").html("&#127783")
-                                } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                                    $("#changeIcon").html("&#127780")
-                                } else if (weatherDescription.includes("snow")){
-                                    $("#changeIcon").html("❄️")
-                                } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-                                    $("#changeIcon").html("⛈")
-                                } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
-                                    $("#changeIcon").html("🌫")
-                                } else {
-                                    $("#changeIcon").html("🌍")
-                                }
-                            
-                                // COVID
-                            
-                                let covidData = data.covid[0]
-                            
-                                $('#active').html("Active: " + covidData.Active);
-                                $('#confirmed').html("Confirmed: " + covidData.Confirmed);
-                                $('#deaths').html("Deaths: " + covidData.Deaths);
-                                $('#recovered').html("Recovered: " + covidData.Recovered);
-                            
-                                // CURRENCY COMPARING
-                            
-                                const listOfCurrency = Object.entries(getCurrencies)
-                                for (const [cName, cValue] of listOfCurrency) {
-                                
-                                    $('#exchangeRate').html("Exchange rate; ");   
-                                
-                                    if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
-                                        // console.log(cValue)
-                                        $('#localCurrency').html(cValue);    
-                                    
-                                        for (const [cName, cValue] of listOfCurrency) {
-                                            if (compareToUSD == cName) {  
-                                                $('#secondCurrency').html("To USD $" + cValue); 
-                                            
-                                                for (const [cName, cValue] of listOfCurrency) {
-                                                    if (compareToEUR == cName) {  
-                                                        $('#thirdCurrency').html("To EUR €" + cValue);                        
-                                                    }
-                                                }                           
-                                            }
-                                        }                    
-                                    } else if (iso == cName && iso != compareToGBP && iso != compareToEUR) {
-                                        $('#localCurrency').html(cValue);    
-                                    
-                                        for (const [cName, cValue] of listOfCurrency) {
-                                            if (compareToGBP == cName) {  
-                                                $('#secondCurrency').html("To GBP £" + cValue); 
+                            $.ajax({
+                                type: "GET",
+                                url: `/libs/php/selCountry.php?selCountry=${countries.find(c => c.name == selCountry).code}`,
+                                success: function(data) {
 
-                                                for (const [cName, cValue] of listOfCurrency) {
-                                                    if (compareToEUR == cName) {  
-                                                        $('#thirdCurrency').html("To EUR €" + cValue);                        
-                                                    }
-                                                }                           
-                                            }
-                                        }                    
-                                    } else if (iso == cName && iso != compareToGBP && iso != compareToUSD) {
-                                        $('#localCurrency').html(cValue);    
+                                    $(".loading").css("display", "none");
+                                    $(".showCountryName").css("display", "block");
+                                
+                                    console.log(data)
+                                
+                                    let countryName = data.country.components.country
+                                    let cityName = data.population.capital
+                                    let countryFlag = data.country.annotations.flag
+                                
+                                    let showTime = data.countryTime.slice(11, 16)
+                                
+                                    let weatherDescription = data.weather.weather[0].description
+                                    let weatherTemp = data.weather.main.temp
+                                
+                                    let cityPopulation = data.population.population
+                                
+                                    let iso = data.country.annotations.currency.iso_code
+                                    let currencyName = data.country.annotations.currency.name
+                                    let currencySymbol = data.country.annotations.currency.symbol   
+                                    let getCurrencies = data.currency.rates
+                                    let compareToUSD = data.currency.base
+                                    let compareToEUR = "EUR"
+                                    let compareToGBP = "GBP"
+                                
+                                    // console.log(localCurrency)
+                                
+                                    let wikiLink = data.wikipedia.wikipediaUrl
+                                    let wikiSummary = data.wikipedia.summary
+                                    let wikiThumnail = data.wikipedia.thumbnailImg
+    
+                                    const kelvin = weatherTemp
+                                    let celsius = kelvin - 273.15
+                                    // let newton = celsius * ( 23 / 100 )
+                                    celsius = Math.floor(celsius)
+                                
+                                    $('#countryName').html("Country: " + countryName);
+                                    $('#cityName').html("Capital City: " + cityName);
+                                    $('#flag').html(countryFlag);
+                                    $('#time').html(`(${showTime})`);
+                                
+                                    $('#weatherCondition').html(weatherDescription.toUpperCase());
+                                    $('#temperature').html(celsius + "˚C");
+                                
+                                    $('#population').html("Population: " + cityPopulation);
+                                
+                                    $('#isoCode').html("Currency; " + iso + ", ");
+                                    $('#currencyName').html(currencyName);
+                                    $('#currencySymbal').html(currencySymbol);
+                                
+                                    // WIKI LINK
+                                
+                                    $('#essayIcon').html("&#128220 ");
+                                    $('#wikiSummary').html(wikiSummary);
+                                
+                                    var a = document.querySelector('.wikipedia');
+                                        a.href = `http://${wikiLink}`;
+                                    $('#wikiLink').html(`Wikipedia links`);
+                                    $('#wikiLinkIcon').html(`🌐 `);
+                                
+                                    // IMAGE FOR PIN LOCATION
+                                
+                                    var img = document.createElement("img");
+                                
+                                    img.src = wikiThumnail;
+                                    var src = document.getElementById("thumnail");
+                                    $(src).html(img)
+                                
+                                    // WEATHER ICONS
+                                
+                                    const getTime = data.countryTime.slice(11, 13)
+                                
+                                    // console.log(getTime)
+                                
+                                    // if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
                                     
-                                        for (const [cName, cValue] of listOfCurrency) {
-                                            if (compareToUSD == cName) {  
-                                                $('#secondCurrency').html("To USD $" + cValue); 
-
-                                                for (const [cName, cValue] of listOfCurrency) {
-                                                    if (compareToGBP == cName) {  
-                                                        $('#thirdCurrency').html("To BGP £" + cValue);                        
-                                                    }
-                                                }                           
-                                            }
-                                        }                    
+                                    //     return (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
+                                    
+                                    // } else if (weatherDescription == "cloudy"){
+                                    //     $("#changeIcon").html("☁️")
+                                    // } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                                    //     $("#changeIcon").html("&#127783")
+                                    // } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
+                                    //     $("#changeIcon").html("&#127780")
+                                    // } else if (weatherDescription.includes("snow")){
+                                    //     $("#changeIcon").html("❄️")
+                                    // } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
+                                    //     $("#changeIcon").html("⛈")
+                                    // } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
+                                    //     $("#changeIcon").html("🌫")
+                                    // } else {
+                                    //     $("#changeIcon").html("🌍")
+                                    // }
+                                
+                                    // COVID
+                                
+                                    let covidData = data.covid[0]
+                                
+                                    $('#active').html("Active: " + covidData.Active);
+                                    $('#confirmed').html("Confirmed: " + covidData.Confirmed);
+                                    $('#deaths').html("Deaths: " + covidData.Deaths);
+                                    $('#recovered').html("Recovered: " + covidData.Recovered);
+                                
+                                    // CURRENCY COMPARING
+                                
+                                    const listOfCurrency = Object.entries(getCurrencies)
+                                    for (const [cName, cValue] of listOfCurrency) {
+                                    
+                                        $('#exchangeRate').html("Exchange rate; ");   
+                                    
+                                        if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
+                                            // console.log(cValue)
+                                            $('#localCurrency').html(cValue);    
+                                        
+                                            for (const [cName, cValue] of listOfCurrency) {
+                                                if (compareToUSD == cName) {  
+                                                    $('#secondCurrency').html("To USD $" + cValue); 
+                                                
+                                                    for (const [cName, cValue] of listOfCurrency) {
+                                                        if (compareToEUR == cName) {  
+                                                            $('#thirdCurrency').html("To EUR €" + cValue);                        
+                                                        }
+                                                    }                           
+                                                }
+                                            }                    
+                                        } else if (iso == cName && iso != compareToGBP && iso != compareToEUR) {
+                                            $('#localCurrency').html(cValue);    
+                                        
+                                            for (const [cName, cValue] of listOfCurrency) {
+                                                if (compareToGBP == cName) {  
+                                                    $('#secondCurrency').html("To GBP £" + cValue); 
+    
+                                                    for (const [cName, cValue] of listOfCurrency) {
+                                                        if (compareToEUR == cName) {  
+                                                            $('#thirdCurrency').html("To EUR €" + cValue);                        
+                                                        }
+                                                    }                           
+                                                }
+                                            }                    
+                                        } else if (iso == cName && iso != compareToGBP && iso != compareToUSD) {
+                                            $('#localCurrency').html(cValue);    
+                                        
+                                            for (const [cName, cValue] of listOfCurrency) {
+                                                if (compareToUSD == cName) {  
+                                                    $('#secondCurrency').html("To USD $" + cValue); 
+    
+                                                    for (const [cName, cValue] of listOfCurrency) {
+                                                        if (compareToGBP == cName) {  
+                                                            $('#thirdCurrency').html("To BGP £" + cValue);                        
+                                                        }
+                                                    }                           
+                                                }
+                                            }                    
+                                        }
                                     }
-                                }
-                            
-                                // THE MAP
-
-                                const poi = data.poi_nearByPlaces
-                                // const poi2 = data.poi
-                            
-                                // console.log(poi2)
-                            
-                                for (let i = 0; i < poi.length; i++) {
-                                    var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
                                 
-                                    var nearByName = poi[i].title
-                                    var summary = poi[i].summary
-
-                                    markerPlaces.bindPopup(`<h4>${nearByName}</h4><p>${summary}</p>`).openPopup()
+                                    // THE MAP
+    
+                                    const poi = data.poi_nearByPlaces
+                                    const poiFromWiki = data.placesNearBy
+                                    // const poi2 = data.poi
                                 
-                                }
-                            
-                                var lat = data.wikipedia.lat
-                                var lng = data.wikipedia.lng
-                            
-                                mymap.setView([lat, lng], 14);
-                            
-                                var marker = L.marker([lat, lng]).addTo(mymap)
-                                    marker.bindPopup(
-                                        `<img class="thumnail" id="thumnail" src="${wikiThumnail}" alt="Picture of the location">
-                                        <p>Picture of ${cityName} City</p>`
+                                    // console.log(poi2)
+
+                                    for (let i = 0; i < poiFromWiki.length; i++) {
+                                        var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng]).addTo(mymap)
+                                    
+                                        var nearByName = poiFromWiki[i].title
+                                        var summary = poiFromWiki[i].summary
+                                        var thumnail = poiFromWiki[i].thumbnailImg
+                                        var linkClick = poiFromWiki[i].wikipediaUrl
+    
+                                        markerPlaces.bindPopup(
+                                            `<div style="text-align: center;">
+                                            <a href="https://${linkClick}" target="blank">
+                                            <img class="thumnail" id="thumnail" src="${thumnail}" alt="Picture of the location">
+                                            </a>
+                                            <h4>${nearByName}</h4>
+                                            <p>${summary}</p>
+                                            </div>`
                                         ).openPopup()
                                     
-                                        var circle = L.circle([lat, lng], {
-                                                color: "red",
-                                                fillColor: "#f03",
-                                                fillOpacity: 0.5,
-                                                radius: 50
-                                        }).addTo(mymap)
-                                // var featureGroup = L.featureGroup(markers).addTo(map);
-                                // map.fitBounds(featureGroup.getBounds());
-                                    
-                                // HIGHLIGHT COUNTRY BORDER
-                                    
-                                let geojsonFeature = data.countryBorders
-                                // console.log(geojsonFeature)
-                                    
-                                    for (i = 0; i < geojsonFeature.length; i++) {
-                                    
-                                        const name = geojsonFeature[i].properties.name
-                                    
-                                            if (countryName == name) {
-                                                geojsonFeature = geojsonFeature[i]
-                                            }
-                                        
                                     }
                                 
-                                L.geoJSON(geojsonFeature).addTo(mymap)
+                                    for (let i = 0; i < poi.length; i++) {
+                                        var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
+                                    
+                                        var nearByName = poi[i].title
+                                        var summary = poi[i].summary
+    
+                                        markerPlaces.bindPopup(
+                                            `<div style="text-align: center;">
+                                            <h4>${nearByName}</h4>
+                                            <p>${summary}</p>
+                                            </div>`
+                                        ).openPopup()
+                                    
+                                    }
                                 
-                            })
-                            .catch(error => {
-                                $(".loading").css("display", "none");
-                                $(".showCountryName").css("display", "block");
-                                $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
-                                $('#flag').html(`😔`);
-                                console.log(error)
+                                    var lat = data.wikipedia.lat
+                                    var lng = data.wikipedia.lng
+                                    var wikiURL = data.wikipedia.wikipediaUrl
+                                
+                                    mymap.setView([lat, lng], 14);
+                                
+                                    var marker = L.marker([lat, lng]).addTo(mymap)
+                                        marker.bindPopup(
+                                            `<div style="text-align: center;">
+                                            <a href="https://${wikiURL}" target="blank">
+                                            <img class="thumnail" id="thumnail" src="${wikiThumnail}" alt="Picture of the location">
+                                            </a>
+                                            <p>Picture of ${cityName} City</p>
+                                            </div>`
+                                            ).openPopup()
+                                        
+                                            var circle = L.circle([lat, lng], {
+                                                    color: "red",
+                                                    fillColor: "#f03",
+                                                    fillOpacity: 0.5,
+                                                    radius: 50
+                                            }).addTo(mymap)
+                                    // var featureGroup = L.featureGroup(markers).addTo(map);
+                                    // map.fitBounds(featureGroup.getBounds());
+                                        
+                                    // HIGHLIGHT COUNTRY BORDER
+                                        
+                                    let geojsonFeature = data.countryBorders
+                                    // console.log(geojsonFeature)
+                                        
+                                        for (i = 0; i < geojsonFeature.length; i++) {
+                                        
+                                            const name = geojsonFeature[i].properties.name
+                                        
+                                                if (countryName == name) {
+                                                    geojsonFeature = geojsonFeature[i]
+                                                }
+                                            
+                                        }
+                                    
+                                    L.geoJSON(geojsonFeature).addTo(mymap)
+                                },
+                                error: function(request,error) {
+                                    alert(request)
+                                    $(".loading").css("display", "none");
+                                    $(".showCountryName").css("display", "block");
+                                    $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
+                                    $('#flag').html(`😔`);                                    
+                                }
                             })
                         });
                     });
@@ -635,5 +702,13 @@ window.onload = function () {
                     });
                 }
             }   
-        }); 
+        },
+        // error: function(request,error) {
+        //     alert(request)
+        //     $(".loading").css("display", "none");
+        //     $(".showCountryName").css("display", "block");
+        //     $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
+        //     $('#flag').html(`😔`);
+        // }
+    })
 }
