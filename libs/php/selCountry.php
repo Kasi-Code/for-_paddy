@@ -55,8 +55,8 @@
 	$decode = json_decode($result,true);
 	$output["wikipedia"] = $decode["geonames"][0];
 	$output["placesNearBy"] = $decode["geonames"];	
-	// $latPOI = $decode["geonames"][0]["lat"];	
-    // $lngPOI = $decode["geonames"][0]["lng"];
+	$latPOI = $decode["geonames"][0]["lat"];	
+    $lngPOI = $decode["geonames"][0]["lng"];
 
 	// Use City to get Weather
 	$url = "https://api.openweathermap.org/data/2.5/weather?q=".$capitalCity."&appid=cb79b904798a1f67e15e9d71fb81bc11";
@@ -120,7 +120,7 @@
 	$output["countryTime"] = $decode["time"];	
 
 	// Near by Places
-	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$lat."&lng=".$lng."&username=coder_k&style=full";
+	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$latPOI."&lng=".$lngPOI."&username=coder_k&style=full";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

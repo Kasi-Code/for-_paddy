@@ -150,7 +150,7 @@ window.onload = function () {
                         // console.log(getTime)
                         
                         // if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                        //         return (getHour >= 6 && getHour <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
+                        //         return (getHour >= 6 && getHour <= 18) ? $("#changeIcon").app("&#127774") : $("#changeIcon").html("🌕")
                         //     } else if (weatherDescription == "cloudy"){
                         //         $("#changeIcon").html("☁️")
                         //     } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){

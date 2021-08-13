@@ -156,6 +156,9 @@ body {
   width: 100%;
   z-index: 4;
 }
+.temp, .weatherCondition {
+  margin: 10px;
+}
 .navBar {
   color: white;
   display: flex;

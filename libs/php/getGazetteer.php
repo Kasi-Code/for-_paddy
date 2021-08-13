@@ -49,6 +49,21 @@
         $city = $decode["capital"];
     }
 
+	// // Near by Places
+	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$_REQUEST['lat']."&lng=".$_REQUEST['long']."&username=coder_k&style=full";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode = json_decode($result,true);
+	$output["poi_nearByPlaces"] = $decode["geonames"];	
+
 	// Use City to get Weather
 	$url = "https://api.openweathermap.org/data/2.5/weather?q=".$country."&appid=cb79b904798a1f67e15e9d71fb81bc11";
 
@@ -140,21 +155,6 @@
 	//Print data
 	$output["countryBorders"] = $json_data["features"];	
 	// print_r($json_data);
-
-	// // Near by Places
-	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_URL,$url);
-
-	$result=curl_exec($ch);
-
-	curl_close($ch);
-
-	$decode = json_decode($result,true);
-	$output["poi_nearByPlaces"] = $decode["geonames"];	
 
 	// Time
 	$url = "http://api.geonames.org/timezoneJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
