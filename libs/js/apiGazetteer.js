@@ -91,6 +91,35 @@ window.onload = function () {
                         let weatherDescription = data.weather.weather[0].description
                         let weatherTemp = data.weather.main.temp
                         
+                        // WEATHER ICONS
+                        
+                        const today = new Date()
+                        const getHour = today.getHours()
+                        // console.log(getHour)
+                        // const getTime = data.countryTime.slice(11, 13)
+                        // console.log(getTime)
+                        
+                        if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
+
+                            (getHour >= 6 && getHour <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
+
+                        } else if (weatherDescription.includes("cloudy")){
+                            $("#changeIcon").html("☁️")
+                        } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                            $("#changeIcon").html("&#127783")
+                        } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
+                            $("#changeIcon").html("&#127780")
+                        } else if (weatherDescription.includes("snow")){
+                            $("#changeIcon").html("❄️")
+                        } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
+                            $("#changeIcon").html("⛈")
+                        } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
+                            $("#changeIcon").html("🌫")
+                        } else {
+                            $("#changeIcon").html("🌍")
+                        }
+
+                        
                         // let cityPopulation = data.population[0].population
                         
                         let iso = data.country.annotations.currency.iso_code
@@ -140,32 +169,6 @@ window.onload = function () {
                         $('#confirmed').html("<h5>Confirmed: </h5>" + covidData.Confirmed);
                         $('#deaths').html("<h5>Deaths: <h5>" + covidData.Deaths);
                         $('#recovered').html("<h5>Recovered: </h5>" + covidData.Recovered);
-                        
-                        // WEATHER ICONS
-                        
-                        const today = new Date()
-                        const getHour = today.getHours()
-                        // console.log(getHour)
-                        // const getTime = data.countryTime.slice(11, 13)
-                        // console.log(getTime)
-                        
-                        // if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                        //         return (getHour >= 6 && getHour <= 18) ? $("#changeIcon").app("&#127774") : $("#changeIcon").html("🌕")
-                        //     } else if (weatherDescription == "cloudy"){
-                        //         $("#changeIcon").html("☁️")
-                        //     } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
-                        //         $("#changeIcon").html("&#127783")
-                        //     } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                        //         $("#changeIcon").html("&#127780")
-                        //     } else if (weatherDescription.includes("snow")){
-                        //         $("#changeIcon").html("❄️")
-                        //     } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-                        //         $("#changeIcon").html("⛈")
-                        //     } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
-                        //         $("#changeIcon").html("🌫")
-                        //     } else {
-                        //         $("#changeIcon").html("🌍")
-                        // }
                     
                         // CURRENCY COMPARING
                     
@@ -253,9 +256,9 @@ window.onload = function () {
                                 `<div style="text-align: center;">
                                 <a href="https://${linkClick}" target="blank">
                                 <img class="thumnail" id="thumnail" src="${thumnail}" alt="Picture of the location">
-                                </a>
                                 <h4>${nearByName}</h4>
                                 <p>${summary}</p>
+                                </a>
                                 </div>`
                             ).openPopup()
                                     
@@ -263,12 +266,17 @@ window.onload = function () {
     
                         for (let i = 0; i < poi.length; i++) {
                             var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
+
                             var nearByName = poi[i].title
                             var summary = poi[i].summary
+                            var urlClick = poi[i].wikipediaUrl
+
                             markerPlaces.bindPopup(
                                 `<div style="text-align: center;">
+                                <a href="https://${urlClick}" target="blank">
                                 <h4>${nearByName}</h4>
                                 <p>${summary}</p>
+                                </a>
                                 </div>`
                             ).openPopup()
                         }
@@ -407,6 +415,32 @@ window.onload = function () {
                                     let weatherDescription = data.weather.weather[0].description
                                     let weatherTemp = data.weather.main.temp
                                 
+                                    // WEATHER ICONS
+                                
+                                    const getTime = data.countryTime.slice(11, 13)
+                                
+                                    // console.log(getTime)
+                                
+                                    if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
+                                    
+                                        (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
+                                    
+                                    } else if (weatherDescription.includes("cloudy")){
+                                        $("#changeIcon").html("☁️")
+                                    } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                                        $("#changeIcon").html("&#127783")
+                                    } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
+                                        $("#changeIcon").html("&#127780")
+                                    } else if (weatherDescription.includes("snow")){
+                                        $("#changeIcon").html("❄️")
+                                    } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
+                                        $("#changeIcon").html("⛈")
+                                    } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
+                                        $("#changeIcon").html("🌫")
+                                    } else {
+                                        $("#changeIcon").html("🌍")
+                                    }
+                                
                                     let cityPopulation = data.population.population
                                 
                                     let iso = data.country.annotations.currency.iso_code
@@ -459,32 +493,6 @@ window.onload = function () {
                                     img.src = wikiThumnail;
                                     var src = document.getElementById("thumnail");
                                     $(src).html(img)
-                                
-                                    // WEATHER ICONS
-                                
-                                    const getTime = data.countryTime.slice(11, 13)
-                                
-                                    // console.log(getTime)
-                                
-                                    // if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                                    
-                                    //     return (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
-                                    
-                                    // } else if (weatherDescription == "cloudy"){
-                                    //     $("#changeIcon").html("☁️")
-                                    // } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
-                                    //     $("#changeIcon").html("&#127783")
-                                    // } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                                    //     $("#changeIcon").html("&#127780")
-                                    // } else if (weatherDescription.includes("snow")){
-                                    //     $("#changeIcon").html("❄️")
-                                    // } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-                                    //     $("#changeIcon").html("⛈")
-                                    // } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
-                                    //     $("#changeIcon").html("🌫")
-                                    // } else {
-                                    //     $("#changeIcon").html("🌍")
-                                    // }
                                 
                                     // COVID
                                 
@@ -568,9 +576,9 @@ window.onload = function () {
                                             `<div style="text-align: center;">
                                             <a href="https://${linkClick}" target="blank">
                                             <img class="thumnail" id="thumnail" src="${thumnail}" alt="Picture of the location">
-                                            </a>
                                             <h4>${nearByName}</h4>
                                             <p>${summary}</p>
+                                            </a>
                                             </div>`
                                         ).openPopup()
                                     
@@ -581,11 +589,14 @@ window.onload = function () {
                                     
                                         var nearByName = poi[i].title
                                         var summary = poi[i].summary
+                                        var urlClick = poi[i].wikipediaUrl
     
                                         markerPlaces.bindPopup(
                                             `<div style="text-align: center;">
+                                            <a href="https://${urlClick}" target="blank">
                                             <h4>${nearByName}</h4>
                                             <p>${summary}</p>
+                                            </a>
                                             </div>`
                                         ).openPopup()
                                     
