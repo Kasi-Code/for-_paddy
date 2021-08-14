@@ -23,6 +23,8 @@
 	// print_r($decode["results"][0]["components"]["city"]);
 
 	$country = $decode["results"][0]["components"]["country"];
+	$country = str_replace(' ', '%20', $country);
+
 	$city = $decode["results"][0]["components"]["city"];
     $city;
 
@@ -47,7 +49,10 @@
 
         $decode = json_decode($result,true);
         $city = $decode["capital"];
+		
     }
+
+	$city = str_replace(' ', '%20', $city);
 
 	// // Near by Places
 	$url = "http://api.geonames.org/findNearbyWikipediaJSON?formatted=true&lat=".$_REQUEST['lat']."&lng=".$_REQUEST['long']."&username=coder_k&style=full";

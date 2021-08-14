@@ -36,9 +36,19 @@
     $lng = $decode["latlng"][1];	
 	$capitalCity = $decode["capital"];	
 
-	if ($_REQUEST['selCountry'] == "USA") {
-		$capitalCity = "washington";
-	}
+	// if ($_REQUEST['selCountry'] == "USA") {
+	// 	$capitalCity = "washington";
+	// }
+
+	// if ($_REQUEST['selCountry'] == "ARE") {
+	// 	$capitalCity = "Abu%20Dhabi";
+	// }
+
+	// if ($_REQUEST['selCountry'] == "IND") {
+	// 	$capitalCity = "New%20Delhi";
+	// }
+    
+	$capitalCity = str_replace(' ', '%20', $capitalCity);
 
 	// Get Wikipedia
 	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$capitalCity."&maxRows=10&username=coder_k&style=full";
@@ -132,7 +142,13 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["poi_nearByPlaces"] = $decode["geonames"];	
+
+	if(isset($decode['geonames'])){
+		$output["poi_nearByPlaces"] = $decode["geonames"];
+	} else {
+		$output["poi_nearByPlaces"] = NULL;
+	}
+	// $output["poi_nearByPlaces"] = $decode["geonames"];	
 
 	// POI
 
