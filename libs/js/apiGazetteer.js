@@ -165,10 +165,10 @@ window.onload = function () {
     
                         // COVID
                         let covidData = data.covid[0]
-                        $('#active').html("<h5>Active: </h5>" + covidData.Active);
-                        $('#confirmed').html("<h5>Confirmed: </h5>" + covidData.Confirmed);
-                        $('#deaths').html("<h5>Deaths: <h5>" + covidData.Deaths);
-                        $('#recovered').html("<h5>Recovered: </h5>" + covidData.Recovered);
+                        $('#active').html(covidData.Active);
+                        $('#confirmed').html(covidData.Confirmed);
+                        $('#deaths').html(covidData.Deaths);
+                        $('#recovered').html(covidData.Recovered);
                     
                         // CURRENCY COMPARING
                     
@@ -240,29 +240,24 @@ window.onload = function () {
                       
                         // THE MAP
 
-                        const poi = data.poi_nearByPlaces
-                        const poiFromWiki = data.placesNearBy
-                        // const poi2 = data.poi
+                        // Maker of your location
+                    
+                        var lat = data.country.geometry.lat
+                        var lng = data.country.geometry.lng
+                    
+                        var marker = L.marker([lat, lng]).addTo(mymap)
+                            marker.bindPopup("<h5>Hey! 🐾</h5>You are here 📍").openPopup()
+                            
+                        var circle = L.circle([lat, lng], {
+                            color: "red",
+                            fillColor: "yellow",
+                            fillOpacity: 0.5,
+                            radius: 30
+                        }).addTo(mymap)            
 
-                        for (let i = 0; i < poiFromWiki.length; i++) {
-                            var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng]).addTo(mymap)
-                                    
-                            var nearByName = poiFromWiki[i].title
-                            var summary = poiFromWiki[i].summary
-                            var thumnail = poiFromWiki[i].thumbnailImg
-                            var linkClick = poiFromWiki[i].wikipediaUrl
-    
-                            markerPlaces.bindPopup(
-                                `<div style="text-align: center;">
-                                <a href="https://${linkClick}" target="blank">
-                                <img class="thumnail" id="thumnail" src="${thumnail}" alt="Picture of the location">
-                                <h4>${nearByName}</h4>
-                                <p>${summary}</p>
-                                </a>
-                                </div>`
-                            ).openPopup()
-                                    
-                        }
+                        // Maker of places near by
+
+                        const poi = data.poi_nearByPlaces
     
                         for (let i = 0; i < poi.length; i++) {
                             var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
@@ -278,39 +273,10 @@ window.onload = function () {
                                 <p>${summary}</p>
                                 </a>
                                 </div>`
-                            ).openPopup()
-                        }
-                    
-                        var lat = data.country.geometry.lat
-                        var lng = data.country.geometry.lng
-                    
-                        mymap.setView([lat, lng], 14);
-                    
-                        var marker = L.marker([lat, lng]).addTo(mymap)
-                            marker.bindPopup("<h5>Hey! 🐾</h5>You are here 📍").openPopup()
-                        var circle = L.circle([lat, lng], {
-                            color: "red",
-                            fillColor: "#f03",
-                            fillOpacity: 0.5,
-                            radius: 10
-                        }).addTo(mymap)
-    
-                        // var featureGroup = L.featureGroup(marker).addTo(mymap);
-                        // mymap.fitBounds(featureGroup.getBounds());
-                        // HIGHLIGHT COUNTRY BORDER
-                        // const getCountryArr = data.countryBorders
-                        let geojsonFeature = data.countryBorders
-                        // console.log(geojsonFeature)
-    
-                        for (i = 0; i < geojsonFeature.length; i++) {
-                            const name = geojsonFeature[i].properties.name
-                            
-                            if (countryName == name) {
-                                geojsonFeature = geojsonFeature[i]
-                            }
-    
-                        }
-                        L.geoJSON(geojsonFeature).addTo(mymap)
+                            )
+                        }                   
+                        
+                        mymap.setView([lat, lng], 14); // <-- Set the center on the map with your location
                     },
                     error: function(error) {
                         alert(`loading failed: ${error}`)
@@ -338,7 +304,7 @@ window.onload = function () {
                     name: country, 
                     code: countryObject[i].properties.iso_a3})
  
-                autocomplete(document.getElementById("myInput"), countries.map(country => country.name));
+                autocomplete(document.getElementById("myInput"), countries.map(country => country.name).sort());
             
                 function autocomplete(inp, arr) {
                 
@@ -498,10 +464,10 @@ window.onload = function () {
                                 
                                     let covidData = data.covid[0]
                                 
-                                    $('#active').html("Active: " + covidData.Active);
-                                    $('#confirmed').html("Confirmed: " + covidData.Confirmed);
-                                    $('#deaths').html("Deaths: " + covidData.Deaths);
-                                    $('#recovered').html("Recovered: " + covidData.Recovered);
+                                    $('#active').html(covidData.Active);
+                                    $('#confirmed').html(covidData.Confirmed);
+                                    $('#deaths').html(covidData.Deaths);
+                                    $('#recovered').html(covidData.Recovered);
                                 
                                     // CURRENCY COMPARING
                                 
@@ -560,9 +526,6 @@ window.onload = function () {
     
                                     const poi = data.poi_nearByPlaces
                                     const poiFromWiki = data.placesNearBy
-                                    // const poi2 = data.poi
-                                
-                                    // console.log(poi2)
 
                                     for (let i = 0; i < poiFromWiki.length; i++) {
                                         var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng]).addTo(mymap)
@@ -606,7 +569,7 @@ window.onload = function () {
                                     var lng = data.wikipedia.lng
                                     var wikiURL = data.wikipedia.wikipediaUrl
                                 
-                                    mymap.setView([lat, lng], 14);
+                                    // mymap.setView([lat, lng], 14);
                                 
                                     var marker = L.marker([lat, lng]).addTo(mymap)
                                         marker.bindPopup(
@@ -624,8 +587,6 @@ window.onload = function () {
                                                     fillOpacity: 0.5,
                                                     radius: 50
                                             }).addTo(mymap)
-                                    // var featureGroup = L.featureGroup(markers).addTo(map);
-                                    // map.fitBounds(featureGroup.getBounds());
                                         
                                     // HIGHLIGHT COUNTRY BORDER
                                         
@@ -642,7 +603,15 @@ window.onload = function () {
                                             
                                         }
                                     
-                                    L.geoJSON(geojsonFeature).addTo(mymap)
+                                    L.geoJSON(geojsonFeature, { color: "red" }).addTo(mymap) // <-- highlighting border
+
+                                    let features = L.geoJSON(geojsonFeature) // <-- getting border for bound
+
+                                    // display the whole border into map
+    
+                                    mymap.fitBounds(features.getBounds(), {
+                                        padding: [20, 20]
+                                    });
                                 },
                                 error: function(request,error) {
                                     alert(request)

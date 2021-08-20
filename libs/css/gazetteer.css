@@ -91,15 +91,38 @@ body {
   /* justify-content: space-evenly; */
   /* flex-direction: row;  */
   text-align: center;
-  /* padding-left: 15vh; */
-  align-items: center;
   z-index: 3;
 }
-.covid p {
+.covidHeading {
+  background-color: #dddddd;
+  padding: 8px;
+}
+.covidResults {
   margin: 5px;
   display: flex;
-  flex-direction: row; 
-  justify-content: space-evenly;
+  flex-direction: column; 
+  margin-left: 10%;
+  /* justify-content: space-evenly; */
+}
+.covidResultsList {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  /* border: 1px solid #dddddd; */
+  text-align: left;
+  padding: 8px;
+  padding-left: 10%;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 .clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
   display: none;
@@ -309,8 +332,5 @@ a:hover, .wikipedia:hover {
     .dataInfo {
         padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
         width: 380px;
-    }
-    .covid {
-      padding-left: 2vh;
     }
 }

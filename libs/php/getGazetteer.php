@@ -159,6 +159,7 @@
 
 	//Print data
 	$output["countryBorders"] = $json_data["features"];	
+	// $output["codeAndNAme"] = $json_data["features"]["properties"];
 	// print_r($json_data);
 
 	// Time
