@@ -86,23 +86,6 @@
 	$lat1 = $decode["coord"]["lat"];
 	$lng1 = $decode["coord"]["lon"];
 
-	// // Get Population
-	// $url = "https://restcountries.eu/rest/v2/capital/".$city;
-
-	// $ch = curl_init();
-	// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	// curl_setopt($ch, CURLOPT_URL,$url);
-
-	// $result=curl_exec($ch);
-
-	// curl_close($ch);
-
-	// $decode = json_decode($result,true);
-	// $lat = $decode[0]["latlng"][0];	
-    // $lng = $decode[0]["latlng"][1];	
-	// $output["population"] = $decode;	
-
 	// // Get Wikipedia
 	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$city."&maxRows=10&username=coder_k&style=full";
 
@@ -152,14 +135,14 @@
 
 	// COUNTRY BORDER - READ JSON FILE
 
-	$json = file_get_contents("countryBorders.geo.json");
+	// $json = file_get_contents("../../vendors/js/countryBorders.geo.json");
 
-	//Decode JSON
-	$json_data = json_decode($json,true);
+	// //Decode JSON
+	// $json_data = json_decode($json,true);
 
-	//Print data
-	$output["countryBorders"] = $json_data["features"];	
-	// $output["codeAndNAme"] = $json_data["features"]["properties"];
+	// //Print data
+	// $countryBorders = $json_data["features"];	
+	// $output["countryBorders"] = $countryBorders;	
 	// print_r($json_data);
 
 	// Time
@@ -178,7 +161,7 @@
 	$output["countryTime"] = $decode["time"];	
 
 	// News
-	$url = "https://newsapi.org/v2/everything?q=apple&from=2021-07-20&to=2021-07-20&sortBy=popularity&apiKey=f6da9dbb1b344948aa2545a0fe23c83f";
+	$url = "https://newsapi.org/v2/everything?q=apple&from=2021-08-20&to=2021-08-20&sortBy=popularity&apiKey=f6da9dbb1b344948aa2545a0fe23c83f";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -191,20 +174,6 @@
 
 	$decode = json_decode($result,true);
 	$output["news"] = $decode;	
-
-	// $url = "http://api.geonames.org/findNearbyPOIsOSMJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
-
-	// $ch = curl_init();
-	// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	// curl_setopt($ch, CURLOPT_URL,$url);
-
-	// $result=curl_exec($ch);
-
-	// curl_close($ch);
-
-	// $decode = json_decode($result,true);
-	// $output["poi"] = $decode["poi"];	
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";

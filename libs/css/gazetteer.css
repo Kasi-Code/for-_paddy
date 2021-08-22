@@ -96,31 +96,28 @@ body {
 .covidHeading {
   background-color: #dddddd;
   padding: 8px;
-}
-.covidResults {
-  margin: 5px;
-  display: flex;
-  flex-direction: column; 
-  margin-left: 10%;
-  /* justify-content: space-evenly; */
-}
-.covidResultsList {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: space-evenly; */
+  border-top-left-radius: 20px; border-top-right-radius: 20px;
 }
 table {
+  position: relative;
   border-collapse: collapse;
   width: 100%;
 }
 
 td {
   /* border: 1px solid #dddddd; */
-  text-align: left;
   padding: 8px;
-  padding-left: 10%;
 }
-
+.covidResultTittle {
+  /* position: absolute; */
+  text-align: left;
+  left: 20%;
+}
+.covidResultNumber {
+  position: absolute;
+  text-align: right;
+  right: 5%;
+}
 tr:nth-child(even) {
   background-color: #dddddd;
 }
@@ -236,6 +233,9 @@ button {
  .newsButton:hover {
   background-color: green;
  }
+
+ /* SEARCH INPUT */
+
 .autocomplete {
   /*the container must be positioned relative:*/
   position: relative;
@@ -288,9 +288,105 @@ input[type=text] {
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+
+/* SELECT OPTION */
+
+/*the container must be positioned relative:*/
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+
+.select-selected {
+  color: #818181;
+  padding: 12px 16px;
+  background-color: rgb(240, 240, 240);
+  width: 300px;
+  margin-left: auto; margin-right: auto;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent white transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: black;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  width: 300px;
+  margin-left: auto; margin-right: auto;
+  max-height: 80vh;
+  overflow: auto;
+  border-top-left-radius: 20px; border-top-right-radius: 20px;
+  z-index: 99;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* .select-selected {
+  background-color: black;  
+}
+.countryOption {
+  align-items: center;
+  padding: 10px;
+  width: 300px;
+  font-size: 16px;
+  border-radius: 10px;
+} */
+
+/* SELECT OPTION END */
+
 .panel {
   padding: 10px;
   display: none;
+  text-align: center;
+  align-items: center;
+}
+.panelInfo {
+  width: 75%;
+  text-align: left;
+  margin-left: auto; margin-left: auto;
+}
+.wikiSummary {
+  text-align: justify;
 }
 .flip {
   margin-top: -20px;
@@ -308,11 +404,12 @@ input[type=text] {
 }
 .search-container {
   top: 0%;
+  display: none;
 }
-.covidSlide:hover, .newsSlide:hover, .infoButton:hover {
+.covidSlide:hover, .newsSlide:hover, .infoButton:hover, .searchButton:hover {
   cursor: pointer;
 }
-.covidButton, .newsButton, .infoButton {
+.covidButton, .newsButton, .infoButton, .searchButton {
   padding-top: 10px; padding-bottom: 10px;
 }
 a:link, a:visited {
@@ -332,5 +429,10 @@ a:hover, .wikipedia:hover {
     .dataInfo {
         padding-left: 2vh; padding-right: 2vh; padding-top: 2vh; padding-bottom: 2vh;
         width: 380px;
+    }
+    .panelInfo {
+      width: 85%;
+      text-align: left;
+      margin-left: auto; margin-left: auto;
     }
 }

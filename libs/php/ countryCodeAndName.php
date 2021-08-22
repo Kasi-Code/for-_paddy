@@ -5,19 +5,25 @@
 
     $executionStartTime = microtime(true); 
 
-	$json = file_get_contents("countryBorders.geo.json");
+	// Read JSON file
+	$json = file_get_contents('countryBorders.geo.json');
 
-	//Decode JSON
+	// Decode JSON
 	$json_data = json_decode($json,true);
 
-	//Print data
-	$output["codeAndName"] = $json_data["features"];	
+	// Get individual data
+	$nameAndISO = $json_data["features"];	
 
-    $output['status']['code'] = "200";
-	$output['status']['name'] = "ok";
-	$output['status']['description'] = "success";
-	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
-	// $output['data'] = $decode['weatherObservations'];
+	for ($i = 0; $i < count($nameAndISO); $i++) {
+		$name[] = $nameAndISO[$i]["properties"]["name"];
+		$iso[] = $nameAndISO[$i]["properties"]["iso_a3"];
+		// $geometry[] = $nameAndISO[$i]["geometry"];
+	}
+
+	// Print data for JS
+	$output["name"] = $name;
+	$output["iso"] = $iso;	
+	// $output["geometry"] = $geometry;
     
     header('Content-Type: application/json; charset=UTF-8');
 	// echo "Lat: ".$_REQUEST['lat']."long: ".$_REQUEST['long'];

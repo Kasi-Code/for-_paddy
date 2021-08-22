@@ -16,14 +16,14 @@
 	$nameAndISO = $json_data["features"];	
 
 	for ($i = 0; $i < count($nameAndISO); $i++) {
-		$name[] = $nameAndISO[$i]["properties"]["name"];
-		$iso[] = $nameAndISO[$i]["properties"]["iso_a3"];
+		// $name[] = $nameAndISO[$i]["properties"]["name"];
+		// $iso[] = $nameAndISO[$i]["properties"]["iso_a3"];
 		$geometry[] = $nameAndISO[$i]["geometry"];
 	}
 
-	$output["name"] = $name;
-	$output["iso"] = $iso;
-	$output["geometry"] = $geometry;
+	// $output["name"] = $name;
+	// $output["iso"] = $iso;
+	// $output["geometry"] = $geometry;
 
 	// $countryBorders = $json_data["features"];	
 	// $output["countryBorders"] = $countryBorders;	

@@ -63,6 +63,21 @@ window.onload = function () {
                 }
 
         });
+
+        // SEARCH SWITCHES
+
+        $(".searchSwitch").click(function(){
+
+            $(".select-container").slideToggle("fast");
+
+            // $(".select-container").hide("fast");
+            $(".search-container").show("fast");
+
+                if ($(".search-container").is(":visible")) {
+                    $(".select-container").hide("fast")
+                }
+
+        });
                 
         $("#map").click(function(){
             if ($(".panel, .newsBox, .covid").is(":visible")) {
@@ -79,7 +94,7 @@ window.onload = function () {
                     url: `/libs/php/getGazetteer.php?lat=${lat}&long=${long}`,
                     success: function(data) {
 
-                        console.log(data)
+                        // console.log(data)
 
                         $("#preloader").css("display", "none").fadeOut('slow')
     
@@ -125,10 +140,6 @@ window.onload = function () {
                         let iso = data.country.annotations.currency.iso_code
                         let currencyName = data.country.annotations.currency.name
                         let currencySymbol = data.country.annotations.currency.symbol   
-                        let getCurrencies = data.currency.rates
-                        let compareToUSD = data.currency.base
-                        let compareToEUR = "EUR"
-                        let compareToGBP = "GBP"
                         
                         // console.log(localCurrency)
                         
@@ -140,8 +151,8 @@ window.onload = function () {
                         // let newton = celsius * ( 23 / 100 )
                         celsius = Math.floor(celsius)
                         
-                        $('#countryName').html("Country: " + countryName);
-                        $('#cityName').html("City: " + cityName);
+                        $('#countryName').html("<b>Country:</b> " + countryName);
+                        $('#cityName').html("<b>City:</b> " + cityName);
                         $('#flag').html(countryFlag);
                         $('#time').html(`(${showTime})`);
                         
@@ -150,7 +161,7 @@ window.onload = function () {
                         
                         // $('#population').html("Population: " + cityPopulation);
                         
-                        $('#isoCode').html("Currency; " + iso + ", ");
+                        $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
                         $('#currencyName').html(currencyName);
                         $('#currencySymbal').html(currencySymbol);
     
@@ -171,10 +182,15 @@ window.onload = function () {
                         $('#recovered').html(covidData.Recovered);
                     
                         // CURRENCY COMPARING
+
+                        let getCurrencies = data.currency.rates
+                        let compareToUSD = data.currency.base
+                        let compareToEUR = "EUR"
+                        let compareToGBP = "GBP"
                     
                         const listOfCurrency = Object.entries(getCurrencies)
                         for (const [cName, cValue] of listOfCurrency) {
-                            $('#exchangeRate').html("Exchange rate; ");  
+                            $('#exchangeRate').html("<b>Exchange rate;</b> ");  
                             if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
                                 // console.log(cValue)
                                 $('#localCurrency').html(cValue);    
@@ -238,6 +254,21 @@ window.onload = function () {
                             parentNode.appendChild(childNode);
                         }
                       
+                        // CHANGING PIN ICON
+
+                        var greenIcon = L.icon({
+                            iconUrl: '../media/grey.png',
+                            // shadowUrl: 'leaf-shadow.png',
+                        
+                            iconSize:     [38, 45], // size of the icon
+                            // shadowSize:   [50, 64], // size of the shadow
+                            iconAnchor:   [19, 22.5], // point of the icon which will correspond to marker's location
+                            // shadowAnchor: [4, 62],  // the same for the shadow
+                            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                        });
+
+                        // L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map);
+
                         // THE MAP
 
                         // Maker of your location
@@ -245,7 +276,7 @@ window.onload = function () {
                         var lat = data.country.geometry.lat
                         var lng = data.country.geometry.lng
                     
-                        var marker = L.marker([lat, lng]).addTo(mymap)
+                        var marker = L.marker([lat, lng]/*, {icon: greenIcon}*/).addTo(mymap)
                             marker.bindPopup("<h5>Hey! 🐾</h5>You are here 📍").openPopup()
                             
                         var circle = L.circle([lat, lng], {
@@ -284,6 +315,129 @@ window.onload = function () {
             })          
     })
 
+    // SELECT INPUT
+
+    $.ajax({
+        type: "GET",
+        url: "/libs/php/getGazetteerBySearch.php",
+        success: function(data) {
+
+            // console.log(data)
+
+            const countryName = data.name
+            const countryISO = data.iso
+            
+            for ( var i = 0; i < countryName.length; i++ ) {
+            
+                let country = countryName[i]
+
+                countries.push({
+                    name: country, 
+                    code: countryISO[i]})
+            }
+
+            listOfCrounty(countries.map(country => country.name).sort());
+            
+            function listOfCrounty(name) {
+
+                var selectList = document.getElementById("countryOption");
+                
+                var option = document.createElement("option");
+                
+                for (i = 0; i < name.length; i++) {
+
+                    // console.log(array[i])
+                    var option = document.createElement("option");
+                    // option.value = name[i];
+                    option.text = name[i];
+                    // option.style.borderRadius = "20px";
+
+                    selectList.appendChild(option);
+                }
+                    
+            }
+
+            var x, i, j, l, ll, selElmnt, a, b, c;
+            /*look for any elements with the class "custom-select":*/
+            x = document.getElementsByClassName("custom-select");
+            l = x.length;
+            for (i = 0; i < l; i++) {
+              selElmnt = x[i].getElementsByTagName("select")[0];
+              ll = selElmnt.length;
+              /*for each element, create a new DIV that will act as the selected item:*/
+              a = document.createElement("DIV");
+              a.setAttribute("class", "select-selected");
+              a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+              x[i].appendChild(a);
+              /*for each element, create a new DIV that will contain the option list:*/
+              b = document.createElement("DIV");
+              b.setAttribute("class", "select-items select-hide");
+              for (j = 1; j < ll; j++) {
+                /*for each option in the original select element,
+                create a new DIV that will act as an option item:*/
+                c = document.createElement("DIV");
+                c.innerHTML = selElmnt.options[j].innerHTML;
+                c.addEventListener("click", function(e) {
+                    /*when an item is clicked, update the original select box,
+                    and the selected item:*/
+                    var y, i, k, s, h, sl, yl;
+                    s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                    sl = s.length;
+                    h = this.parentNode.previousSibling;
+                    for (i = 0; i < sl; i++) {
+                      if (s.options[i].innerHTML == this.innerHTML) {
+                        s.selectedIndex = i;
+                        h.innerHTML = this.innerHTML;
+                        y = this.parentNode.getElementsByClassName("same-as-selected");
+                        yl = y.length;
+                        for (k = 0; k < yl; k++) {
+                          y[k].removeAttribute("class");
+                        }
+                        this.setAttribute("class", "same-as-selected");
+                        break;
+                      }
+                    }
+                    h.click();
+                });
+                b.appendChild(c);
+              }
+              x[i].appendChild(b);
+              a.addEventListener("click", function(e) {
+                  /*when the select box is clicked, close any other select boxes,
+                  and open/close the current select box:*/
+                  e.stopPropagation();
+                  closeAllSelect(this);
+                  this.nextSibling.classList.toggle("select-hide");
+                  this.classList.toggle("select-arrow-active");
+                });
+            }
+            function closeAllSelect(elmnt) {
+              /*a function that will close all select boxes in the document,
+              except the current select box:*/
+              var x, y, i, xl, yl, arrNo = [];
+              x = document.getElementsByClassName("select-items");
+              y = document.getElementsByClassName("select-selected");
+              xl = x.length;
+              yl = y.length;
+              for (i = 0; i < yl; i++) {
+                if (elmnt == y[i]) {
+                  arrNo.push(i)
+                } else {
+                  y[i].classList.remove("select-arrow-active");
+                }
+              }
+              for (i = 0; i < xl; i++) {
+                if (arrNo.indexOf(i)) {
+                  x[i].classList.add("select-hide");
+                }
+              }
+            }
+            /*if the user clicks anywhere outside the select box,
+            then close all select boxes:*/
+            document.addEventListener("click", closeAllSelect);
+        }
+      })
+
 
     // SEARCH INPUT
 
@@ -294,15 +448,16 @@ window.onload = function () {
 
             // console.log(data)
 
-            const countryObject = data.countryBorders
+            const countryName = data.name
+            const countryISO = data.iso
             
-            for ( var i = 0; i < countryObject.length; i++ ) {
+            for ( var i = 0; i < countryName.length; i++ ) {
             
-                let country = countryObject[i].properties.name
+                let country = countryName[i]
 
                 countries.push({
                     name: country, 
-                    code: countryObject[i].properties.iso_a3})
+                    code: countryISO[i]})
  
                 autocomplete(document.getElementById("myInput"), countries.map(country => country.name).sort());
             
@@ -412,10 +567,6 @@ window.onload = function () {
                                     let iso = data.country.annotations.currency.iso_code
                                     let currencyName = data.country.annotations.currency.name
                                     let currencySymbol = data.country.annotations.currency.symbol   
-                                    let getCurrencies = data.currency.rates
-                                    let compareToUSD = data.currency.base
-                                    let compareToEUR = "EUR"
-                                    let compareToGBP = "GBP"
                                 
                                     // console.log(localCurrency)
                                 
@@ -428,17 +579,17 @@ window.onload = function () {
                                     // let newton = celsius * ( 23 / 100 )
                                     celsius = Math.floor(celsius)
                                 
-                                    $('#countryName').html("Country: " + countryName);
-                                    $('#cityName').html("Capital City: " + cityName);
+                                    $('#countryName').html("<b>Country:</b> " + countryName);
+                                    $('#cityName').html("<b>Capital City:</b> " + cityName);
                                     $('#flag').html(countryFlag);
                                     $('#time').html(`(${showTime})`);
                                 
                                     $('#weatherCondition').html(weatherDescription.toUpperCase());
                                     $('#temperature').html(celsius + "˚C");
                                 
-                                    $('#population').html("Population: " + cityPopulation);
+                                    $('#population').html("<b>Population:</b> " + cityPopulation);
                                 
-                                    $('#isoCode').html("Currency; " + iso + ", ");
+                                    $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
                                     $('#currencyName').html(currencyName);
                                     $('#currencySymbal').html(currencySymbol);
                                 
@@ -470,11 +621,16 @@ window.onload = function () {
                                     $('#recovered').html(covidData.Recovered);
                                 
                                     // CURRENCY COMPARING
+
+                                    let getCurrencies = data.currency.rates
+                                    let compareToUSD = data.currency.base
+                                    let compareToEUR = "EUR"
+                                    let compareToGBP = "GBP"
                                 
                                     const listOfCurrency = Object.entries(getCurrencies)
                                     for (const [cName, cValue] of listOfCurrency) {
                                     
-                                        $('#exchangeRate').html("Exchange rate; ");   
+                                        $('#exchangeRate').html("<b>Exchange rate;</b> ");   
                                     
                                         if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
                                             // console.log(cValue)
@@ -614,7 +770,7 @@ window.onload = function () {
                                     });
                                 },
                                 error: function(request,error) {
-                                    alert(request)
+                                    // alert(request)
                                     $(".loading").css("display", "none");
                                     $(".showCountryName").css("display", "block");
                                     $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
@@ -683,12 +839,5 @@ window.onload = function () {
                 }
             }   
         },
-        // error: function(request,error) {
-        //     alert(request)
-        //     $(".loading").css("display", "none");
-        //     $(".showCountryName").css("display", "block");
-        //     $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
-        //     $('#flag').html(`😔`);
-        // }
     })
 }

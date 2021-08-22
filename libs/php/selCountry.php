@@ -3,9 +3,17 @@
     ini_set('display_errors', 'On');
     error_reporting(E_ALL);
 
-    $executionStartTime = microtime(true); 
+    $executionStartTime = microtime(true);
 
-	$json = file_get_contents("countryBorders.geo.json");
+	// Export Var from anohter PHP file
+
+	// include 'getGazetteerBySearch.php';
+
+	// $geometry;
+
+	// Get json file
+
+	$json = file_get_contents("../../vendors/js/countryBorders.geo.json");
 
 	//Decode JSON
 	$json_data = json_decode($json,true);
@@ -25,9 +33,6 @@
 
 	$result=curl_exec($ch);
 
-	// echo $result;
-	// echo "==================";
-
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
@@ -35,18 +40,6 @@
 	$lat = $decode["latlng"][0];	
     $lng = $decode["latlng"][1];	
 	$capitalCity = $decode["capital"];	
-
-	// if ($_REQUEST['selCountry'] == "USA") {
-	// 	$capitalCity = "washington";
-	// }
-
-	// if ($_REQUEST['selCountry'] == "ARE") {
-	// 	$capitalCity = "Abu%20Dhabi";
-	// }
-
-	// if ($_REQUEST['selCountry'] == "IND") {
-	// 	$capitalCity = "New%20Delhi";
-	// }
     
 	$capitalCity = str_replace(' ', '%20', $capitalCity);
 
@@ -148,7 +141,6 @@
 	} else {
 		$output["poi_nearByPlaces"] = NULL;
 	}
-	// $output["poi_nearByPlaces"] = $decode["geonames"];	
 
 	// POI
 
@@ -186,7 +178,7 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["covid"] = $decode;
+	$output["covid"] = $decode; 
 
     $output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
