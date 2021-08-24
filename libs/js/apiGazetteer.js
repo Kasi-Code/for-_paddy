@@ -1,6 +1,7 @@
 // GLOBAL
 
-let countries = []
+let countriesForSearch = []
+let countriesForSelect = []
 
 // INITIATE MAP
 
@@ -68,14 +69,27 @@ window.onload = function () {
 
         $(".searchSwitch").click(function(){
 
-            $(".select-container").slideToggle("fast");
+            // $(".select-container").slideToggle("fast");
 
-            // $(".select-container").hide("fast");
+            $(".select-container").hide("fast");
             $(".search-container").show("fast");
 
-                if ($(".search-container").is(":visible")) {
-                    $(".select-container").hide("fast")
-                }
+            $(".searchSwitch").hide("fast");
+            $(".selectSwitch").show("fast");
+            // $(".select-container").hide("fast");
+
+        });
+
+        $(".selectSwitch").click(function(){
+
+            // $(".select-container").slideToggle("fast");
+
+            $(".select-container").show("fast");
+            $(".search-container").hide("fast");
+
+            $(".searchSwitch").show("fast");
+            $(".selectSwitch").hide("fast");
+            // $(".select-container").hide("fast");
 
         });
                 
@@ -319,7 +333,7 @@ window.onload = function () {
 
     $.ajax({
         type: "GET",
-        url: "/libs/php/getGazetteerBySearch.php",
+        url: "/libs/php/countryCodeAndName.php",
         success: function(data) {
 
             // console.log(data)
@@ -331,12 +345,12 @@ window.onload = function () {
             
                 let country = countryName[i]
 
-                countries.push({
+                countriesForSelect.push({
                     name: country, 
                     code: countryISO[i]})
             }
 
-            listOfCrounty(countries.map(country => country.name).sort());
+            listOfCrounty(countriesForSelect.map(country => country.name).sort());
             
             function listOfCrounty(name) {
 
@@ -358,28 +372,27 @@ window.onload = function () {
             }
 
             var x, i, j, l, ll, selElmnt, a, b, c;
-            /*look for any elements with the class "custom-select":*/
+            
             x = document.getElementsByClassName("custom-select");
             l = x.length;
             for (i = 0; i < l; i++) {
               selElmnt = x[i].getElementsByTagName("select")[0];
+              selElmnt.setAttribute("id", "mySelect");
               ll = selElmnt.length;
-              /*for each element, create a new DIV that will act as the selected item:*/
+              
               a = document.createElement("DIV");
               a.setAttribute("class", "select-selected");
               a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
               x[i].appendChild(a);
-              /*for each element, create a new DIV that will contain the option list:*/
+              
               b = document.createElement("DIV");
               b.setAttribute("class", "select-items select-hide");
               for (j = 1; j < ll; j++) {
-                /*for each option in the original select element,
-                create a new DIV that will act as an option item:*/
+                
                 c = document.createElement("DIV");
                 c.innerHTML = selElmnt.options[j].innerHTML;
                 c.addEventListener("click", function(e) {
-                    /*when an item is clicked, update the original select box,
-                    and the selected item:*/
+                    
                     var y, i, k, s, h, sl, yl;
                     s = this.parentNode.parentNode.getElementsByTagName("select")[0];
                     sl = s.length;
@@ -398,6 +411,279 @@ window.onload = function () {
                       }
                     }
                     h.click();
+
+                    // WHEN X SELECT COUNTRY
+
+                    event.preventDefault();
+                        
+                    $(".loading").css("display", "block");
+                    $("#loading").html("loading...");
+                    $(".showCountryName").css("display", "none");
+                
+                    const selCountry = document.getElementById("mySelect").value;
+                    
+                    // console.log(selCountry)
+
+                    $.ajax({
+                        type: "GET",
+                        url: `/libs/php/selCountry.php?selCountry=${countriesForSelect.find(c => c.name == selCountry).code}`,
+                        success: function(data) {
+
+                            $(".loading").css("display", "none");
+                            $(".showCountryName").css("display", "block");
+                        
+                            console.log(data)
+                        
+                            let countryName = data.country.components.country
+                            let cityName = data.population.capital
+                            let countryFlag = data.country.annotations.flag
+                        
+                            let showTime = data.countryTime.slice(11, 16)
+                        
+                            let weatherDescription = data.weather.weather[0].description
+                            let weatherTemp = data.weather.main.temp
+                        
+                            // WEATHER ICONS
+                        
+                            const getTime = data.countryTime.slice(11, 13)
+                        
+                            // console.log(getTime)
+                        
+                            if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
+                            
+                                (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
+                            
+                            } else if (weatherDescription.includes("cloudy")){
+                                $("#changeIcon").html("☁️")
+                            } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                                $("#changeIcon").html("&#127783")
+                            } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
+                                $("#changeIcon").html("&#127780")
+                            } else if (weatherDescription.includes("snow")){
+                                $("#changeIcon").html("❄️")
+                            } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
+                                $("#changeIcon").html("⛈")
+                            } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
+                                $("#changeIcon").html("🌫")
+                            } else {
+                                $("#changeIcon").html("🌍")
+                            }
+                        
+                            let cityPopulation = data.population.population
+                        
+                            let iso = data.country.annotations.currency.iso_code
+                            let currencyName = data.country.annotations.currency.name
+                            let currencySymbol = data.country.annotations.currency.symbol   
+                        
+                            // console.log(localCurrency)
+                        
+                            let wikiLink = data.wikipedia.wikipediaUrl
+                            let wikiSummary = data.wikipedia.summary
+                            let wikiThumnail = data.wikipedia.thumbnailImg
+
+                            const kelvin = weatherTemp
+                            let celsius = kelvin - 273.15
+                            // let newton = celsius * ( 23 / 100 )
+                            celsius = Math.floor(celsius)
+                        
+                            $('#countryName').html("<b>Country:</b> " + countryName);
+                            $('#cityName').html("<b>Capital City:</b> " + cityName);
+                            $('#flag').html(countryFlag);
+                            $('#time').html(`(${showTime})`);
+                        
+                            $('#weatherCondition').html(weatherDescription.toUpperCase());
+                            $('#temperature').html(celsius + "˚C");
+                        
+                            $('#population').html("<b>Population:</b> " + cityPopulation);
+                        
+                            $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
+                            $('#currencyName').html(currencyName);
+                            $('#currencySymbal').html(currencySymbol);
+                        
+                            // WIKI LINK
+                        
+                            $('#essayIcon').html("&#128220 ");
+                            $('#wikiSummary').html(wikiSummary);
+                        
+                            var a = document.querySelector('.wikipedia');
+                                a.href = `http://${wikiLink}`;
+                            $('#wikiLink').html(`Wikipedia links`);
+                            $('#wikiLinkIcon').html(`🌐 `);
+                        
+                            // IMAGE FOR PIN LOCATION
+                        
+                            var img = document.createElement("img");
+                        
+                            img.src = wikiThumnail;
+                            var src = document.getElementById("thumnail");
+                            $(src).html(img)
+                        
+                            // COVID
+                        
+                            let covidData = data.covid[0]
+                        
+                            $('#active').html(covidData.Active);
+                            $('#confirmed').html(covidData.Confirmed);
+                            $('#deaths').html(covidData.Deaths);
+                            $('#recovered').html(covidData.Recovered);
+                        
+                            // CURRENCY COMPARING
+
+                            let getCurrencies = data.currency.rates
+                            let compareToUSD = data.currency.base
+                            let compareToEUR = "EUR"
+                            let compareToGBP = "GBP"
+                        
+                            const listOfCurrency = Object.entries(getCurrencies)
+                            for (const [cName, cValue] of listOfCurrency) {
+                            
+                                $('#exchangeRate').html("<b>Exchange rate;</b> ");   
+                            
+                                if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
+                                    // console.log(cValue)
+                                    $('#localCurrency').html(cValue);    
+                                
+                                    for (const [cName, cValue] of listOfCurrency) {
+                                        if (compareToUSD == cName) {  
+                                            $('#secondCurrency').html("To USD $" + cValue); 
+                                        
+                                            for (const [cName, cValue] of listOfCurrency) {
+                                                if (compareToEUR == cName) {  
+                                                    $('#thirdCurrency').html("To EUR €" + cValue);                        
+                                                }
+                                            }                           
+                                        }
+                                    }                    
+                                } else if (iso == cName && iso != compareToGBP && iso != compareToEUR) {
+                                    $('#localCurrency').html(cValue);    
+                                
+                                    for (const [cName, cValue] of listOfCurrency) {
+                                        if (compareToGBP == cName) {  
+                                            $('#secondCurrency').html("To GBP £" + cValue); 
+
+                                            for (const [cName, cValue] of listOfCurrency) {
+                                                if (compareToEUR == cName) {  
+                                                    $('#thirdCurrency').html("To EUR €" + cValue);                        
+                                                }
+                                            }                           
+                                        }
+                                    }                    
+                                } else if (iso == cName && iso != compareToGBP && iso != compareToUSD) {
+                                    $('#localCurrency').html(cValue);    
+                                
+                                    for (const [cName, cValue] of listOfCurrency) {
+                                        if (compareToUSD == cName) {  
+                                            $('#secondCurrency').html("To USD $" + cValue); 
+
+                                            for (const [cName, cValue] of listOfCurrency) {
+                                                if (compareToGBP == cName) {  
+                                                    $('#thirdCurrency').html("To BGP £" + cValue);                        
+                                                }
+                                            }                           
+                                        }
+                                    }                    
+                                }
+                            }
+                        
+                            // THE MAP
+
+                            const poi = data.poi_nearByPlaces
+                            const poiFromWiki = data.placesNearBy
+
+                            for (let i = 0; i < poiFromWiki.length; i++) {
+                                var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng]).addTo(mymap)
+                            
+                                var nearByName = poiFromWiki[i].title
+                                var summary = poiFromWiki[i].summary
+                                var thumnail = poiFromWiki[i].thumbnailImg
+                                var linkClick = poiFromWiki[i].wikipediaUrl
+
+                                markerPlaces.bindPopup(
+                                    `<div style="text-align: center;">
+                                    <a href="https://${linkClick}" target="blank">
+                                    <img class="thumnail" id="thumnail" src="${thumnail}" alt="Picture of the location">
+                                    <h4>${nearByName}</h4>
+                                    <p>${summary}</p>
+                                    </a>
+                                    </div>`
+                                ).openPopup()
+                            
+                            }
+                        
+                            for (let i = 0; i < poi.length; i++) {
+                                var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
+                            
+                                var nearByName = poi[i].title
+                                var summary = poi[i].summary
+                                var urlClick = poi[i].wikipediaUrl
+
+                                markerPlaces.bindPopup(
+                                    `<div style="text-align: center;">
+                                    <a href="https://${urlClick}" target="blank">
+                                    <h4>${nearByName}</h4>
+                                    <p>${summary}</p>
+                                    </a>
+                                    </div>`
+                                ).openPopup()
+                            
+                            }
+                        
+                            var lat = data.wikipedia.lat
+                            var lng = data.wikipedia.lng
+                            var wikiURL = data.wikipedia.wikipediaUrl
+                        
+                            // mymap.setView([lat, lng], 14);
+                        
+                            var marker = L.marker([lat, lng]).addTo(mymap)
+                                marker.bindPopup(
+                                    `<div style="text-align: center;">
+                                    <a href="https://${wikiURL}" target="blank">
+                                    <img class="thumnail" id="thumnail" src="${wikiThumnail}" alt="Picture of the location">
+                                    </a>
+                                    <p>Picture of ${cityName} City</p>
+                                    </div>`
+                                    ).openPopup()
+                                
+                                    var circle = L.circle([lat, lng], {
+                                            color: "red",
+                                            fillColor: "#f03",
+                                            fillOpacity: 0.5,
+                                            radius: 50
+                                    }).addTo(mymap)
+                                
+                            // HIGHLIGHT COUNTRY BORDER
+                                
+                            let geojsonFeature = data.countryBorders
+                            // console.log(geojsonFeature)
+                                
+                                for (i = 0; i < geojsonFeature.length; i++) {
+                                
+                                    const name = geojsonFeature[i].properties.name
+                                
+                                        if (countryName == name) {
+                                            geojsonFeature = geojsonFeature[i]
+                                        }
+                                    
+                                }
+                            
+                            L.geoJSON(geojsonFeature, { color: "red" }).addTo(mymap) // <-- highlighting border
+
+                            let features = L.geoJSON(geojsonFeature) // <-- getting border for bound
+
+                            // display the whole border into map
+
+                            mymap.fitBounds(features.getBounds(), {
+                                padding: [20, 20]
+                            });
+                        },
+                        error: function(request,error) {
+                            // alert(request)
+                            $(".loading").css("display", "none");
+                            $(".showCountryName").css("display", "block");
+                            $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
+                            $('#flag').html(`😔`);                                    
+                        }
+                    })    
                 });
                 b.appendChild(c);
               }
@@ -455,11 +741,11 @@ window.onload = function () {
             
                 let country = countryName[i]
 
-                countries.push({
+                countriesForSearch.push({
                     name: country, 
                     code: countryISO[i]})
  
-                autocomplete(document.getElementById("myInput"), countries.map(country => country.name).sort());
+                autocomplete(document.getElementById("myInput"), countriesForSearch.map(country => country.name).sort());
             
                 function autocomplete(inp, arr) {
                 
@@ -519,7 +805,7 @@ window.onload = function () {
 
                             $.ajax({
                                 type: "GET",
-                                url: `/libs/php/selCountry.php?selCountry=${countries.find(c => c.name == selCountry).code}`,
+                                url: `/libs/php/selCountry.php?selCountry=${countriesForSearch.find(c => c.name == selCountry).code}`,
                                 success: function(data) {
 
                                     $(".loading").css("display", "none");

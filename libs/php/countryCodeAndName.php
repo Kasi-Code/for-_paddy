@@ -6,24 +6,32 @@
     $executionStartTime = microtime(true); 
 
 	// Read JSON file
-	$json = file_get_contents('countryBorders.geo.json');
+	$json = file_get_contents('../../vendors/js/countryBorders.geo.json');
 
-	// Decode JSON
+	//Decode JSON
 	$json_data = json_decode($json,true);
 
-	// Get individual data
+	//Print data
+
 	$nameAndISO = $json_data["features"];	
 
 	for ($i = 0; $i < count($nameAndISO); $i++) {
 		$name[] = $nameAndISO[$i]["properties"]["name"];
 		$iso[] = $nameAndISO[$i]["properties"]["iso_a3"];
-		// $geometry[] = $nameAndISO[$i]["geometry"];
+		$geometry[] = $nameAndISO[$i]["geometry"];
 	}
 
-	// Print data for JS
 	$output["name"] = $name;
-	$output["iso"] = $iso;	
-	// $output["geometry"] = $geometry;
+	$output["iso"] = $iso;
+	$output["geometry"] = $geometry;
+
+	// $countryBorders = $json_data["features"];	
+	// $output["countryBorders"] = $countryBorders;	
+
+	
+
+	// $output["codeAndNAme"] = $json_data["features"]["properties"];	
+	// print_r($json_data);
     
     header('Content-Type: application/json; charset=UTF-8');
 	// echo "Lat: ".$_REQUEST['lat']."long: ".$_REQUEST['long'];

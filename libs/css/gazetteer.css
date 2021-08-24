@@ -294,7 +294,7 @@ input[type=text] {
 /*the container must be positioned relative:*/
 .custom-select {
   position: relative;
-  font-family: Arial;
+  /* font-family: Arial; */
 }
 
 .custom-select select {
@@ -360,6 +360,9 @@ input[type=text] {
 .select-items div:hover, .same-as-selected {
   background-color: rgba(0, 0, 0, 0.1);
 }
+.selectSwitch {
+  display: none;
+}
 
 /* .select-selected {
   background-color: black;  
@@ -409,7 +412,7 @@ input[type=text] {
 .covidSlide:hover, .newsSlide:hover, .infoButton:hover, .searchButton:hover {
   cursor: pointer;
 }
-.covidButton, .newsButton, .infoButton, .searchButton {
+.covidButton, .newsButton, .infoButton, .searchButton, .selectButton {
   padding-top: 10px; padding-bottom: 10px;
 }
 a:link, a:visited {
