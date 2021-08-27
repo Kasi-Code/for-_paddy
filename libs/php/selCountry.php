@@ -5,11 +5,7 @@
 
     $executionStartTime = microtime(true);
 
-	// Export Var from anohter PHP file
-
-	// include 'getGazetteerBySearch.php';
-
-	// $geometry;
+	$countrySelected = $_REQUEST['selCountry'];
 
 	// Get json file
 
@@ -18,11 +14,21 @@
 	//Decode JSON
 	$json_data = json_decode($json,true);
 
+	$nameAndISO = $json_data["features"];	
+
+	for ($i = 0; $i < count($nameAndISO); $i++) {
+
+		if ($countrySelected == $nameAndISO[$i]["properties"]["iso_a3"]) {
+			$geometry[] = $nameAndISO[$i];
+		}
+
+	}	
+
 	//Print data
-	$output["countryBorders"] = $json_data["features"];	
+	$output["border"] = $geometry;
 
 	// Get Population
-	$url = "https://restcountries.eu/rest/v2/alpha/".$_REQUEST['selCountry'];
+	$url = "https://restcountries.eu/rest/v2/alpha/".$countrySelected;
 
 	// echo $url;
 

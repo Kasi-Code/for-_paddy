@@ -38,7 +38,7 @@ body {
 }
 .newsHeading {
   padding: 10px;
-  width: 300px;     /* <-- to center any div, set width */
+  width: 200px;     /* <-- to center any div, set width */
   margin-left: auto; margin-right: auto;  /* <-- and then margin L&R to be auto */
 }
 .newsBox {
@@ -437,10 +437,5 @@ a:hover, .wikipedia:hover {
       width: 85%;
       text-align: left;
       margin-left: auto; margin-left: auto;
-    }
-    .newsHeading {
-      padding: 10px;
-      width: 200px;     /* <-- to center any div, set width */
-      margin-left: auto; margin-right: auto;  /* <-- and then margin L&R to be auto */
     }
 }

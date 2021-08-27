@@ -24,13 +24,6 @@
 	$output["name"] = $name;
 	$output["iso"] = $iso;
 	$output["geometry"] = $geometry;
-
-	// $countryBorders = $json_data["features"];	
-	// $output["countryBorders"] = $countryBorders;	
-
-	
-
-	// $output["codeAndNAme"] = $json_data["features"]["properties"];	
 	// print_r($json_data);
     
     header('Content-Type: application/json; charset=UTF-8');

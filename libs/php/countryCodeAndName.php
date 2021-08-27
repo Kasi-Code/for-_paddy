@@ -18,19 +18,10 @@
 	for ($i = 0; $i < count($nameAndISO); $i++) {
 		$name[] = $nameAndISO[$i]["properties"]["name"];
 		$iso[] = $nameAndISO[$i]["properties"]["iso_a3"];
-		$geometry[] = $nameAndISO[$i]["geometry"];
 	}
 
 	$output["name"] = $name;
 	$output["iso"] = $iso;
-	$output["geometry"] = $geometry;
-
-	// $countryBorders = $json_data["features"];	
-	// $output["countryBorders"] = $countryBorders;	
-
-	
-
-	// $output["codeAndNAme"] = $json_data["features"]["properties"];	
 	// print_r($json_data);
     
     header('Content-Type: application/json; charset=UTF-8');

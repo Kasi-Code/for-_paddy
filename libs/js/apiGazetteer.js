@@ -213,7 +213,7 @@ window.onload = function () {
                     
                         const listOfCurrency = Object.entries(getCurrencies)
                         for (const [cName, cValue] of listOfCurrency) {
-                            $('#exchangeRate').html("<b>Exchange rate;</b> ");  
+                            $('#exchangeRate').html("<b>Exchange rate</b> ⚖");  
                             if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
                                 // console.log(cValue)
                                 $('#localCurrency').html(cValue);    
@@ -300,7 +300,7 @@ window.onload = function () {
                             
                         var circle = L.circle([lat, lng], {
                             color: "red",
-                            fillColor: "yellow",
+                            fillColor: "orange",
                             fillOpacity: 0.5,
                             radius: 30
                         }).addTo(mymap)            
@@ -437,7 +437,7 @@ window.onload = function () {
                             $(".loading").css("display", "none");
                             $(".showCountryName").css("display", "block");
                         
-                            console.log(data)
+                            // console.log(data)
                         
                             let countryName = data.country.components.country
                             let cityName = data.population.capital
@@ -542,7 +542,7 @@ window.onload = function () {
                             const listOfCurrency = Object.entries(getCurrencies)
                             for (const [cName, cValue] of listOfCurrency) {
                             
-                                $('#exchangeRate').html("<b>Exchange rate;</b> ");   
+                                $('#exchangeRate').html("<b>Exchange rate</b> ⚖");   
                             
                                 if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
                                     // console.log(cValue)
@@ -658,7 +658,7 @@ window.onload = function () {
                                 
                             // HIGHLIGHT COUNTRY BORDER
                                 
-                            let geojsonFeature = data.countryBorders
+                            let geojsonFeature = data.border
                             // console.log(geojsonFeature)
                                 
                                 for (i = 0; i < geojsonFeature.length; i++) {
@@ -816,7 +816,7 @@ window.onload = function () {
                                     $(".loading").css("display", "none");
                                     $(".showCountryName").css("display", "block");
                                 
-                                    console.log(data)
+                                    // console.log(data)
                                 
                                     let countryName = data.country.components.country
                                     let cityName = data.population.capital
@@ -1037,7 +1037,7 @@ window.onload = function () {
                                         
                                     // HIGHLIGHT COUNTRY BORDER
                                         
-                                    let geojsonFeature = data.countryBorders
+                                    let geojsonFeature = data.border
                                     // console.log(geojsonFeature)
                                         
                                         for (i = 0; i < geojsonFeature.length; i++) {

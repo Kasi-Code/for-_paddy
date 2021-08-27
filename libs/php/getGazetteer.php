@@ -19,8 +19,6 @@
 
 	$decode = json_decode($result,true);
 	$output["country"] = $decode["results"][0];	
-	// echo $result;
-	// print_r($decode["results"][0]["components"]["city"]);
 
 	$country = $decode["results"][0]["components"]["country"];
 	$country = str_replace(' ', '%20', $country);
@@ -132,18 +130,6 @@
 
 	$decode = json_decode($result,true);
 	$output["currency"] = $decode;	
-
-	// COUNTRY BORDER - READ JSON FILE
-
-	// $json = file_get_contents("../../vendors/js/countryBorders.geo.json");
-
-	// //Decode JSON
-	// $json_data = json_decode($json,true);
-
-	// //Print data
-	// $countryBorders = $json_data["features"];	
-	// $output["countryBorders"] = $countryBorders;	
-	// print_r($json_data);
 
 	// Time
 	$url = "http://api.geonames.org/timezoneJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
