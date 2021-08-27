@@ -36,6 +36,11 @@ body {
   border: 1px solid black;
   width: 500px;
 }
+.newsHeading {
+  padding: 10px;
+  width: 300px;     /* <-- to center any div, set width */
+  margin-left: auto; margin-right: auto;  /* <-- and then margin L&R to be auto */
+}
 .newsBox {
   display: none;
   overflow: hidden;
@@ -141,16 +146,6 @@ tr:nth-child(even) {
   z-index: 7;
   max-height: 100%;
 }
-.eachBtn {
-  background-color: white;  
-  margin-bottom: 5px;
-  padding: 5px;
-  border-top-left-radius: 20px; border-bottom-left-radius: 20px;
-  box-shadow: 1px 2px 2px black;
-}
-.eachBtn button {
-  font-size: 10px;
-}
 .options {
   padding-left: 3px; padding-top: 3px; padding-bottom: 3px;
 }
@@ -186,20 +181,11 @@ tr:nth-child(even) {
   z-index: 5;
   margin-top: 10px;
 }
-.navBtn {
-  font-weight: bold;
-}
 .searchList {
   margin-top: 20px;
 }
 .wikiLink {
   text-decoration: underline;
-}
-button {
-  border: none;
-  background-color: transparent;
-  outline: none;
-  cursor: pointer;
 }
 .loading {
   height: 20px;
@@ -215,24 +201,6 @@ button {
   flex-direction: row;
   justify-content: center;
 }
-.submit:hover {
-  transform: scale(1.2);
- }
- .eachBtn:hover {
-  transform: scale(1.1);
- }
- /* .weatherButton:hover {
-  background-color: yellow;
- } */
- .covidButton:hover {
-  background-color: red;
- }
- .infoButton:hover {
-  background-color: yellow;
- }
- .newsButton:hover {
-  background-color: green;
- }
 
  /* SEARCH INPUT */
 
@@ -358,24 +326,73 @@ input[type=text] {
 }
 
 .select-items div:hover, .same-as-selected {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: white;
+  color: black;
 }
 .selectSwitch {
   display: none;
 }
 
-/* .select-selected {
-  background-color: black;  
-}
-.countryOption {
-  align-items: center;
-  padding: 10px;
-  width: 300px;
-  font-size: 16px;
-  border-radius: 10px;
-} */
-
 /* SELECT OPTION END */
+
+/* BUTTON  */
+
+.eachBtn button {
+  font-size: 10px;
+}
+.eachBtn {
+  background-color: white;  
+  margin-bottom: 5px;
+  padding: 5px;
+  border-top-left-radius: 20px; border-bottom-left-radius: 20px;
+  box-shadow: 1px 2px 2px black;
+}
+.navBtn {
+  font-weight: bold;
+}
+.covidSlide:hover, .newsSlide:hover, .infoButton:hover, .searchButton:hover {
+  cursor: pointer;
+}
+.covidButton, .newsButton, .infoButton, .searchButton, .selectButton {
+  padding-top: 10px; padding-bottom: 10px;
+}
+.flag, .essayIcon, .buttonUpStyle, .submit, .wikiLinkIcon {
+  text-shadow: 1px 2px 2px black;
+}
+.flip button:hover {
+  transform: scale(1.2);
+}
+.buttonUpStyle {
+  margin-bottom: 10px;
+  font-size: 20px;
+  /* color: red; */
+}
+.submit:hover {
+  transform: scale(1.2);
+ }
+ .eachBtn:hover {
+  transform: scale(1.1);
+ }
+ /* .weatherButton:hover {
+  background-color: yellow;
+ } */
+ .covidButton:hover {
+  background-color: red;
+ }
+ .infoButton:hover {
+  background-color: yellow;
+ }
+ .newsButton:hover {
+  background-color: green;
+ }
+ button {
+   border: none;
+   background-color: transparent;
+   outline: none;
+   cursor: pointer;
+ }
+
+/* BUTTON END  */
 
 .panel {
   padding: 10px;
@@ -394,26 +411,9 @@ input[type=text] {
 .flip {
   margin-top: -20px;
 }
-.flip button:hover {
-  transform: scale(1.2);
-}
-.buttonUpStyle {
-  margin-bottom: 10px;
-  font-size: 20px;
-  /* color: red; */
-}
-.flag, .essayIcon, .buttonUpStyle, .submit, .wikiLinkIcon {
-  text-shadow: 1px 2px 2px black;
-}
 .search-container {
   top: 0%;
   display: none;
-}
-.covidSlide:hover, .newsSlide:hover, .infoButton:hover, .searchButton:hover {
-  cursor: pointer;
-}
-.covidButton, .newsButton, .infoButton, .searchButton, .selectButton {
-  padding-top: 10px; padding-bottom: 10px;
 }
 a:link, a:visited {
   text-decoration: none; color: inherit;
@@ -437,5 +437,10 @@ a:hover, .wikipedia:hover {
       width: 85%;
       text-align: left;
       margin-left: auto; margin-left: auto;
+    }
+    .newsHeading {
+      padding: 10px;
+      width: 200px;     /* <-- to center any div, set width */
+      margin-left: auto; margin-right: auto;  /* <-- and then margin L&R to be auto */
     }
 }

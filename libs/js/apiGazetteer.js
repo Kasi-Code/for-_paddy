@@ -268,7 +268,7 @@ window.onload = function () {
                             parentNode.appendChild(childNode);
                         }
                       
-                        // CHANGING PIN ICON
+                        // CHANGING MARKER ICON
 
                         var greenIcon = L.icon({
                             iconUrl: '../media/grey.png',
@@ -290,7 +290,7 @@ window.onload = function () {
                         var lat = data.country.geometry.lat
                         var lng = data.country.geometry.lng
                     
-                        var marker = L.marker([lat, lng]/*, {icon: greenIcon}*/).addTo(mymap)
+                        var marker = L.marker([lat, lng], {icon: greenIcon}).addTo(mymap)
                             marker.bindPopup("<h5>Hey! 🐾</h5>You are here 📍").openPopup()
                             
                         var circle = L.circle([lat, lng], {
