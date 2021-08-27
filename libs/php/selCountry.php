@@ -42,7 +42,8 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["population"] = $decode;	
+	$output["population"] = $decode["population"];	
+	$output["capital"] = $decode["capital"];	
 	$lat = $decode["latlng"][0];	
     $lng = $decode["latlng"][1];	
 	$capitalCity = $decode["capital"];	
@@ -62,7 +63,12 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["wikipedia"] = $decode["geonames"][0];
+	$wikipedia = $decode["geonames"][0];	
+	$output["wikipedia"] = $wikipedia["wikipediaUrl"];	
+	$output["summary"] = $wikipedia["summary"];	
+	$output["thumbnailImg"] = $wikipedia["thumbnailImg"];	
+	$output["lat"] = $wikipedia["lat"];	
+	$output["lng"] = $wikipedia["lng"];	
 	$output["placesNearBy"] = $decode["geonames"];	
 	$latPOI = $decode["geonames"][0]["lat"];	
     $lngPOI = $decode["geonames"][0]["lng"];
@@ -80,7 +86,10 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["weather"] = $decode;		
+	// $output["weather"] = $decode;		
+
+	$output["description"] = $decode["weather"][0]["description"];	
+	$output["temp"] = $decode["main"]["temp"];	
 
     // Get Location
 	$url = "https://api.opencagedata.com/geocode/v1/json?q=".$lat."+".$lng."&key=87c637778f19465f89895cad4bf83cfa";
@@ -95,8 +104,29 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["country"] = $decode["results"][0];	
-	$country = $decode["results"][0]["components"]["country"];
+
+	$results = $decode["results"][0];	
+
+	$country = $results["components"]["country"];
+	$output["country"] = $country;	
+	
+	$flag = $results["annotations"]["flag"];
+	$output["flag"] = $flag;	
+
+	$iso_code = $results["annotations"]["currency"]["iso_code"];
+	$output["iso_code"] = $iso_code;	
+
+	$name = $results["annotations"]["currency"]["name"];
+	$output["name"] = $name;	
+
+	$symbol = $results["annotations"]["currency"]["symbol"];
+	$output["symbol"] = $symbol;	
+
+	// $lat = $results["geometry"]["lat"];
+	// $output["lat"] = $lat;
+
+	// $lng = $results["geometry"]["lng"];
+	// $output["lng"] = $lng;
 
 	// Get Currency
 	$url = "https://openexchangerates.org/api/latest.json?app_id=4b8acff9591e4f8d8864ef8ca25aea3b";
@@ -111,7 +141,9 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["currency"] = $decode;	
+	
+	$output["base"] = $decode["base"];	
+	$output["rates"] = $decode["rates"];
 
 	// Time
 	$url = "http://api.geonames.org/timezoneJSON?formatted=true&lat=".$lat."&lng=".$lng."&username=coder_k&style=full";
@@ -184,7 +216,11 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["covid"] = $decode; 
+	$covid = $decode[0];
+	$output["Active"] = $covid["Active"];
+	$output["Confirmed"] = $covid["Confirmed"];
+	$output["Deaths"] = $covid["Deaths"];
+	$output["Recovered"] = $covid["Recovered"];
 
     $output['status']['code'] = "200";
 	$output['status']['name'] = "ok";

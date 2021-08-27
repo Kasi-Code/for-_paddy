@@ -119,13 +119,13 @@ window.onload = function () {
 
                         $("#preloader").css("display", "none").fadeOut('slow')
     
-                        let countryName = data.country.components.country
-                        let cityName = data.country.components.city
-                        let countryFlag = data.country.annotations.flag
+                        let countryName = data.country
+                        let cityName = data.city
+                        let countryFlag = data.flag
                         let showTime = data.countryTime.slice(11, 16)
                         
-                        let weatherDescription = data.weather.weather[0].description
-                        let weatherTemp = data.weather.main.temp
+                        let weatherDescription = data.description
+                        let weatherTemp = data.temp
                         
                         // WEATHER ICONS
                         
@@ -141,7 +141,7 @@ window.onload = function () {
 
                         } else if (weatherDescription.includes("cloudy")){
                             $("#changeIcon").html("☁️")
-                        } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                        } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
                             $("#changeIcon").html("&#127783")
                         } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
                             $("#changeIcon").html("&#127780")
@@ -154,18 +154,12 @@ window.onload = function () {
                         } else {
                             $("#changeIcon").html("🌍")
                         }
-
                         
-                        // let cityPopulation = data.population[0].population
-                        
-                        let iso = data.country.annotations.currency.iso_code
-                        let currencyName = data.country.annotations.currency.name
-                        let currencySymbol = data.country.annotations.currency.symbol   
+                        let iso = data.iso_code
+                        let currencyName = data.name
+                        let currencySymbol = data.symbol   
                         
                         // console.log(localCurrency)
-                        
-                        let wikiLink = data.wikipedia.wikipediaUrl
-                        let wikiSummary = data.wikipedia.summary
                         
                         const kelvin = weatherTemp
                         let celsius = kelvin - 273.15
@@ -180,13 +174,15 @@ window.onload = function () {
                         $('#weatherCondition').html(weatherDescription.toUpperCase());
                         $('#temperature').html(celsius + "˚C");
                         
-                        // $('#population').html("Population: " + cityPopulation);
-                        
                         $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
                         $('#currencyName').html(currencyName);
                         $('#currencySymbal').html(currencySymbol);
     
                         // WIKI
+                        
+                        let wikiLink = data.wikipediaUrl
+                        let wikiSummary = data.summary
+
                         $('#essayIcon').html("&#128220 ");
                         $('#wikiSummary').html(wikiSummary);
                         
@@ -196,16 +192,15 @@ window.onload = function () {
                         $('#wikiLinkIcon').html(`🌐 `);
     
                         // COVID
-                        let covidData = data.covid[0]
-                        $('#active').html(covidData.Active);
-                        $('#confirmed').html(covidData.Confirmed);
-                        $('#deaths').html(covidData.Deaths);
-                        $('#recovered').html(covidData.Recovered);
+                        $('#active').html(data.Active);
+                        $('#confirmed').html(data.Confirmed);
+                        $('#deaths').html(data.Deaths);
+                        $('#recovered').html(data.Recovered);
                     
                         // CURRENCY COMPARING
 
-                        let getCurrencies = data.currency.rates
-                        let compareToUSD = data.currency.base
+                        let getCurrencies = data.rates
+                        let compareToUSD = data.base
                         let compareToEUR = "EUR"
                         let compareToGBP = "GBP"
                     
@@ -290,8 +285,8 @@ window.onload = function () {
 
                         // Maker of your location
                     
-                        var lat = data.country.geometry.lat
-                        var lng = data.country.geometry.lng
+                        var lat = data.lat
+                        var lng = data.lng
                     
                         var marker = L.marker([lat, lng], {icon: humanMarker}).addTo(mymap)
                             marker.bindPopup("<h5>Hey! 🐾</h5>You are here 📍").openPopup()
@@ -437,14 +432,14 @@ window.onload = function () {
                         
                             console.log(data)
                         
-                            let countryName = data.country.components.country
-                            let cityName = data.population.capital
-                            let countryFlag = data.country.annotations.flag
+                            let countryName = data.country
+                            let cityName = data.capital
+                            let countryFlag = data.flag
                         
                             let showTime = data.countryTime.slice(11, 16)
                         
-                            let weatherDescription = data.weather.weather[0].description
-                            let weatherTemp = data.weather.main.temp
+                            let weatherDescription = data.description
+                            let weatherTemp = data.temp
                         
                             // WEATHER ICONS
                         
@@ -458,7 +453,7 @@ window.onload = function () {
                             
                             } else if (weatherDescription.includes("cloudy")){
                                 $("#changeIcon").html("☁️")
-                            } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                            } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
                                 $("#changeIcon").html("&#127783")
                             } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
                                 $("#changeIcon").html("&#127780")
@@ -472,17 +467,13 @@ window.onload = function () {
                                 $("#changeIcon").html("🌍")
                             }
                         
-                            let cityPopulation = data.population.population
+                            let cityPopulation = data.population
                         
-                            let iso = data.country.annotations.currency.iso_code
-                            let currencyName = data.country.annotations.currency.name
-                            let currencySymbol = data.country.annotations.currency.symbol   
+                            let iso = data.iso_code
+                            let currencyName = data.name
+                            let currencySymbol = data.symbol   
                         
                             // console.log(localCurrency)
-                        
-                            let wikiLink = data.wikipedia.wikipediaUrl
-                            let wikiSummary = data.wikipedia.summary
-                            let wikiThumnail = data.wikipedia.thumbnailImg
 
                             const kelvin = weatherTemp
                             let celsius = kelvin - 273.15
@@ -497,13 +488,17 @@ window.onload = function () {
                             $('#weatherCondition').html(weatherDescription.toUpperCase());
                             $('#temperature').html(celsius + "˚C");
                         
-                            $('#population').html("<b>Population:</b> " + cityPopulation);
+                            $('#population').html("<b>Population:</b> " + cityPopulation + " citizens");
                         
                             $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
                             $('#currencyName').html(currencyName);
                             $('#currencySymbal').html(currencySymbol);
                         
                             // WIKI LINK
+                        
+                            let wikiLink = data.wikipediaUrl
+                            let wikiSummary = data.summary
+                            let wikiThumnail = data.thumbnailImg
                         
                             $('#essayIcon').html("&#128220 ");
                             $('#wikiSummary').html(wikiSummary);
@@ -523,17 +518,15 @@ window.onload = function () {
                         
                             // COVID
                         
-                            let covidData = data.covid[0]
-                        
-                            $('#active').html(covidData.Active);
-                            $('#confirmed').html(covidData.Confirmed);
-                            $('#deaths').html(covidData.Deaths);
-                            $('#recovered').html(covidData.Recovered);
+                            $('#active').html(data.Active);
+                            $('#confirmed').html(data.Confirmed);
+                            $('#deaths').html(data.Deaths);
+                            $('#recovered').html(data.Recovered);
                         
                             // CURRENCY COMPARING
 
-                            let getCurrencies = data.currency.rates
-                            let compareToUSD = data.currency.base
+                            let getCurrencies = data.rates
+                            let compareToUSD = data.base
                             let compareToEUR = "EUR"
                             let compareToGBP = "GBP"
                         
@@ -631,9 +624,9 @@ window.onload = function () {
                             
                             }
                         
-                            var lat = data.wikipedia.lat
-                            var lng = data.wikipedia.lng
-                            var wikiURL = data.wikipedia.wikipediaUrl
+                            var lat = data.lat
+                            var lng = data.lng
+                            var wikiURL = data.wikipediaUrl
                         
                             // mymap.setView([lat, lng], 14);
                         
@@ -816,14 +809,14 @@ window.onload = function () {
                                 
                                     console.log(data)
                                 
-                                    let countryName = data.country.components.country
-                                    let cityName = data.population.capital
-                                    let countryFlag = data.country.annotations.flag
+                                    let countryName = data.country
+                                    let cityName = data.capital
+                                    let countryFlag = data.flag
                                 
                                     let showTime = data.countryTime.slice(11, 16)
                                 
-                                    let weatherDescription = data.weather.weather[0].description
-                                    let weatherTemp = data.weather.main.temp
+                                    let weatherDescription = data.description
+                                    let weatherTemp = data.temp
                                 
                                     // WEATHER ICONS
                                 
@@ -837,7 +830,7 @@ window.onload = function () {
                                     
                                     } else if (weatherDescription.includes("cloudy")){
                                         $("#changeIcon").html("☁️")
-                                    } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast")){
+                                    } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
                                         $("#changeIcon").html("&#127783")
                                     } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
                                         $("#changeIcon").html("&#127780")
@@ -851,17 +844,13 @@ window.onload = function () {
                                         $("#changeIcon").html("🌍")
                                     }
                                 
-                                    let cityPopulation = data.population.population
+                                    let cityPopulation = data.population
                                 
-                                    let iso = data.country.annotations.currency.iso_code
-                                    let currencyName = data.country.annotations.currency.name
-                                    let currencySymbol = data.country.annotations.currency.symbol   
+                                    let iso = data.iso_code
+                                    let currencyName = data.name
+                                    let currencySymbol = data.symbol   
                                 
                                     // console.log(localCurrency)
-                                
-                                    let wikiLink = data.wikipedia.wikipediaUrl
-                                    let wikiSummary = data.wikipedia.summary
-                                    let wikiThumnail = data.wikipedia.thumbnailImg
     
                                     const kelvin = weatherTemp
                                     let celsius = kelvin - 273.15
@@ -876,13 +865,17 @@ window.onload = function () {
                                     $('#weatherCondition').html(weatherDescription.toUpperCase());
                                     $('#temperature').html(celsius + "˚C");
                                 
-                                    $('#population').html("<b>Population:</b> " + cityPopulation);
+                                    $('#population').html("<b>Population:</b> " + cityPopulation + " citizens");
                                 
                                     $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
                                     $('#currencyName').html(currencyName);
                                     $('#currencySymbal').html(currencySymbol);
                                 
                                     // WIKI LINK
+                                
+                                    let wikiLink = data.wikipediaUrl
+                                    let wikiSummary = data.summary
+                                    let wikiThumnail = data.thumbnailImg
                                 
                                     $('#essayIcon').html("&#128220 ");
                                     $('#wikiSummary').html(wikiSummary);
@@ -902,17 +895,15 @@ window.onload = function () {
                                 
                                     // COVID
                                 
-                                    let covidData = data.covid[0]
-                                
-                                    $('#active').html(covidData.Active);
-                                    $('#confirmed').html(covidData.Confirmed);
-                                    $('#deaths').html(covidData.Deaths);
-                                    $('#recovered').html(covidData.Recovered);
+                                    $('#active').html(data.Active);
+                                    $('#confirmed').html(data.Confirmed);
+                                    $('#deaths').html(data.Deaths);
+                                    $('#recovered').html(data.Recovered);
                                 
                                     // CURRENCY COMPARING
 
-                                    let getCurrencies = data.currency.rates
-                                    let compareToUSD = data.currency.base
+                                    let getCurrencies = data.rates
+                                    let compareToUSD = data.base
                                     let compareToEUR = "EUR"
                                     let compareToGBP = "GBP"
                                 
@@ -1010,9 +1001,9 @@ window.onload = function () {
                                     
                                     }
                                 
-                                    var lat = data.wikipedia.lat
-                                    var lng = data.wikipedia.lng
-                                    var wikiURL = data.wikipedia.wikipediaUrl
+                                    var lat = data.lat
+                                    var lng = data.lng
+                                    var wikiURL = data.wikipediaUrl
                                 
                                     // mymap.setView([lat, lng], 14);
                                 

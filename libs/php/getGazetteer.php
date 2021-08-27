@@ -19,14 +19,35 @@
 
 	$decode = json_decode($result,true);
 	$output["country"] = $decode["results"][0];	
+	$results = $decode["results"][0];	
+	
+	$flag = $results["annotations"]["flag"];
+	$output["flag"] = $flag;	
 
-	$country = $decode["results"][0]["components"]["country"];
+	$iso_code = $results["annotations"]["currency"]["iso_code"];
+	$output["iso_code"] = $iso_code;	
+
+	$name = $results["annotations"]["currency"]["name"];
+	$output["name"] = $name;	
+
+	$symbol = $results["annotations"]["currency"]["symbol"];
+	$output["symbol"] = $symbol;	
+
+	$lat = $results["geometry"]["lat"];
+	$output["lat"] = $lat;
+
+	$lng = $results["geometry"]["lng"];
+	$output["lng"] = $lng;
+
+	$country = $results["components"]["country"];
+	$output["country"] = $country;
 	$country = str_replace(' ', '%20', $country);
 
-	$city = $decode["results"][0]["components"]["city"];
+	$city = $results["components"]["city"];
+	$output["city"] = $city;	
     $city;
 
-    if(array_key_exists("city",$decode["results"][0]["components"])){
+    if(array_key_exists("city", $results["components"])){
 
         // "City  Found!
 
@@ -65,6 +86,7 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
+	
 	$output["poi_nearByPlaces"] = $decode["geonames"];	
 
 	// Use City to get Weather
@@ -80,9 +102,11 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["weather"] = $decode;	
 	$lat1 = $decode["coord"]["lat"];
 	$lng1 = $decode["coord"]["lon"];
+
+	$output["description"] = $decode["weather"][0]["description"];	
+	$output["temp"] = $decode["main"]["temp"];	
 
 	// // Get Wikipedia
 	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$city."&maxRows=10&username=coder_k&style=full";
@@ -97,8 +121,10 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["wikipedia"] = $decode["geonames"][0];	
-	$output["placesNearBy"] = $decode["geonames"];	
+	$wikipedia = $decode["geonames"][0];	
+	$output["wikipedia"] = $wikipedia["wikipediaUrl"];	
+	$output["summary"] = $wikipedia["summary"];	
+	// $output["placesNearBy"] = $decode["geonames"];	
 
 	// COVID
 
@@ -114,7 +140,11 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["covid"] = $decode;
+	$covid = $decode[0];
+	$output["Active"] = $covid["Active"];
+	$output["Confirmed"] = $covid["Confirmed"];
+	$output["Deaths"] = $covid["Deaths"];
+	$output["Recovered"] = $covid["Recovered"];
 
 	// // Get Currency
 	$url = "https://openexchangerates.org/api/latest.json?app_id=4b8acff9591e4f8d8864ef8ca25aea3b";
@@ -129,7 +159,9 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);
-	$output["currency"] = $decode;	
+
+	$output["base"] = $decode["base"];	
+	$output["rates"] = $decode["rates"];	
 
 	// Time
 	$url = "http://api.geonames.org/timezoneJSON?formatted=true&lat=".$lat1."&lng=".$lng1."&username=coder_k&style=full";
