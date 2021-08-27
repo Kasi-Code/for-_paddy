@@ -16,6 +16,15 @@ var mymap = L.map('mapid').setView([0, 0], 13);
             accessToken: 'your.mapbox.access.token'
             }).addTo(mymap);
 
+
+
+            var wikiMarker = L.icon({
+                iconUrl: 'libs/media/blueMarker.gif',                        
+                iconSize:     [38, 38],
+                iconAnchor:   [19, 45],
+                popupAnchor:  [0, -40]
+            });
+
 // AUTO LOAD USING X LOACTION
 
 window.onload = function () {
@@ -105,7 +114,7 @@ window.onload = function () {
 
                 $.ajax({
                     type: "GET",
-                    url: `/libs/php/getGazetteer.php?lat=${lat}&long=${long}`,
+                    url: `libs/php/getGazetteer.php?lat=${lat}&long=${long}`,
                     success: function(data) {
 
                         // console.log(data)
@@ -270,18 +279,14 @@ window.onload = function () {
                       
                         // CHANGING MARKER ICON
 
-                        var greenIcon = L.icon({
-                            iconUrl: '../media/grey.png',
-                            // shadowUrl: 'leaf-shadow.png',
-                        
+                        var humanMarker = L.icon({
+                            iconUrl: 'libs/media/humanMarkerOrange.png',                        
                             iconSize:     [38, 45], // size of the icon
                             // shadowSize:   [50, 64], // size of the shadow
-                            iconAnchor:   [19, 22.5], // point of the icon which will correspond to marker's location
+                            iconAnchor:   [19, 45], // point of the icon which will correspond to marker's location
                             // shadowAnchor: [4, 62],  // the same for the shadow
-                            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                            popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
                         });
-
-                        // L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map);
 
                         // THE MAP
 
@@ -290,7 +295,7 @@ window.onload = function () {
                         var lat = data.country.geometry.lat
                         var lng = data.country.geometry.lng
                     
-                        var marker = L.marker([lat, lng], {icon: greenIcon}).addTo(mymap)
+                        var marker = L.marker([lat, lng], {icon: humanMarker}).addTo(mymap)
                             marker.bindPopup("<h5>Hey! 🐾</h5>You are here 📍").openPopup()
                             
                         var circle = L.circle([lat, lng], {
@@ -305,7 +310,7 @@ window.onload = function () {
                         const poi = data.poi_nearByPlaces
     
                         for (let i = 0; i < poi.length; i++) {
-                            var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
+                            var markerPlaces = L.marker([poi[i].lat, poi[i].lng], {icon: wikiMarker}).addTo(mymap)
 
                             var nearByName = poi[i].title
                             var summary = poi[i].summary
@@ -333,7 +338,7 @@ window.onload = function () {
 
     $.ajax({
         type: "GET",
-        url: "/libs/php/countryCodeAndName.php",
+        url: "libs/php/countryCodeAndName.php",
         success: function(data) {
 
             // console.log(data)
@@ -426,7 +431,7 @@ window.onload = function () {
 
                     $.ajax({
                         type: "GET",
-                        url: `/libs/php/selCountry.php?selCountry=${countriesForSelect.find(c => c.name == selCountry).code}`,
+                        url: `libs/php/selCountry.php?selCountry=${countriesForSelect.find(c => c.name == selCountry).code}`,
                         success: function(data) {
 
                             $(".loading").css("display", "none");
@@ -591,7 +596,7 @@ window.onload = function () {
                             const poiFromWiki = data.placesNearBy
 
                             for (let i = 0; i < poiFromWiki.length; i++) {
-                                var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng]).addTo(mymap)
+                                var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng], {icon: wikiMarker}).addTo(mymap)
                             
                                 var nearByName = poiFromWiki[i].title
                                 var summary = poiFromWiki[i].summary
@@ -611,7 +616,7 @@ window.onload = function () {
                             }
                         
                             for (let i = 0; i < poi.length; i++) {
-                                var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
+                                var markerPlaces = L.marker([poi[i].lat, poi[i].lng], {icon: wikiMarker}).addTo(mymap)
                             
                                 var nearByName = poi[i].title
                                 var summary = poi[i].summary
@@ -634,7 +639,7 @@ window.onload = function () {
                         
                             // mymap.setView([lat, lng], 14);
                         
-                            var marker = L.marker([lat, lng]).addTo(mymap)
+                            var marker = L.marker([lat, lng], {icon: wikiMarker}).addTo(mymap)
                                 marker.bindPopup(
                                     `<div style="text-align: center;">
                                     <a href="https://${wikiURL}" target="blank">
@@ -729,7 +734,7 @@ window.onload = function () {
 
     $.ajax({
         type: "GET",
-        url: "/libs/php/getGazetteerBySearch.php",
+        url: "libs/php/getGazetteerBySearch.php",
         success: function(data) {
 
             // console.log(data)
@@ -805,7 +810,7 @@ window.onload = function () {
 
                             $.ajax({
                                 type: "GET",
-                                url: `/libs/php/selCountry.php?selCountry=${countriesForSearch.find(c => c.name == selCountry).code}`,
+                                url: `libs/php/selCountry.php?selCountry=${countriesForSearch.find(c => c.name == selCountry).code}`,
                                 success: function(data) {
 
                                     $(".loading").css("display", "none");
@@ -970,7 +975,7 @@ window.onload = function () {
                                     const poiFromWiki = data.placesNearBy
 
                                     for (let i = 0; i < poiFromWiki.length; i++) {
-                                        var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng]).addTo(mymap)
+                                        var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng], {icon: wikiMarker}).addTo(mymap)
                                     
                                         var nearByName = poiFromWiki[i].title
                                         var summary = poiFromWiki[i].summary
@@ -990,7 +995,7 @@ window.onload = function () {
                                     }
                                 
                                     for (let i = 0; i < poi.length; i++) {
-                                        var markerPlaces = L.marker([poi[i].lat, poi[i].lng]).addTo(mymap)
+                                        var markerPlaces = L.marker([poi[i].lat, poi[i].lng], {icon: wikiMarker}).addTo(mymap)
                                     
                                         var nearByName = poi[i].title
                                         var summary = poi[i].summary
@@ -1013,7 +1018,7 @@ window.onload = function () {
                                 
                                     // mymap.setView([lat, lng], 14);
                                 
-                                    var marker = L.marker([lat, lng]).addTo(mymap)
+                                    var marker = L.marker([lat, lng], {icon: wikiMarker}).addTo(mymap)
                                         marker.bindPopup(
                                             `<div style="text-align: center;">
                                             <a href="https://${wikiURL}" target="blank">
