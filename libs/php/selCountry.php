@@ -14,18 +14,18 @@
 	//Decode JSON
 	$json_data = json_decode($json,true);
 
-	$nameAndISO = $json_data["features"];	
+	$isoForBorder = $json_data["features"];	
 
-	for ($i = 0; $i < count($nameAndISO); $i++) {
+	for ($i = 0; $i < count($isoForBorder); $i++) {
 
-		if ($countrySelected == $nameAndISO[$i]["properties"]["iso_a3"]) {
-			$geometry[] = $nameAndISO[$i];
+		if ($countrySelected == $isoForBorder[$i]["properties"]["iso_a3"]) {
+			$border[] = $isoForBorder[$i];
 		}
 
 	}	
 
 	//Print data
-	$output["border"] = $geometry;
+	$output["border"] = $border;
 
 	// Get Population
 	$url = "https://restcountries.eu/rest/v2/alpha/".$countrySelected;

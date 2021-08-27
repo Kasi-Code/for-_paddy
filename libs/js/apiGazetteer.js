@@ -16,8 +16,6 @@ var mymap = L.map('mapid').setView([0, 0], 13);
             accessToken: 'your.mapbox.access.token'
             }).addTo(mymap);
 
-
-
             var wikiMarker = L.icon({
                 iconUrl: 'libs/media/blueMarker.gif',                        
                 iconSize:     [38, 38],
@@ -117,7 +115,7 @@ window.onload = function () {
                     url: `libs/php/getGazetteer.php?lat=${lat}&long=${long}`,
                     success: function(data) {
 
-                        // console.log(data)
+                        console.log(data)
 
                         $("#preloader").css("display", "none").fadeOut('slow')
     
@@ -341,7 +339,7 @@ window.onload = function () {
         url: "libs/php/countryCodeAndName.php",
         success: function(data) {
 
-            // console.log(data)
+            console.log(data)
 
             const countryName = data.name
             const countryISO = data.iso
@@ -437,7 +435,7 @@ window.onload = function () {
                             $(".loading").css("display", "none");
                             $(".showCountryName").css("display", "block");
                         
-                            // console.log(data)
+                            console.log(data)
                         
                             let countryName = data.country.components.country
                             let cityName = data.population.capital
@@ -816,7 +814,7 @@ window.onload = function () {
                                     $(".loading").css("display", "none");
                                     $(".showCountryName").css("display", "block");
                                 
-                                    // console.log(data)
+                                    console.log(data)
                                 
                                     let countryName = data.country.components.country
                                     let cityName = data.population.capital
