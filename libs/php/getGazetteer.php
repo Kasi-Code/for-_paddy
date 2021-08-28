@@ -107,6 +107,8 @@
 
 	$output["description"] = $decode["weather"][0]["description"];	
 	$output["temp"] = $decode["main"]["temp"];	
+	$output["feels_like"] = $decode["main"]["feels_like"];	
+	$output["humidity"] = $decode["main"]["humidity"];	
 
 	// // Get Wikipedia
 	$url = "http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=".$city."&maxRows=10&username=coder_k&style=full";

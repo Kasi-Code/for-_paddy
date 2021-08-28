@@ -23,19 +23,36 @@
 
     <div class="topPageSection">
         <div class="weather">
-            <div class="icons">
-                <h1 id="weatherIcons">
-                    <div class="weatherIcons">
-                        <span class="changeIcon" id="changeIcon"></span>
-                    </div>
-                </h1>
-            </div>
-            <div class="temp">
-                <p><span id="temperature"></p>
-            </div>
-            <div class="weatherCondition">
-                <p><span id="weatherCondition"></p>   
-            </div>
+            <table class="weatherTable">
+                <tr>
+                    <td>
+                        <div class="weatherEmoji">
+                                <div class="weatherIcons" id="weatherIcons">                                    
+                                    <span class="changeIcon" id="changeIcon"></span>   
+                                    <img class="cloudyPicture" id="cloudyPicture" src="" alt="">                       
+                                </div>
+                        </div>   
+                    </td>    
+                    <td>
+                        <div class="temp">
+                            <p><span id="temperature"></p>
+                        </div>
+                    </td>                 
+                    <td>
+                        <div class="humidity">
+                            <p><span id="humidity"></p>
+                        </div>
+                        <div class="feelsLike">
+                            <p><span id="feelsLike"></p>
+                        </div>
+                    </td> 
+                    <td>
+                        <div class="weatherCondition">
+                            <p><span id="weatherCondition"></p>   
+                        </div>
+                    </td>                           
+                </tr>
+            </table>           
         </div>
         <div class="covid">
             <h4 class="covidHeading">Covid Results</h4>
@@ -84,20 +101,29 @@
         </div>
         <div class="panel">
             <div class="panelInfo">
-                <p><span id="cityName"></span></p>
-                <p><span id="population"></span></p> 
-                <p>
-                    <span id="isoCode"></span>
-                    <span id="currencyName"></span>
-                </p>
+                <table>
+                    <tr>
+                        <td>
+                            <p><span id="cityName"></span></p>
+                            <p><span id="population"></span></p> 
+                            <p>
+                                <span id="isoCode"></span>
+                                <span id="currencyName"></span>
+                            </p>
+                        </td>
+                        <td>
+                            <p><span id="exchangeRate"></span> <br>
+                            <span id="currencySymbal"></span><span id="localCurrency"></span>
+                            </p>
+                            <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
+                            <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
+                        </td>    
+                    </tr>
+                </table>
 
                 <br>
 
-                <p><span id="exchangeRate"></span> <br>
-                    <span id="currencySymbal"></span><span id="localCurrency"></span>
-                </p>
-                <p><span id="currencySymbal2"></span><span id="secondCurrency"></span></p>
-                <p><span id="currencySymbal3"></span><span id="thirdCurrency"></span></p>
+                
             </div>
             
             <br>

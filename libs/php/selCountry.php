@@ -90,6 +90,8 @@
 
 	$output["description"] = $decode["weather"][0]["description"];	
 	$output["temp"] = $decode["main"]["temp"];	
+	$output["feels_like"] = $decode["main"]["feels_like"];	
+	$output["humidity"] = $decode["main"]["humidity"];	
 
     // Get Location
 	$url = "https://api.opencagedata.com/geocode/v1/json?q=".$lat."+".$lng."&key=87c637778f19465f89895cad4bf83cfa";

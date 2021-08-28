@@ -81,15 +81,48 @@ body {
   position: fixed;
   z-index: 4;
 }
+
+/* WEATHER  */
+
 .weather {
+  /* display: flex; */
+  /* justify-content: space-evenly; */
   color: black;
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
-  align-items: center;
   z-index: 3;
-  /* padding: 5%; */
+  /* margin-left: auto; margin-right: auto; */
 }
+.weatherEmoji {
+  text-align: center;
+  font-size: 28px;
+  /* padding-right: 5ex; */
+}
+.weatherCondition {
+  text-align: center;
+  /* padding-left: 5ex; */
+}
+.humidity, .feelsLike {
+  font-size: 11px;
+  text-align: left;
+}
+.cloudyPicture {
+  height: 34px;
+}
+.cloudyPicture {
+  display: none;
+}
+.temp {
+  text-align: right;
+  font-size: 24px;
+}
+.weather table {
+  width: 90%;
+  margin-left: auto; margin-right: auto;
+  /* table-layout: fixed; */
+  /* background-color: cadetblue; */
+}
+
+/* WEATHER END */
+
 .covid {
   color: black;
   display: none;
@@ -103,13 +136,12 @@ body {
   padding: 8px;
   border-top-left-radius: 20px; border-top-right-radius: 20px;
 }
-table {
+.covid table, .panelInfo table {
   position: relative;
   border-collapse: collapse;
   width: 100%;
 }
-
-td {
+.covid td, .panelInfo td {
   /* border: 1px solid #dddddd; */
   padding: 8px;
 }
@@ -118,16 +150,13 @@ td {
   text-align: left;
   left: 20%;
 }
+.covid tr:nth-child(even), .panelInfo tr:nth-child(even){
+  background-color: #dddddd;
+}
 .covidResultNumber {
   position: absolute;
   text-align: right;
   right: 5%;
-}
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-.clearskyIcon, .clouds, .overcastClouds, .sunAndClouds, .snow, .thunder {
-  display: none;
 }
 .map {
   z-index: 0;
@@ -170,9 +199,6 @@ tr:nth-child(even) {
   height: 40px;
   width: 100%;
   z-index: 4;
-}
-.temp, .weatherCondition {
-  margin: 10px;
 }
 .navBar {
   color: white;
@@ -397,13 +423,14 @@ input[type=text] {
 .panel {
   padding: 10px;
   display: none;
-  text-align: center;
-  align-items: center;
+  /* text-align: center;
+  align-items: center; */
 }
 .panelInfo {
-  width: 75%;
+  width: 90%;
   text-align: left;
-  margin-left: auto; margin-left: auto;
+  text-align: top;
+  margin-left: auto; margin-right: auto;
 }
 .wikiSummary {
   text-align: justify;
@@ -437,5 +464,20 @@ a:hover, .wikipedia:hover {
       width: 85%;
       text-align: left;
       margin-left: auto; margin-left: auto;
+    }
+    .weather table {
+      width: 100%;
+      /* font-size: 12%; */
+    }
+    .weatherCondition {
+      font-size: 14px;
+    }
+    .humidity, .feelsLike {
+      font-size: 9px;
+      text-align: left;
+    }
+    .temp {
+      text-align: right;
+      font-size: 18px;
     }
 }

@@ -3,6 +3,8 @@
 let countriesForSearch = []
 let countriesForSelect = []
 
+let cloudyNight = $("#cloudyPicture").attr("src", "libs/media/nightCloudy.png")
+
 // INITIATE MAP
 
 var mymap = L.map('mapid').setView([0, 0], 13);
@@ -123,17 +125,26 @@ window.onload = function () {
                         let cityName = data.city
                         let countryFlag = data.flag
                         let showTime = data.countryTime.slice(11, 16)
-                        
+                                                
+                        // WEATHER ICONS
+
                         let weatherDescription = data.description
                         let weatherTemp = data.temp
-                        
-                        // WEATHER ICONS
+                        let feels_like = data.feels_like
+                        let humidityPercentage = data.humidity
+
+                        function convertToCelsius(kelvin) {
+
+                            const celsius = 273.15
+
+                            return Math.floor(kelvin - celsius)
+                          }
+
+                        let mainTemp = convertToCelsius(weatherTemp)
+                        let feelsLike = convertToCelsius(feels_like)
                         
                         const today = new Date()
                         const getHour = today.getHours()
-                        // console.log(getHour)
-                        // const getTime = data.countryTime.slice(11, 13)
-                        // console.log(getTime)
                         
                         if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
 
@@ -143,8 +154,12 @@ window.onload = function () {
                             $("#changeIcon").html("☁️")
                         } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
                             $("#changeIcon").html("&#127783")
-                        } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                            $("#changeIcon").html("&#127780")
+                        } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){   
+
+                            (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127780") : $("#changeIcon").html(cloudyNight)
+
+                            $(".cloudyPicture").css("display", "block")
+
                         } else if (weatherDescription.includes("snow")){
                             $("#changeIcon").html("❄️")
                         } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
@@ -160,19 +175,16 @@ window.onload = function () {
                         let currencySymbol = data.symbol   
                         
                         // console.log(localCurrency)
-                        
-                        const kelvin = weatherTemp
-                        let celsius = kelvin - 273.15
-                        // let newton = celsius * ( 23 / 100 )
-                        celsius = Math.floor(celsius)
-                        
+                                                
                         $('#countryName').html("<b>Country:</b> " + countryName);
                         $('#cityName').html("<b>City:</b> " + cityName);
                         $('#flag').html(countryFlag);
                         $('#time').html(`(${showTime})`);
                         
                         $('#weatherCondition').html(weatherDescription.toUpperCase());
-                        $('#temperature').html(celsius + "˚C");
+                        $('#temperature').html(mainTemp + "˚C | ");
+                        $('#feelsLike').html("  FEELS LIKE: " + feelsLike + "˚C");
+                        $('#humidity').html("  HUMIDITY " + humidityPercentage + "%");
                         
                         $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
                         $('#currencyName').html(currencyName);
@@ -437,11 +449,23 @@ window.onload = function () {
                             let countryFlag = data.flag
                         
                             let showTime = data.countryTime.slice(11, 16)
-                        
+                                                
+                            // WEATHER ICONS
+
                             let weatherDescription = data.description
                             let weatherTemp = data.temp
-                        
-                            // WEATHER ICONS
+                            let feels_like = data.feels_like
+                            let humidityPercentage = data.humidity
+
+                            function convertToCelsius(kelvin) {
+
+                                const celsius = 273.15
+
+                                return Math.floor(kelvin - celsius)
+                              }
+
+                            let mainTemp = convertToCelsius(weatherTemp)
+                            let feelsLike = convertToCelsius(feels_like)
                         
                             const getTime = data.countryTime.slice(11, 13)
                         
@@ -455,8 +479,12 @@ window.onload = function () {
                                 $("#changeIcon").html("☁️")
                             } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
                                 $("#changeIcon").html("&#127783")
-                            } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                                $("#changeIcon").html("&#127780")
+                            } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){   
+
+                                (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127780") : $("#changeIcon").html(cloudyNight)
+
+                                $(".cloudyPicture").css("display", "block")
+
                             } else if (weatherDescription.includes("snow")){
                                 $("#changeIcon").html("❄️")
                             } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
@@ -474,19 +502,16 @@ window.onload = function () {
                             let currencySymbol = data.symbol   
                         
                             // console.log(localCurrency)
-
-                            const kelvin = weatherTemp
-                            let celsius = kelvin - 273.15
-                            // let newton = celsius * ( 23 / 100 )
-                            celsius = Math.floor(celsius)
                         
                             $('#countryName').html("<b>Country:</b> " + countryName);
                             $('#cityName').html("<b>Capital City:</b> " + cityName);
                             $('#flag').html(countryFlag);
                             $('#time').html(`(${showTime})`);
-                        
+
+                            $('#temperature').html(mainTemp + "˚C | ");
+                            $('#feelsLike').html("  FEELS LIKE: " + feelsLike + "˚C");
+                            $('#humidity').html("  HUMIDITY " + humidityPercentage + "%");
                             $('#weatherCondition').html(weatherDescription.toUpperCase());
-                            $('#temperature').html(celsius + "˚C");
                         
                             $('#population').html("<b>Population:</b> " + cityPopulation + " citizens");
                         
@@ -650,7 +675,6 @@ window.onload = function () {
                             // HIGHLIGHT COUNTRY BORDER
                                 
                             let geojsonFeature = data.border
-                            // console.log(geojsonFeature)
                                 
                                 for (i = 0; i < geojsonFeature.length; i++) {
                                 
@@ -813,12 +837,24 @@ window.onload = function () {
                                     let cityName = data.capital
                                     let countryFlag = data.flag
                                 
-                                    let showTime = data.countryTime.slice(11, 16)
-                                
+                                    let showTime = data.countryTime.slice(11, 16)                               
+                                                                    
+                                    // WEATHER ICONS
+
                                     let weatherDescription = data.description
                                     let weatherTemp = data.temp
-                                
-                                    // WEATHER ICONS
+                                    let feels_like = data.feels_like
+                                    let humidityPercentage = data.humidity
+
+                                    function convertToCelsius(kelvin) {
+        
+                                        const celsius = 273.15
+        
+                                        return Math.floor(kelvin - celsius)
+                                      }
+        
+                                    let mainTemp = convertToCelsius(weatherTemp)
+                                    let feelsLike = convertToCelsius(feels_like)
                                 
                                     const getTime = data.countryTime.slice(11, 13)
                                 
@@ -832,8 +868,12 @@ window.onload = function () {
                                         $("#changeIcon").html("☁️")
                                     } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
                                         $("#changeIcon").html("&#127783")
-                                    } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){
-                                        $("#changeIcon").html("&#127780")
+                                    } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){    
+
+                                        (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127780") : $("#changeIcon").html(cloudyNight)
+
+                                        $(".cloudyPicture").css("display", "block")
+                                        
                                     } else if (weatherDescription.includes("snow")){
                                         $("#changeIcon").html("❄️")
                                     } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
@@ -850,20 +890,15 @@ window.onload = function () {
                                     let currencyName = data.name
                                     let currencySymbol = data.symbol   
                                 
-                                    // console.log(localCurrency)
-    
-                                    const kelvin = weatherTemp
-                                    let celsius = kelvin - 273.15
-                                    // let newton = celsius * ( 23 / 100 )
-                                    celsius = Math.floor(celsius)
-                                
                                     $('#countryName').html("<b>Country:</b> " + countryName);
                                     $('#cityName').html("<b>Capital City:</b> " + cityName);
                                     $('#flag').html(countryFlag);
                                     $('#time').html(`(${showTime})`);
-                                
-                                    $('#weatherCondition').html(weatherDescription.toUpperCase());
-                                    $('#temperature').html(celsius + "˚C");
+
+                                    $('#temperature').html(mainTemp + "˚C | ");
+                                    $('#feelsLike').html("  FEELS LIKE: " + feelsLike + "˚C");
+                                    $('#humidity').html("  HUMIDITY " + humidityPercentage + "%");  
+                                    $('#weatherCondition').html(weatherDescription.toUpperCase());                                             
                                 
                                     $('#population').html("<b>Population:</b> " + cityPopulation + " citizens");
                                 
