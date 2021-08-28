@@ -484,9 +484,12 @@ window.onload = function () {
                                 $("#changeIcon").html("&#127783")
                             } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){   
 
-                                (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127780") : $("#changeIcon").html(cloudyNight)
-
-                                $(".cloudyPicture").css("display", "block")
+                                if (getTime >= 6 && getTime <= 18) {
+                                    $("#changeIcon").html("&#127780")
+                                } else {
+                                    $("#changeIcon").html(cloudyNight)
+                                    $(".cloudyPicture").css("display", "block")
+                                }      
 
                             } else if (weatherDescription.includes("snow")){
                                 $("#changeIcon").html("❄️")
@@ -873,9 +876,12 @@ window.onload = function () {
                                         $("#changeIcon").html("&#127783")
                                     } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){    
 
-                                        (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127780") : $("#changeIcon").html(cloudyNight)
-
-                                        $(".cloudyPicture").css("display", "block")
+                                        if (getTime >= 6 && getTime <= 18) {
+                                            $("#changeIcon").html("&#127780")
+                                        } else {
+                                            $("#changeIcon").html(cloudyNight)
+                                            $(".cloudyPicture").css("display", "block")
+                                        }  
                                         
                                     } else if (weatherDescription.includes("snow")){
                                         $("#changeIcon").html("❄️")
