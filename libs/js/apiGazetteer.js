@@ -954,7 +954,7 @@ window.onload = function () {
                                     const listOfCurrency = Object.entries(getCurrencies)
                                     for (const [cName, cValue] of listOfCurrency) {
                                     
-                                        $('#exchangeRate').html("<b>Exchange rate;</b> ");   
+                                        $('#exchangeRate').html("<b>Exchange rate;</b> ⚖");   
                                     
                                         if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
                                             // console.log(cValue)
