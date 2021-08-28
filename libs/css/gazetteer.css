@@ -98,6 +98,7 @@ body {
 }
 .weatherCondition {
   text-align: center;
+  align-items: center;
   /* padding-left: 5ex; */
 }
 .humidity, .feelsLike {
@@ -105,10 +106,10 @@ body {
   text-align: left;
 }
 .cloudyPicture {
-  height: 34px;
+  display: none;
 }
 .cloudyPicture {
-  display: none;
+  height: 34px;
 }
 .temp {
   text-align: right;
