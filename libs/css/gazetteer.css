@@ -427,7 +427,7 @@ input[type=text] {
   align-items: center; */
 }
 .panelInfo {
-  width: 90%;
+  width: 95%;
   text-align: left;
   text-align: top;
   margin-left: auto; margin-right: auto;
@@ -479,5 +479,8 @@ a:hover, .wikipedia:hover {
     .temp {
       text-align: right;
       font-size: 14px;
+    }
+    .panelInfo {
+      font-size: 12px;
     }
 }
