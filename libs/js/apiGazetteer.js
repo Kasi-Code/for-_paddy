@@ -186,8 +186,8 @@ window.onload = function () {
                         
                         $('#weatherCondition').html(weatherDescription.toUpperCase());
                         $('#temperature').html(mainTemp + "˚C | ");
-                        $('#feelsLike').html("  FEELS LIKE: " + feelsLike + "˚C");
-                        $('#humidity').html("  HUMIDITY " + humidityPercentage + "%");
+                        $('#humidity').html("  HUMIDITY: " + humidityPercentage + "%");
+                        $('#feelsLike').html("  FEELS LIKE " + feelsLike + "˚C");
                         
                         $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
                         $('#currencyName').html(currencyName);
@@ -515,8 +515,8 @@ window.onload = function () {
                             $('#time').html(`(${showTime})`);
 
                             $('#temperature').html(mainTemp + "˚C | ");
-                            $('#feelsLike').html("  FEELS LIKE: " + feelsLike + "˚C");
-                            $('#humidity').html("  HUMIDITY " + humidityPercentage + "%");
+                            $('#humidity').html("  HUMIDITY: " + humidityPercentage + "%");
+                            $('#feelsLike').html("  FEELS LIKE " + feelsLike + "˚C");
                             $('#weatherCondition').html(weatherDescription.toUpperCase());
                         
                             $('#population').html("<b>Population:</b> " + cityPopulation + " citizens");
@@ -905,8 +905,8 @@ window.onload = function () {
                                     $('#time').html(`(${showTime})`);
 
                                     $('#temperature').html(mainTemp + "˚C | ");
-                                    $('#feelsLike').html("  FEELS LIKE: " + feelsLike + "˚C");
-                                    $('#humidity').html("  HUMIDITY " + humidityPercentage + "%");  
+                                    $('#humidity').html("  HUMIDITY: " + humidityPercentage + "%");  
+                                    $('#feelsLike').html("  FEELS LIKE " + feelsLike + "˚C");
                                     $('#weatherCondition').html(weatherDescription.toUpperCase());                                             
                                 
                                     $('#population').html("<b>Population:</b> " + cityPopulation + " citizens");
