@@ -5,6 +5,232 @@ let countriesForSelect = []
 
 let cloudyNight = $("#cloudyPicture").attr("src", "libs/media/nightCloudy.png")
 
+const celsius = 273.15
+
+const changeWeatherIcon = (getHour, weatherDescription) => {
+
+    if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
+
+        (getHour >= 6 && getHour <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
+
+    } else if (weatherDescription.includes("cloudy")){
+        $("#changeIcon").html("☁️")
+    } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
+        $("#changeIcon").html("&#127783")
+    } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){  
+        
+        if (getHour >= 6 && getHour <= 18) {
+            $("#changeIcon").html("&#127780")
+        } else {
+            $("#changeIcon").html(cloudyNight)
+            $(".cloudyPicture").css("display", "block")
+        }                           
+
+    } else if (weatherDescription.includes("snow")){
+        $("#changeIcon").html("❄️")
+    } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
+        $("#changeIcon").html("⛈")
+    } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
+        $("#changeIcon").html("🌫")
+    } else {
+        $("#changeIcon").html("🌍")
+    }
+
+}
+
+let compareToEUR = "EUR"
+let compareToGBP = "GBP"
+
+const currencyExchange = (iso, listOfCurrency, compareToUSD) => {
+
+    for (const [cName, cValue] of listOfCurrency) {
+        $('#exchangeRate').html("<b>Exchange rate</b> ⚖");  
+        if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
+            // console.log(cValue)
+            $('#localCurrency').html(cValue);    
+        
+            for (const [cName, cValue] of listOfCurrency) {
+                if (compareToUSD == cName) {  
+                    $('#secondCurrency').html("To USD $" + cValue); 
+                    for (const [cName, cValue] of listOfCurrency) {
+                        if (compareToEUR == cName) {  
+                            $('#thirdCurrency').html("To EUR €" + cValue);                        
+                        }
+                    }                           
+                }
+            }                    
+        } else if (iso == cName && iso != compareToGBP && iso != compareToEUR) {
+            $('#localCurrency').html(cValue);    
+        
+            for (const [cName, cValue] of listOfCurrency) {
+                if (compareToGBP == cName) {  
+                    $('#secondCurrency').html("To GBP £" + cValue); 
+                    for (const [cName, cValue] of listOfCurrency) {
+                        if (compareToEUR == cName) {  
+                            $('#thirdCurrency').html("To EUR €" + cValue);                        
+                        }
+                    }                           
+                }
+            }                    
+        } else if (iso == cName && iso != compareToGBP && iso != compareToUSD) {
+            $('#localCurrency').html(cValue);    
+        
+            for (const [cName, cValue] of listOfCurrency) {
+                if (compareToUSD == cName) {  
+                    $('#secondCurrency').html("To USD $" + cValue); 
+                    for (const [cName, cValue] of listOfCurrency) {
+                        if (compareToGBP == cName) {  
+                            $('#thirdCurrency').html("To BGP £" + cValue);                        
+                        }
+                    }                           
+                }
+            }                    
+        }
+    }
+
+}
+
+const news = (newsArr) => {
+
+    for (var i = 0; i < newsArr.length; i++){ 
+                            
+        let childNode = document.createElement('li')
+        let parentNode = document.getElementById('parentList')
+        childNode.setAttribute("class", "childList")
+    
+        childNode.innerHTML = `<a href="${newsArr[i].url}" target="_blank"><span><h5>${newsArr[i].author}</h5></span><span><p>${newsArr[i].title}</p></span></a>` 
+        parentNode.style.overflow = "auto";
+        parentNode.style.maxHeight = "85vh"; 
+        parentNode.appendChild(childNode);
+    }
+
+}
+
+const poiAroundTheLocation = (poi) => {
+
+    for (let i = 0; i < poi.length; i++) {
+        var markerPlaces = L.marker([poi[i].lat, poi[i].lng], {icon: wikiMarker}).addTo(mymap)
+
+        var nearByName = poi[i].title
+        var summary = poi[i].summary
+        var urlClick = poi[i].wikipediaUrl
+
+        markerPlaces.bindPopup(
+            `<div style="text-align: center;">
+            <a href="https://${urlClick}" target="blank">
+            <h4>${nearByName}</h4>
+            <p>${summary}</p>
+            </a>
+            </div>`
+        )
+    }     
+
+}
+
+const poiAroundTheCountry = (poiFromWiki) => {
+
+    for (let i = 0; i < poiFromWiki.length; i++) {
+        var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng], {icon: wikiMarker}).addTo(mymap)
+    
+        var nearByName = poiFromWiki[i].title
+        var summary = poiFromWiki[i].summary
+        var thumnail = poiFromWiki[i].thumbnailImg
+        var linkClick = poiFromWiki[i].wikipediaUrl
+
+        markerPlaces.bindPopup(
+            `<div style="text-align: center;">
+            <a href="https://${linkClick}" target="blank">
+            <img class="thumnail" id="thumnail" src="${thumnail}" alt="Picture of the location">
+            <h4>${nearByName}</h4>
+            <p>${summary}</p>
+            </a>
+            </div>`
+        ).openPopup()
+    
+    }
+
+}
+
+const getBorder = (geojsonFeature) => {
+
+    for (i = 0; i < geojsonFeature.length; i++) {
+                                        
+        const name = geojsonFeature[i].properties.name
+    
+            if (countryName == name) {
+                geojsonFeature = geojsonFeature[i]
+            }
+        
+    }
+
+}
+
+const loading = () => {
+
+    $(".loading").css("display", "block");
+    $("#loading").html("loading...");
+    $(".showCountryName").css("display", "none");
+
+}
+
+const stopLoading = () => {
+
+    $(".loading").css("display", "none");
+    $(".showCountryName").css("display", "block");
+
+}
+
+const UIdata = (countryName, cityName, countryFlag, showTime, mainTemp, humidityPercentage, feelsLike, weatherDescription, 
+    iso, currencyName, currencySymbol, wikiSummary, cityPopulation) => {
+                        
+    $('#countryName').html("<b>Country:</b> " + countryName);
+    $('#cityName').html("<b>Capital City:</b> " + cityName);
+    $('#flag').html(countryFlag);
+    $('#time').html(`(${showTime})`);
+
+    $('#temperature').html(mainTemp + "˚C | ");
+    $('#humidity').html("  HUMIDITY: " + humidityPercentage + "%");
+    $('#feelsLike').html("  FEELS LIKE " + feelsLike + "˚C");
+    $('#weatherCondition').html(weatherDescription.toUpperCase());
+
+    $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
+    $('#currencyName').html(currencyName);
+    $('#currencySymbal').html(currencySymbol);
+
+    $('#wikiSummary').html(wikiSummary);
+
+    if (typeof cityPopulation == 'undefined' || cityPopulation === null) {
+
+        $('#population').css("display", "none");
+
+    } else {
+
+        $('#population').css("display", "block");
+        $('#population').html("<b>Population:</b> " + cityPopulation + " citizens");
+
+    }
+
+}
+
+const covid = (Active, Confirmed, Deaths, Recovered) => {
+
+    $('#active').html(Active);
+    $('#confirmed').html(Confirmed);
+    $('#deaths').html(Deaths);
+    $('#recovered').html(Recovered);
+
+}
+
+const displayError = (selCountry) => {
+
+    // alert(request)
+    $(".loading").css("display", "none");
+    $(".showCountryName").css("display", "block");
+    $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
+    $('#flag').html(`😔`); 
+
+}
+
 // INITIATE MAP
 
 var mymap = L.map('mapid').setView([0, 0], 13);
@@ -133,12 +359,7 @@ window.onload = function () {
                         let feels_like = data.feels_like
                         let humidityPercentage = data.humidity
 
-                        function convertToCelsius(kelvin) {
-
-                            const celsius = 273.15
-
-                            return Math.floor(kelvin - celsius)
-                          }
+                        const convertToCelsius = kelvin => Math.floor(kelvin - celsius)
 
                         let mainTemp = convertToCelsius(weatherTemp)
                         let feelsLike = convertToCelsius(feels_like)
@@ -146,60 +367,21 @@ window.onload = function () {
                         const today = new Date()
                         const getHour = today.getHours()
                         
-                        if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-
-                            (getHour >= 6 && getHour <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
-
-                        } else if (weatherDescription.includes("cloudy")){
-                            $("#changeIcon").html("☁️")
-                        } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
-                            $("#changeIcon").html("&#127783")
-                        } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){  
-                            
-                            if (getHour >= 6 && getHour <= 18) {
-                                $("#changeIcon").html("&#127780")
-                            } else {
-                                $("#changeIcon").html(cloudyNight)
-                                $(".cloudyPicture").css("display", "block")
-                            }                           
-
-                        } else if (weatherDescription.includes("snow")){
-                            $("#changeIcon").html("❄️")
-                        } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-                            $("#changeIcon").html("⛈")
-                        } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
-                            $("#changeIcon").html("🌫")
-                        } else {
-                            $("#changeIcon").html("🌍")
-                        }
+                        changeWeatherIcon(getHour, weatherDescription)
                         
                         let iso = data.iso_code
                         let currencyName = data.name
                         let currencySymbol = data.symbol   
-                        
-                        // console.log(localCurrency)
-                                                
-                        $('#countryName').html("<b>Country:</b> " + countryName);
-                        $('#cityName').html("<b>City:</b> " + cityName);
-                        $('#flag').html(countryFlag);
-                        $('#time').html(`(${showTime})`);
-                        
-                        $('#weatherCondition').html(weatherDescription.toUpperCase());
-                        $('#temperature').html(mainTemp + "˚C | ");
-                        $('#humidity').html("  HUMIDITY: " + humidityPercentage + "%");
-                        $('#feelsLike').html("  FEELS LIKE " + feelsLike + "˚C");
-                        
-                        $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
-                        $('#currencyName').html(currencyName);
-                        $('#currencySymbal').html(currencySymbol);
     
                         // WIKI
                         
                         let wikiLink = data.wikipediaUrl
                         let wikiSummary = data.summary
 
+                        UIdata(countryName, cityName, countryFlag, showTime, mainTemp, humidityPercentage, feelsLike, weatherDescription, 
+                            iso, currencyName, currencySymbol, wikiSummary)
+
                         $('#essayIcon').html("&#128220 ");
-                        $('#wikiSummary').html(wikiSummary);
                         
                         var a = document.querySelector('.wikipedia');
                             a.href = `http://${wikiLink}`;
@@ -207,93 +389,38 @@ window.onload = function () {
                         $('#wikiLinkIcon').html(`🌐 `);
     
                         // COVID
-                        $('#active').html(data.Active);
-                        $('#confirmed').html(data.Confirmed);
-                        $('#deaths').html(data.Deaths);
-                        $('#recovered').html(data.Recovered);
+
+                        let active = data.Active
+                        let confirmed = data.Confirmed
+                        let deaths = data.Deaths
+                        let recovered = data.Recovered
+
+                        covid(active, confirmed, deaths, recovered)
                     
                         // CURRENCY COMPARING
 
                         let getCurrencies = data.rates
                         let compareToUSD = data.base
-                        let compareToEUR = "EUR"
-                        let compareToGBP = "GBP"
                     
                         const listOfCurrency = Object.entries(getCurrencies)
-                        for (const [cName, cValue] of listOfCurrency) {
-                            $('#exchangeRate').html("<b>Exchange rate</b> ⚖");  
-                            if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
-                                // console.log(cValue)
-                                $('#localCurrency').html(cValue);    
-                            
-                                for (const [cName, cValue] of listOfCurrency) {
-                                    if (compareToUSD == cName) {  
-                                        $('#secondCurrency').html("To USD $" + cValue); 
-                                        for (const [cName, cValue] of listOfCurrency) {
-                                            if (compareToEUR == cName) {  
-                                                $('#thirdCurrency').html("To EUR €" + cValue);                        
-                                            }
-                                        }                           
-                                    }
-                                }                    
-                            } else if (iso == cName && iso != compareToGBP && iso != compareToEUR) {
-                                $('#localCurrency').html(cValue);    
-                            
-                                for (const [cName, cValue] of listOfCurrency) {
-                                    if (compareToGBP == cName) {  
-                                        $('#secondCurrency').html("To GBP £" + cValue); 
-                                        for (const [cName, cValue] of listOfCurrency) {
-                                            if (compareToEUR == cName) {  
-                                                $('#thirdCurrency').html("To EUR €" + cValue);                        
-                                            }
-                                        }                           
-                                    }
-                                }                    
-                            } else if (iso == cName && iso != compareToGBP && iso != compareToUSD) {
-                                $('#localCurrency').html(cValue);    
-                            
-                                for (const [cName, cValue] of listOfCurrency) {
-                                    if (compareToUSD == cName) {  
-                                        $('#secondCurrency').html("To USD $" + cValue); 
-                                        for (const [cName, cValue] of listOfCurrency) {
-                                            if (compareToGBP == cName) {  
-                                                $('#thirdCurrency').html("To BGP £" + cValue);                        
-                                            }
-                                        }                           
-                                    }
-                                }                    
-                            }
-                        }
+
+                        currencyExchange(iso, listOfCurrency, compareToUSD)
     
                         // NEWS
+
                         const newsArr = data.news.articles
-    
-                        for (var i = 0; i < newsArr.length; i++){ 
-                            // Create DOM element
-                            let childNode = document.createElement('li')
-                            let parentNode = document.getElementById('parentList')
-                            childNode.setAttribute("class", "childList")
-                        
-                            // Set content to current element
-                            childNode.innerHTML = `<a href="${newsArr[i].url}" target="_blank"><span><h5>${newsArr[i].author}</h5></span><span><p>${newsArr[i].title}</p></span></a>` 
-                            parentNode.style.overflow = "auto";
-                            parentNode.style.maxHeight = "85vh"; 
-                            // childNode.style.borderTopLeftRadius = "20px";
-                            // childNode.style.borderTopRightRadius = "20px";
-                        
-                            // Add DOM Node to list
-                            parentNode.appendChild(childNode);
-                        }
+
+                        news(newsArr)   
                       
                         // CHANGING MARKER ICON
 
                         var humanMarker = L.icon({
                             iconUrl: 'libs/media/humanMarkerOrange.png',                        
-                            iconSize:     [38, 45], // size of the icon
+                            iconSize:     [38, 45],
                             // shadowSize:   [50, 64], // size of the shadow
-                            iconAnchor:   [19, 45], // point of the icon which will correspond to marker's location
+                            iconAnchor:   [19, 45],
                             // shadowAnchor: [4, 62],  // the same for the shadow
-                            popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+                            popupAnchor:  [0, -40]
                         });
 
                         // THE MAP
@@ -317,22 +444,7 @@ window.onload = function () {
 
                         const poi = data.poi_nearByPlaces
     
-                        for (let i = 0; i < poi.length; i++) {
-                            var markerPlaces = L.marker([poi[i].lat, poi[i].lng], {icon: wikiMarker}).addTo(mymap)
-
-                            var nearByName = poi[i].title
-                            var summary = poi[i].summary
-                            var urlClick = poi[i].wikipediaUrl
-
-                            markerPlaces.bindPopup(
-                                `<div style="text-align: center;">
-                                <a href="https://${urlClick}" target="blank">
-                                <h4>${nearByName}</h4>
-                                <p>${summary}</p>
-                                </a>
-                                </div>`
-                            )
-                        }                   
+                        poiAroundTheLocation(poi)              
                         
                         mymap.setView([lat, lng], 14); // <-- Set the center on the map with your location
                     },
@@ -373,11 +485,9 @@ window.onload = function () {
                 
                 for (i = 0; i < name.length; i++) {
 
-                    // console.log(array[i])
                     var option = document.createElement("option");
                     // option.value = name[i];
                     option.text = name[i];
-                    // option.style.borderRadius = "20px";
 
                     selectList.appendChild(option);
                 }
@@ -429,9 +539,7 @@ window.onload = function () {
 
                     event.preventDefault();
                         
-                    $(".loading").css("display", "block");
-                    $("#loading").html("loading...");
-                    $(".showCountryName").css("display", "none");
+                    loading()
                 
                     const selCountry = document.getElementById("mySelect").value;
                     
@@ -442,8 +550,7 @@ window.onload = function () {
                         url: `libs/php/selCountry.php?selCountry=${countriesForSelect.find(c => c.name == selCountry).code}`,
                         success: function(data) {
 
-                            $(".loading").css("display", "none");
-                            $(".showCountryName").css("display", "block");
+                            stopLoading()
                         
                             // console.log(data)
                         
@@ -460,12 +567,7 @@ window.onload = function () {
                             let feels_like = data.feels_like
                             let humidityPercentage = data.humidity
 
-                            function convertToCelsius(kelvin) {
-
-                                const celsius = 273.15
-
-                                return Math.floor(kelvin - celsius)
-                              }
+                            const convertToCelsius = kelvin => Math.floor(kelvin - celsius)
 
                             let mainTemp = convertToCelsius(weatherTemp)
                             let feelsLike = convertToCelsius(feels_like)
@@ -474,32 +576,7 @@ window.onload = function () {
                         
                             // console.log(getTime)
                         
-                            if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                            
-                                (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
-                            
-                            } else if (weatherDescription.includes("cloudy")){
-                                $("#changeIcon").html("☁️")
-                            } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
-                                $("#changeIcon").html("&#127783")
-                            } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){   
-
-                                if (getTime >= 6 && getTime <= 18) {
-                                    $("#changeIcon").html("&#127780")
-                                } else {
-                                    $("#changeIcon").html(cloudyNight)
-                                    $(".cloudyPicture").css("display", "block")
-                                }      
-
-                            } else if (weatherDescription.includes("snow")){
-                                $("#changeIcon").html("❄️")
-                            } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-                                $("#changeIcon").html("⛈")
-                            } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
-                                $("#changeIcon").html("🌫")
-                            } else {
-                                $("#changeIcon").html("🌍")
-                            }
+                            changeWeatherIcon(getTime, weatherDescription)
                         
                             let cityPopulation = data.population
                         
@@ -507,32 +584,16 @@ window.onload = function () {
                             let currencyName = data.name
                             let currencySymbol = data.symbol   
                         
-                            // console.log(localCurrency)
-                        
-                            $('#countryName').html("<b>Country:</b> " + countryName);
-                            $('#cityName').html("<b>Capital City:</b> " + cityName);
-                            $('#flag').html(countryFlag);
-                            $('#time').html(`(${showTime})`);
-
-                            $('#temperature').html(mainTemp + "˚C | ");
-                            $('#humidity').html("  HUMIDITY: " + humidityPercentage + "%");
-                            $('#feelsLike').html("  FEELS LIKE " + feelsLike + "˚C");
-                            $('#weatherCondition').html(weatherDescription.toUpperCase());
-                        
-                            $('#population').html("<b>Population:</b> " + cityPopulation + " citizens");
-                        
-                            $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
-                            $('#currencyName').html(currencyName);
-                            $('#currencySymbal').html(currencySymbol);
-                        
                             // WIKI LINK
                         
                             let wikiLink = data.wikipediaUrl
                             let wikiSummary = data.summary
                             let wikiThumnail = data.thumbnailImg
+
+                            UIdata(countryName, cityName, countryFlag, showTime, mainTemp, humidityPercentage, feelsLike, weatherDescription, 
+                                iso, currencyName, currencySymbol, wikiSummary, cityPopulation)
                         
                             $('#essayIcon').html("&#128220 ");
-                            $('#wikiSummary').html(wikiSummary);
                         
                             var a = document.querySelector('.wikipedia');
                                 a.href = `http://${wikiLink}`;
@@ -549,111 +610,29 @@ window.onload = function () {
                         
                             // COVID
                         
-                            $('#active').html(data.Active);
-                            $('#confirmed').html(data.Confirmed);
-                            $('#deaths').html(data.Deaths);
-                            $('#recovered').html(data.Recovered);
+                            let active = data.Active
+                            let confirmed = data.Confirmed
+                            let deaths = data.Deaths
+                            let recovered = data.Recovered
+    
+                            covid(active, confirmed, deaths, recovered)
                         
                             // CURRENCY COMPARING
 
                             let getCurrencies = data.rates
                             let compareToUSD = data.base
-                            let compareToEUR = "EUR"
-                            let compareToGBP = "GBP"
                         
                             const listOfCurrency = Object.entries(getCurrencies)
-                            for (const [cName, cValue] of listOfCurrency) {
                             
-                                $('#exchangeRate').html("<b>Exchange rate</b> ⚖");   
-                            
-                                if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
-                                    // console.log(cValue)
-                                    $('#localCurrency').html(cValue);    
-                                
-                                    for (const [cName, cValue] of listOfCurrency) {
-                                        if (compareToUSD == cName) {  
-                                            $('#secondCurrency').html("To USD $" + cValue); 
-                                        
-                                            for (const [cName, cValue] of listOfCurrency) {
-                                                if (compareToEUR == cName) {  
-                                                    $('#thirdCurrency').html("To EUR €" + cValue);                        
-                                                }
-                                            }                           
-                                        }
-                                    }                    
-                                } else if (iso == cName && iso != compareToGBP && iso != compareToEUR) {
-                                    $('#localCurrency').html(cValue);    
-                                
-                                    for (const [cName, cValue] of listOfCurrency) {
-                                        if (compareToGBP == cName) {  
-                                            $('#secondCurrency').html("To GBP £" + cValue); 
-
-                                            for (const [cName, cValue] of listOfCurrency) {
-                                                if (compareToEUR == cName) {  
-                                                    $('#thirdCurrency').html("To EUR €" + cValue);                        
-                                                }
-                                            }                           
-                                        }
-                                    }                    
-                                } else if (iso == cName && iso != compareToGBP && iso != compareToUSD) {
-                                    $('#localCurrency').html(cValue);    
-                                
-                                    for (const [cName, cValue] of listOfCurrency) {
-                                        if (compareToUSD == cName) {  
-                                            $('#secondCurrency').html("To USD $" + cValue); 
-
-                                            for (const [cName, cValue] of listOfCurrency) {
-                                                if (compareToGBP == cName) {  
-                                                    $('#thirdCurrency').html("To BGP £" + cValue);                        
-                                                }
-                                            }                           
-                                        }
-                                    }                    
-                                }
-                            }
+                            currencyExchange(iso, listOfCurrency, compareToUSD)
                         
                             // THE MAP
 
                             const poi = data.poi_nearByPlaces
                             const poiFromWiki = data.placesNearBy
-
-                            for (let i = 0; i < poiFromWiki.length; i++) {
-                                var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng], {icon: wikiMarker}).addTo(mymap)
-                            
-                                var nearByName = poiFromWiki[i].title
-                                var summary = poiFromWiki[i].summary
-                                var thumnail = poiFromWiki[i].thumbnailImg
-                                var linkClick = poiFromWiki[i].wikipediaUrl
-
-                                markerPlaces.bindPopup(
-                                    `<div style="text-align: center;">
-                                    <a href="https://${linkClick}" target="blank">
-                                    <img class="thumnail" id="thumnail" src="${thumnail}" alt="Picture of the location">
-                                    <h4>${nearByName}</h4>
-                                    <p>${summary}</p>
-                                    </a>
-                                    </div>`
-                                ).openPopup()
-                            
-                            }
                         
-                            for (let i = 0; i < poi.length; i++) {
-                                var markerPlaces = L.marker([poi[i].lat, poi[i].lng], {icon: wikiMarker}).addTo(mymap)
-                            
-                                var nearByName = poi[i].title
-                                var summary = poi[i].summary
-                                var urlClick = poi[i].wikipediaUrl
-
-                                markerPlaces.bindPopup(
-                                    `<div style="text-align: center;">
-                                    <a href="https://${urlClick}" target="blank">
-                                    <h4>${nearByName}</h4>
-                                    <p>${summary}</p>
-                                    </a>
-                                    </div>`
-                                ).openPopup()
-                            
-                            }
+                            poiAroundTheLocation(poi)
+                            poiAroundTheCountry(poiFromWiki)
                         
                             var lat = data.lat
                             var lng = data.lng
@@ -682,15 +661,7 @@ window.onload = function () {
                                 
                             let geojsonFeature = data.border
                                 
-                                for (i = 0; i < geojsonFeature.length; i++) {
-                                
-                                    const name = geojsonFeature[i].properties.name
-                                
-                                        if (countryName == name) {
-                                            geojsonFeature = geojsonFeature[i]
-                                        }
-                                    
-                                }
+                            getBorder(geojsonFeature)
                             
                             L.geoJSON(geojsonFeature, { color: "red" }).addTo(mymap) // <-- highlighting border
 
@@ -703,11 +674,7 @@ window.onload = function () {
                             });
                         },
                         error: function(request,error) {
-                            // alert(request)
-                            $(".loading").css("display", "none");
-                            $(".showCountryName").css("display", "block");
-                            $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
-                            $('#flag').html(`😔`);                                    
+                            displayError(selCountry)                                     
                         }
                     })    
                 });
@@ -821,9 +788,7 @@ window.onload = function () {
                         
                             event.preventDefault();
                         
-                            $(".loading").css("display", "block");
-                            $("#loading").html("loading...");
-                            $(".showCountryName").css("display", "none");
+                            loading()
                         
                             var selCountry = document.getElementById("myInput").value;
                             
@@ -834,8 +799,7 @@ window.onload = function () {
                                 url: `libs/php/selCountry.php?selCountry=${countriesForSearch.find(c => c.name == selCountry).code}`,
                                 success: function(data) {
 
-                                    $(".loading").css("display", "none");
-                                    $(".showCountryName").css("display", "block");
+                                    stopLoading()
                                 
                                     // console.log(data)
                                 
@@ -852,46 +816,14 @@ window.onload = function () {
                                     let feels_like = data.feels_like
                                     let humidityPercentage = data.humidity
 
-                                    function convertToCelsius(kelvin) {
-        
-                                        const celsius = 273.15
-        
-                                        return Math.floor(kelvin - celsius)
-                                      }
+                                    const convertToCelsius = kelvin => Math.floor(kelvin - celsius)
         
                                     let mainTemp = convertToCelsius(weatherTemp)
                                     let feelsLike = convertToCelsius(feels_like)
                                 
                                     const getTime = data.countryTime.slice(11, 13)
                                 
-                                    // console.log(getTime)
-                                
-                                    if (weatherDescription.includes("sun") || weatherDescription.includes("sunny") || weatherDescription.includes("clear")){
-                                    
-                                        (getTime >= 6 && getTime <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
-                                    
-                                    } else if (weatherDescription.includes("cloudy")){
-                                        $("#changeIcon").html("☁️")
-                                    } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
-                                        $("#changeIcon").html("&#127783")
-                                    } else if (weatherDescription.includes("cloud") || weatherDescription.includes("clouds")){    
-
-                                        if (getTime >= 6 && getTime <= 18) {
-                                            $("#changeIcon").html("&#127780")
-                                        } else {
-                                            $("#changeIcon").html(cloudyNight)
-                                            $(".cloudyPicture").css("display", "block")
-                                        }  
-                                        
-                                    } else if (weatherDescription.includes("snow")){
-                                        $("#changeIcon").html("❄️")
-                                    } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-                                        $("#changeIcon").html("⛈")
-                                    } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
-                                        $("#changeIcon").html("🌫")
-                                    } else {
-                                        $("#changeIcon").html("🌍")
-                                    }
+                                    changeWeatherIcon(getTime, weatherDescription)
                                 
                                     let cityPopulation = data.population
                                 
@@ -899,30 +831,16 @@ window.onload = function () {
                                     let currencyName = data.name
                                     let currencySymbol = data.symbol   
                                 
-                                    $('#countryName').html("<b>Country:</b> " + countryName);
-                                    $('#cityName').html("<b>Capital City:</b> " + cityName);
-                                    $('#flag').html(countryFlag);
-                                    $('#time').html(`(${showTime})`);
-
-                                    $('#temperature').html(mainTemp + "˚C | ");
-                                    $('#humidity').html("  HUMIDITY: " + humidityPercentage + "%");  
-                                    $('#feelsLike').html("  FEELS LIKE " + feelsLike + "˚C");
-                                    $('#weatherCondition').html(weatherDescription.toUpperCase());                                             
-                                
-                                    $('#population').html("<b>Population:</b> " + cityPopulation + " citizens");
-                                
-                                    $('#isoCode').html("<b>Currency;</b> " + iso + ", ");
-                                    $('#currencyName').html(currencyName);
-                                    $('#currencySymbal').html(currencySymbol);
-                                
                                     // WIKI LINK
                                 
                                     let wikiLink = data.wikipediaUrl
                                     let wikiSummary = data.summary
                                     let wikiThumnail = data.thumbnailImg
+
+                                    UIdata(countryName, cityName, countryFlag, showTime, mainTemp, humidityPercentage, feelsLike, weatherDescription, 
+                                        iso, currencyName, currencySymbol, wikiSummary, cityPopulation)
                                 
                                     $('#essayIcon').html("&#128220 ");
-                                    $('#wikiSummary').html(wikiSummary);
                                 
                                     var a = document.querySelector('.wikipedia');
                                         a.href = `http://${wikiLink}`;
@@ -939,111 +857,29 @@ window.onload = function () {
                                 
                                     // COVID
                                 
-                                    $('#active').html(data.Active);
-                                    $('#confirmed').html(data.Confirmed);
-                                    $('#deaths').html(data.Deaths);
-                                    $('#recovered').html(data.Recovered);
+                                    let active = data.Active
+                                    let confirmed = data.Confirmed
+                                    let deaths = data.Deaths
+                                    let recovered = data.Recovered
+            
+                                    covid(active, confirmed, deaths, recovered)
                                 
                                     // CURRENCY COMPARING
 
                                     let getCurrencies = data.rates
                                     let compareToUSD = data.base
-                                    let compareToEUR = "EUR"
-                                    let compareToGBP = "GBP"
                                 
                                     const listOfCurrency = Object.entries(getCurrencies)
-                                    for (const [cName, cValue] of listOfCurrency) {
                                     
-                                        $('#exchangeRate').html("<b>Exchange rate</b> ⚖");   
-                                    
-                                        if (iso == cName && iso != compareToUSD && iso != compareToEUR) {
-                                            // console.log(cValue)
-                                            $('#localCurrency').html(cValue);    
-                                        
-                                            for (const [cName, cValue] of listOfCurrency) {
-                                                if (compareToUSD == cName) {  
-                                                    $('#secondCurrency').html("To USD $" + cValue); 
-                                                
-                                                    for (const [cName, cValue] of listOfCurrency) {
-                                                        if (compareToEUR == cName) {  
-                                                            $('#thirdCurrency').html("To EUR €" + cValue);                        
-                                                        }
-                                                    }                           
-                                                }
-                                            }                    
-                                        } else if (iso == cName && iso != compareToGBP && iso != compareToEUR) {
-                                            $('#localCurrency').html(cValue);    
-                                        
-                                            for (const [cName, cValue] of listOfCurrency) {
-                                                if (compareToGBP == cName) {  
-                                                    $('#secondCurrency').html("To GBP £" + cValue); 
-    
-                                                    for (const [cName, cValue] of listOfCurrency) {
-                                                        if (compareToEUR == cName) {  
-                                                            $('#thirdCurrency').html("To EUR €" + cValue);                        
-                                                        }
-                                                    }                           
-                                                }
-                                            }                    
-                                        } else if (iso == cName && iso != compareToGBP && iso != compareToUSD) {
-                                            $('#localCurrency').html(cValue);    
-                                        
-                                            for (const [cName, cValue] of listOfCurrency) {
-                                                if (compareToUSD == cName) {  
-                                                    $('#secondCurrency').html("To USD $" + cValue); 
-    
-                                                    for (const [cName, cValue] of listOfCurrency) {
-                                                        if (compareToGBP == cName) {  
-                                                            $('#thirdCurrency').html("To BGP £" + cValue);                        
-                                                        }
-                                                    }                           
-                                                }
-                                            }                    
-                                        }
-                                    }
+                                    currencyExchange(iso, listOfCurrency, compareToUSD)
                                 
                                     // THE MAP
     
                                     const poi = data.poi_nearByPlaces
-                                    const poiFromWiki = data.placesNearBy
-
-                                    for (let i = 0; i < poiFromWiki.length; i++) {
-                                        var markerPlaces = L.marker([poiFromWiki[i].lat, poiFromWiki[i].lng], {icon: wikiMarker}).addTo(mymap)
-                                    
-                                        var nearByName = poiFromWiki[i].title
-                                        var summary = poiFromWiki[i].summary
-                                        var thumnail = poiFromWiki[i].thumbnailImg
-                                        var linkClick = poiFromWiki[i].wikipediaUrl
-    
-                                        markerPlaces.bindPopup(
-                                            `<div style="text-align: center;">
-                                            <a href="https://${linkClick}" target="blank">
-                                            <img class="thumnail" id="thumnail" src="${thumnail}" alt="Picture of the location">
-                                            <h4>${nearByName}</h4>
-                                            <p>${summary}</p>
-                                            </a>
-                                            </div>`
-                                        ).openPopup()
-                                    
-                                    }
+                                    const poiFromWiki = data.placesNearBy                                    
                                 
-                                    for (let i = 0; i < poi.length; i++) {
-                                        var markerPlaces = L.marker([poi[i].lat, poi[i].lng], {icon: wikiMarker}).addTo(mymap)
-                                    
-                                        var nearByName = poi[i].title
-                                        var summary = poi[i].summary
-                                        var urlClick = poi[i].wikipediaUrl
-    
-                                        markerPlaces.bindPopup(
-                                            `<div style="text-align: center;">
-                                            <a href="https://${urlClick}" target="blank">
-                                            <h4>${nearByName}</h4>
-                                            <p>${summary}</p>
-                                            </a>
-                                            </div>`
-                                        ).openPopup()
-                                    
-                                    }
+                                    poiAroundTheLocation(poi)
+                                    poiAroundTheCountry(poiFromWiki)
                                 
                                     var lat = data.lat
                                     var lng = data.lng
@@ -1071,17 +907,8 @@ window.onload = function () {
                                     // HIGHLIGHT COUNTRY BORDER
                                         
                                     let geojsonFeature = data.border
-                                    // console.log(geojsonFeature)
                                         
-                                        for (i = 0; i < geojsonFeature.length; i++) {
-                                        
-                                            const name = geojsonFeature[i].properties.name
-                                        
-                                                if (countryName == name) {
-                                                    geojsonFeature = geojsonFeature[i]
-                                                }
-                                            
-                                        }
+                                    getBorder(geojsonFeature)
                                     
                                     L.geoJSON(geojsonFeature, { color: "red" }).addTo(mymap) // <-- highlighting border
 
@@ -1094,11 +921,7 @@ window.onload = function () {
                                     });
                                 },
                                 error: function(request,error) {
-                                    // alert(request)
-                                    $(".loading").css("display", "none");
-                                    $(".showCountryName").css("display", "block");
-                                    $('#countryName').html(`Error, "${selCountry}" isn't available right now...`);
-                                    $('#flag').html(`😔`);                                    
+                                    displayError(selCountry)                                   
                                 }
                             })
                         });
