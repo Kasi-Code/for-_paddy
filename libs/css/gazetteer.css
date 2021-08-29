@@ -375,8 +375,7 @@ input[type=text] {
 .eachBtn {
   background-color: white;  
   margin-bottom: 5px;
-  padding: 5px;
-  border-radius: 105px;
+  border-radius: 50%;
   box-shadow: 1px 2px 2px black;
 }
 .navBtn {
@@ -386,8 +385,7 @@ input[type=text] {
   cursor: pointer;
 }
 .covidButton, .newsButton, .infoButton, .searchButton, .selectButton {
-  padding-top: 8px; padding-bottom: 8px;
-  padding-left: 10px; padding-right: 10px;
+  padding: 10px;
 }
 .flag, .essayIcon, .buttonUpStyle, .submit, .wikiLinkIcon {
   text-shadow: 1px 2px 2px black;
@@ -406,9 +404,6 @@ input[type=text] {
  .eachBtn:hover {
   transform: scale(1.1);
  }
- /* .weatherButton:hover {
-  background-color: yellow;
- } */
  .covidButton:hover {
   background-color: red;
  }
@@ -433,8 +428,6 @@ input[type=text] {
 .panel {
   padding: 10px;
   display: none;
-  /* text-align: center;
-  align-items: center; */
 }
 .panelInfo {
   width: 95%;
