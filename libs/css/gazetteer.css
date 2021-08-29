@@ -174,18 +174,6 @@ body {
 .mapid { 
   height: 100vh; 
  }
-.options {
-  overflow: hidden;
-  position: fixed;
-  right: 0; 
-  top: 50%;
-  transform: translate(0, -50%);
-  z-index: 7;
-  max-height: 100%;
-}
-.options {
-  padding-left: 3px; padding-top: 3px; padding-bottom: 3px;
-}
 .searchResults {
   background-color: rgba(255, 255, 255);
   overflow: hidden;
@@ -371,6 +359,16 @@ input[type=text] {
 
 /* BUTTON  */
 
+.options {
+  overflow: hidden;
+  position: fixed;
+  right: 0; 
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 7;
+  max-height: 100%;
+  padding: 3px
+}
 .eachBtn button {
   font-size: 10px;
 }
@@ -378,7 +376,7 @@ input[type=text] {
   background-color: white;  
   margin-bottom: 5px;
   padding: 5px;
-  border-top-left-radius: 20px; border-bottom-left-radius: 20px;
+  border-radius: 105px;
   box-shadow: 1px 2px 2px black;
 }
 .navBtn {
@@ -388,7 +386,8 @@ input[type=text] {
   cursor: pointer;
 }
 .covidButton, .newsButton, .infoButton, .searchButton, .selectButton {
-  padding-top: 10px; padding-bottom: 10px;
+  padding-top: 5px; padding-bottom: 5px;
+  padding-left: 10px; padding-right: 10px;
 }
 .flag, .essayIcon, .buttonUpStyle, .submit, .wikiLinkIcon {
   text-shadow: 1px 2px 2px black;
@@ -418,6 +417,9 @@ input[type=text] {
  }
  .newsButton:hover {
   background-color: green;
+ }
+ .searchButton:hover, .selectButton:hover {
+  background-color: skyblue;
  }
  button {
    border: none;
