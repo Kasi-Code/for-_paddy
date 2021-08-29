@@ -13,6 +13,8 @@ const changeWeatherIcon = (getHour, weatherDescription) => {
 
         (getHour >= 6 && getHour <= 18) ? $("#changeIcon").html("&#127774") : $("#changeIcon").html("🌕")
 
+    } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm") || weatherDescription.includes("lightning")){
+        $("#changeIcon").html("⛈")
     } else if (weatherDescription.includes("cloudy")){
         $("#changeIcon").html("☁️")
     } else if (weatherDescription.includes("rain") || weatherDescription.includes("rainny") || weatherDescription.includes("overcast") || weatherDescription.includes("drizzle")){
@@ -28,8 +30,6 @@ const changeWeatherIcon = (getHour, weatherDescription) => {
 
     } else if (weatherDescription.includes("snow")){
         $("#changeIcon").html("❄️")
-    } else if (weatherDescription.includes("thunder") || weatherDescription.includes("storm")){
-        $("#changeIcon").html("⛈")
     } else if (weatherDescription.includes("mist") || weatherDescription.includes("fog")){
         $("#changeIcon").html("🌫")
     } else {
@@ -189,8 +189,8 @@ const UIdata = (countryName, cityName, countryFlag, showTime, mainTemp, humidity
     $('#time').html(`(${showTime})`);
 
     $('#temperature').html(mainTemp + "˚C | ");
-    $('#humidity').html("  HUMIDITY: " + humidityPercentage + "%");
-    $('#feelsLike').html("  FEELS LIKE " + feelsLike + "˚C");
+    $('#humidity').html("HUMIDITY: " + humidityPercentage + "%");
+    $('#feelsLike').html("FEELS LIKE " + feelsLike + "˚C");
     $('#weatherCondition').html(weatherDescription.toUpperCase());
 
     $('#isoCode').html("<b>Currency;</b> " + iso + ", ");

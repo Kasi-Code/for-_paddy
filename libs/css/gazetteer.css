@@ -94,16 +94,12 @@ body {
 .weatherEmoji {
   text-align: center;
   font-size: 28px;
-  /* padding-right: 5ex; */
+  margin-right: 5px;
 }
 .weatherCondition {
   text-align: center;
   align-items: center;
   /* padding-left: 5ex; */
-}
-.humidity, .feelsLike {
-  font-size: 11px;
-  text-align: left;
 }
 .cloudyPicture {
   display: none;
@@ -114,21 +110,34 @@ body {
 .temp {
   text-align: right;
   font-size: 24px;
+  white-space: nowrap;
+  margin-right: 5px;
 }
 .weather table {
   width: 90%;
   margin-left: auto; margin-right: auto;
-  /* table-layout: fixed; */
-  /* background-color: cadetblue; */
+}
+.humidity, .feelsLike {
+  font-size: 11px;
+  text-align: left;
+  margin-right: 0;
+  white-space: nowrap;
+}
+.weatherCondition {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  margin-left: auto; margin-right: auto;
 }
 
 /* WEATHER END */
 
+#population {
+  white-space: nowrap;
+}
 .covid {
   color: black;
   display: none;
-  /* justify-content: space-evenly; */
-  /* flex-direction: row;  */
   text-align: center;
   z-index: 3;
 }
@@ -143,11 +152,9 @@ body {
   width: 100%;
 }
 .covid td, .panelInfo td {
-  /* border: 1px solid #dddddd; */
   padding: 8px;
 }
 .covidResultTittle {
-  /* position: absolute; */
   text-align: left;
   left: 20%;
 }
@@ -434,6 +441,9 @@ input[type=text] {
   margin-left: auto; margin-right: auto;
   background-color: #dddddd;
   /* border-radius: 20px; */
+}
+#exchangeRate {
+  white-space: nowrap;
 }
 .wikiSummary {
   text-align: justify;
