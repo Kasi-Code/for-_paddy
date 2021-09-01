@@ -186,6 +186,9 @@ body {
   width: 300px;
   max-height: 315px;
 }
+
+/* BOTTOM SECTION */
+
 .bottomPageSection {
   background: black;
   /* position: sticky; */
@@ -203,6 +206,9 @@ body {
   z-index: 5;
   margin-top: 10px;
 }
+
+/* BOTTOM SECTION END */
+
 .searchList {
   margin-top: 20px;
 }

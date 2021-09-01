@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasi | Company Directory</title>
+
+    <link rel="stylesheet" href="libs/css/cDirectory.css">
+</head>
+<body>
+    <div class="heading">
+        <h2>Company Directory</h2>
+    </div>
+    <div class="main">
+            <div class="inputBox">
+                <form class="formBox" autocomplete="off">
+                    <div class="formGroup">
+                        <label class="label" for=""><p>First name</p></label>
+                        <input required class="formControl" type="text" placeholder="Enter first name" id="first_name"/>
+                    </div>
+                    <div class="formGroup">
+                        <label class="label" for=""><p>Last name</p></label>
+                        <input required class="formControl" type="text" placeholder="Enter last name" id="last_name"/>
+                    </div>
+                    <div class="formGroup">
+                        <label class="label" for=""><p>Position</p></label>
+                        <input required class="formControl" type="text" placeholder="Enter Position" id="position"/>
+                    </div>
+                    <div class="formGroup">
+                        <label class="label" for=""><p>Location</p></label>
+                        <input required class="formControl" type="text" placeholder="Enter Location" id="location"/>
+                    </div>
+                    <div class="formGroup">
+                        <button class="submitBtm" id="submitBtm" type="submit" name="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="resultBox">
+                <table class="list" id="list">
+                    <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Position</th>
+                            <th>Location</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <div class="bottomPageSection">
+        <div class="navBar">
+            <a href="index.html" class="navBtn">Main Menu</a>
+        </div>
+    </div>
+
+    <script src="libs/js/cDirectory.js"></script>
+
+</body>
+</html>
