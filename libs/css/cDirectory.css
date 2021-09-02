@@ -5,7 +5,7 @@
 }
 .heading {
     text-align: center;
-    padding: 5%;
+    padding: 2%;
 }
 .main {
     /* margin: auto; */
@@ -13,6 +13,7 @@
     background-color: cadetblue;
     /* padding: auto; */
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
 }
@@ -26,9 +27,12 @@
 .formGroup {
     margin: 10px;
 }
+.formControl {
+    width: 100%;
+}
 .submitBtm {
     padding: 3px;
-    background-color: skyblue;
+    /* background-color: skyblue; */
     border-radius: 5px;
 }
 .editDeleteBtm {
@@ -39,17 +43,19 @@
     cursor: pointer;
 }
 .editBtn {
-    background-color: green;
+    /* background-color: gray; */
+    padding: 2px;
 }
 .deleteBtn {
-    background-color: red;
+    /* background-color: red; */
+    padding: 2px;
 }
 table {
     border-collapse: collapse;
 }
 th {
     text-align: left;
-    padding-right: 30px;
+    /* padding-right: 30px; */
 }
 .inputBox {
     background-color: cornsilk;
@@ -57,14 +63,14 @@ th {
 }
 .resultBox {
     background-color: indianred;
-    height: 100%;
+    white-space: nowrap;
+    height: 80vh;
+    overflow: scroll;
 }
 .list {
     /* background-color: gray; */
     width: 600px;   
-}
-tr {
-    padding: 7px;
+    margin: 10px;
 }
 tbody tr:nth-child(even){
     background-color: #f2f2f2
@@ -99,3 +105,59 @@ tbody tr:hover {background-color: gray;}
   a:visited { text-decoration: none; color: white;}
   
   /* BOTTOM SECTION END */
+
+  /* SCREEN SIZING */
+
+  @media (max-width: 865px) {
+    .inputBox {
+        display: flex;
+        justify-content: center;
+        background-color: cornsilk;
+        width: 100%;
+    }
+    .list {
+        width: 100%;
+    }
+    .resultBox {
+        background-color: indianred;
+        width: 100%;
+    }
+
+    .formBox {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        position: relative;
+        padding-bottom: 30px;
+    }
+    .submitBtm {
+        position: absolute;
+        bottom: 0;
+        left: 40%;
+    }
+}
+
+@media (max-width: 550px) {
+    .inputBox {
+        display: flex;
+        justify-content: center;
+        background-color: cornsilk;
+        width: 100%;
+    }
+    .formControl {
+        width: 120px;
+    }
+    .list {
+        width: 100%;
+    }
+    .editDeleteBtm {
+        font-size: 8px;
+    }
+    .submitBtm {
+        font-size: 8px;
+    }
+    .main {
+        font-size: 12px;
+    }
+}

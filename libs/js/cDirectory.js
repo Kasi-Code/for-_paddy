@@ -2,13 +2,13 @@ const submitBtm = document.getElementById("submitBtm");
 
 let selectedRow = null
 
-submitBtm.addEventListener('click', function(){
+// submitBtm.addEventListener('click', function(){
     
-    formSubmit()
+//     formSubmit()
 
-    event.preventDefault();
+//     event.preventDefault();
 
-})
+// })
 
 const formSubmit = ()=> {
     // if (validate()) {

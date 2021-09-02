@@ -14,24 +14,24 @@
     </div>
     <div class="main">
             <div class="inputBox">
-                <form class="formBox" autocomplete="off">
-                    <div class="formGroup">
+                <form class="formBox" autocomplete="off" onsubmit="event.preventDefault(); formSubmit();">
+                    <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>First name</p></label>
                         <input required class="formControl" type="text" placeholder="Enter first name" id="first_name"/>
                     </div>
-                    <div class="formGroup">
+                    <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>Last name</p></label>
                         <input required class="formControl" type="text" placeholder="Enter last name" id="last_name"/>
                     </div>
-                    <div class="formGroup">
+                    <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>Position</p></label>
                         <input required class="formControl" type="text" placeholder="Enter Position" id="position"/>
                     </div>
-                    <div class="formGroup">
+                    <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>Location</p></label>
                         <input required class="formControl" type="text" placeholder="Enter Location" id="location"/>
                     </div>
-                    <div class="formGroup">
+                    <div class="formGroup submitBtm">
                         <button class="submitBtm" id="submitBtm" type="submit" name="submit">Submit</button>
                     </div>
                 </form>
@@ -44,7 +44,7 @@
                             <th>Last name</th>
                             <th>Position</th>
                             <th>Location</th>
-                            <th></th>
+                            <th class="editAndDelete"></th>
                         </tr>
                     </thead>
                     <tbody>
