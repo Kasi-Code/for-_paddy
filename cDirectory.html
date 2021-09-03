@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kasi | Company Directory</title>
+    <title>Company Directory | 📂</title>
 
     <link rel="stylesheet" href="libs/css/cDirectory.css">
 </head>
@@ -25,11 +25,17 @@
                     </div>
                     <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>Position</p></label>
-                        <input required class="formControl" type="text" placeholder="Enter Position" id="position"/>
+                        <select name="position" class="position" id="position" required>
+                            <option value="" disabled selected>Select position</option>
+                            <option value="Director">Director</option>
+                            <option value="Area Manager">Area Manager</option>
+                            <option value="Practice Manager">Practice Manager</option>
+                            <option value="Assistant">Assistant</option>
+                          </select>
                     </div>
                     <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>Location</p></label>
-                        <input required class="formControl" type="text" placeholder="Enter Location" id="location"/>
+                        <input required class="formControl" type="text" placeholder="Enter location" id="location"/>
                     </div>
                     <div class="formGroup submitBtm">
                         <button class="submitBtm" id="submitBtm" type="submit" name="submit">Submit</button>
@@ -39,12 +45,12 @@
             <div class="resultBox">
                 <table class="list" id="list">
                     <thead>
-                        <tr>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Position</th>
-                            <th>Location</th>
-                            <th class="editAndDelete"></th>
+                        <tr class="resultHeading">
+                            <th class="tableTitle">First name</th>
+                            <th class="tableTitle">Last name</th>
+                            <th class="tableTitle">Position</th>
+                            <th class="tableTitle">Location</th>
+                            <th class="tableTitle editAndDelete"><span class="blankSpace">blank space</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,11 +58,6 @@
                     </tbody>
                 </table>
             </div>
-    </div>
-    <div class="bottomPageSection">
-        <div class="navBar">
-            <a href="index.html" class="navBtn">Main Menu</a>
-        </div>
     </div>
 
     <script src="libs/js/cDirectory.js"></script>

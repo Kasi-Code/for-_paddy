@@ -10,7 +10,7 @@
 .main {
     /* margin: auto; */
     height: 80vh;
-    /* background-color: cadetblue; */
+    /* background-color: lightcoral; */
     /* padding: auto; */
     display: flex;
     flex-wrap: wrap;
@@ -20,14 +20,10 @@
 
 /* FORM SECTION */
 
-.formBox {
-    /* background-color: cornsilk; */
-    /* height: 30%; */
-}
 .formGroup {
     margin: 10px;
 }
-.formControl {
+.formControl, .position {
     width: 100%;
 }
 .submitBtm {
@@ -38,6 +34,12 @@
 .editDeleteBtm {
     margin: 2px;
     border-radius: 5px;
+}
+.resultHeading .tableTitle {
+    width: 200px;
+}
+.blankSpace {
+    visibility: hidden;
 }
 .editDeleteBtm:hover, .submitBtm:hover {
     cursor: pointer;
@@ -65,6 +67,9 @@ th {
     background-color: cornsilk;
     width: 250px;
 }
+.tableTitle {
+    width: 200px;
+}
 .resultBox {
     background-color: cadetblue;
     white-space: nowrap;
@@ -73,7 +78,7 @@ th {
 }
 .list {
     /* background-color: gray; */
-    width: 600px;   
+    width: 700px;   
     padding: 10px;
     /* margin: 10px; */
 }
@@ -116,7 +121,7 @@ tbody tr:hover {background-color: gray;}
 
   /* SCREEN SIZING */
 
-  @media (max-width: 865px) {
+  @media (max-width: 984px) {
     .inputBox {
         display: flex;
         justify-content: center;
