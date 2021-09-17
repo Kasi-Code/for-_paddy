@@ -16,6 +16,10 @@
             <div class="inputBox">
                 <form class="formBox" autocomplete="off" onsubmit="event.preventDefault(); formSubmit();">
                     <div class="formGroup apartFromBtn">
+                        <label class="label" for=""><p>ID number</p></label>
+                        <input required class="formControl" type="number" placeholder="Enter ID" id="id_number"/>
+                    </div>
+                    <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>First name</p></label>
                         <input required class="formControl" type="text" placeholder="Enter first name" id="first_name"/>
                     </div>
@@ -24,9 +28,9 @@
                         <input required class="formControl" type="text" placeholder="Enter last name" id="last_name"/>
                     </div>
                     <div class="formGroup apartFromBtn">
-                        <label class="label" for=""><p>Position</p></label>
-                        <select name="position" class="position" id="position" required>
-                            <option value="" disabled selected>Select position</option>
+                        <label class="label" for=""><p>Department</p></label>
+                        <select name="department" class="department" id="department" required>
+                            <option value="" disabled selected>Select Department</option>
                             <option value="Director">Director</option>
                             <option value="Area Manager">Area Manager</option>
                             <option value="Practice Manager">Practice Manager</option>
@@ -35,7 +39,13 @@
                     </div>
                     <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>Location</p></label>
-                        <input required class="formControl" type="text" placeholder="Enter location" id="location"/>
+                        <select name="location" class="location" id="location" required>
+                            <option value="" disabled selected>Select Location</option>
+                            <option value="Director">Director</option>
+                            <option value="Area Manager">Area Manager</option>
+                            <option value="Practice Manager">Practice Manager</option>
+                            <option value="Assistant">Assistant</option>
+                          </select>
                     </div>
                     <div class="formGroup submitBtm">
                         <button class="submitBtm" id="submitBtm" type="submit" name="submit">Submit</button>
@@ -46,9 +56,10 @@
                 <table class="list" id="list">
                     <thead>
                         <tr class="resultHeading">
+                            <th class="tableTitle">ID number</th>
                             <th class="tableTitle">First name</th>
                             <th class="tableTitle">Last name</th>
-                            <th class="tableTitle">Position</th>
+                            <th class="tableTitle">Department</th>
                             <th class="tableTitle">Location</th>
                             <th class="tableTitle editAndDelete"><span class="blankSpace">blank space</span></th>
                         </tr>
