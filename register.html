@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="libs/css/register.css">
+</head>
+<body>
+    <div class="main">
+        <div class="register">
+            <h2>Register</h2>
+            <form action="libs/php/register.php" method="POST">
+                <hr>
+                <!-- <label for="email">Email:</label>
+                <br>
+                <input id="email" name="email" type="email" required type="email">
+                <br> -->
+                <label for="username">Username:</label>
+                <br>
+                <input id="username" name="username" type="text" required minlength="3" maxlength="15">
+                <br>
+                <label for="password">Password:</label>
+                <br>
+                <input id="password" name="password" type="password" required minlength="8" maxlength="15">
+                <!-- <br>
+                <label for="dob">Date of birth:</label>
+                <br>
+                <input id="dob" name="dob" type="date" required minlength="0" maxlength="8"> -->
+                <br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div class="bottomPageSection">
+            <div class="navBar">
+                <a href="index.html" class="navBtn">Main Menu</a>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

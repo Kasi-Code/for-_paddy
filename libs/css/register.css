@@ -1,0 +1,31 @@
+.main {
+width: 100vh;
+padding-top: 20%;
+}
+.register, .bottomPageSection {
+    text-align: center;
+    width: 300px;
+    margin-left: auto; margin-right: auto;
+}
+.bottomPageSection {
+    background: black;
+    /* position: sticky; */
+    overflow: hidden;
+    position: fixed;
+    bottom: 0; 
+    left: 0;
+    height: 40px;
+    width: 100%;
+    z-index: 4;
+  }
+  .navBar {
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    /* z-index: 5; */
+    margin-top: 10px;
+  }
+  a {
+    text-decoration: none
+  }
+  a:visited { text-decoration: none; color: white;}
