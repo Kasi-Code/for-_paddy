@@ -1,22 +1,25 @@
-<?php
-$servername = "localhost";
-$username = "username";
-$password = "password";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
 
-// Create database
-$sql = "CREATE DATABASE register";
-if ($conn->query($sql) === TRUE) {
-  echo "Database created successfully";
-} else {
-  echo "Error creating database: " . $conn->error;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
 
-$conn->close();
-?>
+  <?php
+
+  $username = $_POST_POST["username"];
+  $password = $_POST_POST["password"];
+
+  mysqli_connect("localhost", "root", "");
+  mysql_select_db("register");
+  mysqli_query("INSERT INTO registerTest VALUES('$username', '$password')");
+
+  ?>
+    
+</body>
+</html>
