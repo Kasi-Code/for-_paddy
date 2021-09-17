@@ -110,9 +110,12 @@ $(window).on("load", () => {
         type: "GET",
         dataType: "json",
         success: function(result) {
+
+            console.log(result)
+
             result["data"].forEach(department => {
 
-                console.log(department)
+               
                 // $("#deptSearch").append(`<option value="${department["id"]}">${department["name"]}</option>`);
                 // $(".deptEdit").append(`<option value="${department["id"]}">${department["name"]}</option>`);
             })
