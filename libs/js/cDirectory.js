@@ -78,10 +78,10 @@ const onEdit = (td)=> {
 }
 const updateRecord = (formData)=> {
     selectedRow.cells[0].innerHTML = formData.id_number;
-    selectedRow.cells[0].innerHTML = formData.first_name;
-    selectedRow.cells[1].innerHTML = formData.last_name;
-    selectedRow.cells[2].innerHTML = formData.department;
-    selectedRow.cells[3].innerHTML = formData.location;
+    selectedRow.cells[1].innerHTML = formData.first_name;
+    selectedRow.cells[2].innerHTML = formData.last_name;
+    selectedRow.cells[3].innerHTML = formData.department;
+    selectedRow.cells[4].innerHTML = formData.location;
 }
 
 const onDelete = (td)=> {
@@ -119,6 +119,6 @@ window.onload = function () {
                 // $("#deptSearch").append(`<option value="${department["id"]}">${department["name"]}</option>`);
                 // $(".deptEdit").append(`<option value="${department["id"]}">${department["name"]}</option>`);
             })
-        }
+        },
     })
 }
