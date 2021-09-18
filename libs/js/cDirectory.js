@@ -104,9 +104,9 @@ const onDelete = (td)=> {
 //     return isValid;
 // }
 
-$(window).on("load", () => {
+window.onload = function () {
     $.ajax({
-        url: "companydirectory/libs/php/getAllDepartments.php",
+        url: "companydirectory/libs/php/getAll.php",
         type: "GET",
         dataType: "json",
         success: function(result) {
@@ -121,4 +121,4 @@ $(window).on("load", () => {
             })
         }
     })
-})
+}
