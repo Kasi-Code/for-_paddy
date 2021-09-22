@@ -14,39 +14,36 @@
     </div>
     <div class="main">
             <div class="inputBox">
-                <form class="formBox" autocomplete="off" onsubmit="event.preventDefault(); formSubmit();">
+                <form class="formBox" method="POST" action="companydirectory/libs/php/insertAll.php" autocomplete="off" onsubmit="setTimeout(function() { window.location.reload(); }, 5)">
                     <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>ID number</p></label>
-                        <input required class="formControl" type="number" placeholder="Enter ID" id="id_number"/>
-                    </div>
+                        <input  class="formControl id_number" type="number" placeholder="Search ID" id="id_number"/>
+                    </div><br>
                     <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>First name</p></label>
-                        <input required class="formControl" type="text" placeholder="Enter first name" id="first_name"/>
+                        <input required name="first_name" class="formControl first_name" type="text" placeholder="Enter first name" id="first_name"/>
                     </div>
                     <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>Last name</p></label>
-                        <input required class="formControl" type="text" placeholder="Enter last name" id="last_name"/>
+                        <input required name="last_name" class="formControl last_name" type="text" placeholder="Enter last name" id="last_name"/>
+                    </div>
+                    <div class="formGroup apartFromBtn">
+                        <label class="label" for=""><p>Email</p></label>
+                        <input required name="email" class="formControl email" type="email" placeholder="Enter email" id="email"/>
                     </div>
                     <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>Department</p></label>
-                        <select name="department" class="department" id="department" required>
+                        <select required name="departmentID" class="department" id="department" >
                             <option value="" disabled selected>Select Department</option>
-                            <option value="Director">Director</option>
-                            <option value="Area Manager">Area Manager</option>
-                            <option value="Practice Manager">Practice Manager</option>
-                            <option value="Assistant">Assistant</option>
                           </select>
                     </div>
                     <div class="formGroup apartFromBtn">
                         <label class="label" for=""><p>Location</p></label>
-                        <select name="location" class="location" id="location" required>
+                        <select name="location locationID" class="location" id="location" >
                             <option value="" disabled selected>Select Location</option>
-                            <option value="Director">Director</option>
-                            <option value="Area Manager">Area Manager</option>
-                            <option value="Practice Manager">Practice Manager</option>
-                            <option value="Assistant">Assistant</option>
                           </select>
                     </div>
+                    
                     <div class="formGroup submitBtm">
                         <button class="submitBtm" id="submitBtm" type="submit" name="submit">Submit</button>
                     </div>
@@ -54,19 +51,24 @@
             </div>
             <div class="resultBox">
                 <table class="list" id="list">
-                    <thead>
-                        <tr class="resultHeading">
-                            <th class="tableTitle">ID number</th>
-                            <th class="tableTitle">First name</th>
-                            <th class="tableTitle">Last name</th>
-                            <th class="tableTitle">Department</th>
-                            <th class="tableTitle">Location</th>
-                            <th class="tableTitle editAndDelete"><span class="blankSpace">blank space</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
+                    <div class="tableHeader">
+                        <thead>
+                            <tr class="resultHeading">
+                                <th class="tableTitle">ID number</th>
+                                <th class="tableTitle">First name</th>
+                                <th class="tableTitle">Last name</th>
+                                <th class="tableTitle">Email</th>
+                                <th class="tableTitle">Department</th>
+                                <th class="tableTitle">Location</th>
+                                <th class="tableTitle editAndDelete"><span class="blankSpace">blank space</span></th>
+                            </tr>
+                        </thead>
+                    </div>
+                    <div class="listTable">
+                        <tbody id="id_data">
+                            <!-- <td id="id_data"></td> -->
+                        </tbody>
+                    </div>
                 </table>
             </div>
     </div>
