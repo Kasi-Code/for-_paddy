@@ -558,7 +558,7 @@ window.onload = function () {
                             let cityName = data.capital
                             let countryFlag = data.flag
                         
-                            let showTime = data.countryTime.slice(11, 16)
+                            let showTime = data.countryTime.slice(11, 15)
                                                 
                             // WEATHER ICONS
 

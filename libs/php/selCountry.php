@@ -28,7 +28,7 @@
 	$output["border"] = $border;
 
 	// Get Population
-	$url = "https://restcountries.eu/rest/v2/alpha/".$countrySelected;
+	$url = "https://restcountries.com/v2/alpha/".$countrySelected;
 
 	// echo $url;
 

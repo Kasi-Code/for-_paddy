@@ -57,7 +57,7 @@
 
         // City not found, getting capital city from Rest Countries
 
-        $url = "https://restcountries.eu/rest/v2/alpha/".$decode["results"][0]["components"]["country_code"];
+        $url = "https://restcountries.com/v2/alpha".$decode["results"][0]["components"]["country_code"];
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -181,7 +181,7 @@
 	$output["countryTime"] = $decode["time"];	
 
 	// News
-	$url = "https://newsapi.org/v2/everything?q=apple&from=2021-08-20&to=2021-08-20&sortBy=popularity&apiKey=f6da9dbb1b344948aa2545a0fe23c83f";
+	$url = "https://newsapi.org/v2/everything?q=apple&from=". date("Y-m-d") . "&to=" . date("Y-m-d") ."&sortBy=popularity&apiKey=f6da9dbb1b344948aa2545a0fe23c83f";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
