@@ -9,6 +9,10 @@ const locationV = document.getElementById("location");
 
 let selectedRow = null
 
+$('tbody').on('click', '.deleteBtn', function(e){
+    onDelete(e.target.dataset.id)
+})
+
 const formSubmit = ()=> {
         const formData = readFormData();
         if (selectedRow == null)
@@ -34,120 +38,34 @@ const insertNewRecord = (data)=> {
                 
     // console.log(justID)
 
-    autocomplete(document.getElementById("id_number"), data);
-            
-                function autocomplete(inp, data) {
+    // var id = data.id_number
 
-                    var justID = data.id_number;
-                
-                    var currentFocus;
-                    
-                    inp.addEventListener("input", function(e) {
+    var table = document.getElementById("list").getElementsByTagName('tbody')[0];
+    var newRow = table.insertRow(table.length);
+    cell1 = newRow.insertCell(0);
+    cell1.innerHTML = data.id_number;
+    cell2 = newRow.insertCell(1);
+    cell2.innerHTML = data.first_name;
+    cell3 = newRow.insertCell(2);
+    cell3.innerHTML = data.last_name;
+    cell4 = newRow.insertCell(3);
+    cell4.innerHTML = data.email;
+    cell5 = newRow.insertCell(4);
+    cell5.innerHTML = data.department;
+    cell6 = newRow.insertCell(5);
+    cell6.innerHTML = data.location;
+    cell7 = newRow.insertCell(6);
+    cell7.innerHTML = `<button class="editDeleteBtm editBtn" onClick="onEdit(this)">Edit</button>
+                       <button class="editDeleteBtm deleteBtn" data-id="${data.id_number}" id="deleteBtn-${data.id_number}">Delete</button>`;
 
-                        var a, b, i, val = this.value;
 
-                        // console.log(val)
-                    
-                        closeAllLists();
-                        if (!val) { return false;}
-                        currentFocus = -1;
-
-                        for (var i = 0; i < justID.length; i++) {    
-                            
-                            if (val == justID[i]) {
-
-                                console.log(justID);
-    
-                                var table = document.getElementById("list").getElementsByTagName('tbody')[0];
-                                var newRow = table.insertRow(table.length);
-                                cell1 = newRow.insertCell(0);
-                                cell1.innerHTML = data.id_number;
-                                cell2 = newRow.insertCell(1);
-                                cell2.innerHTML = data.first_name;
-                                cell3 = newRow.insertCell(2);
-                                cell3.innerHTML = data.last_name;
-                                cell4 = newRow.insertCell(3);
-                                cell4.innerHTML = data.email;
-                                cell5 = newRow.insertCell(4);
-                                cell5.innerHTML = data.department;
-                                cell6 = newRow.insertCell(5);
-                                cell6.innerHTML = data.location;
-                                cell7 = newRow.insertCell(6);
-                                cell7.innerHTML = `<button class="editDeleteBtm editBtn" onClick="onEdit(this)">Edit</button>
-                                                   <button class="editDeleteBtm deleteBtn" onClick="onDelete(this)">Delete</button>`;
-                            
-                            
-                                cell1.setAttribute("class", "tableBody");
-                                cell2.setAttribute("class", "tableBody");
-                                cell3.setAttribute("class", "tableBody");
-                                cell4.setAttribute("class", "tableBody");
-                                cell5.setAttribute("class", "tableBody");
-                                cell6.setAttribute("class", "tableBody");
-                                cell7.setAttribute("class", "tableBody");
-
-                            }
-
-                        }
-
-                    inp.addEventListener("keydown", function(e) {
-                    
-                        var x = document.getElementById(this.id + "autocomplete-list");
-                    
-                        if (x) x = x.getElementsByTagName("div");
-                    
-                        if (e.keyCode == 40) {
-                        
-                            currentFocus++;
-                        
-                            addActive(x);
-                        } else if (e.keyCode == 38) {
-                        
-                            currentFocus--;
-                        
-                            addActive(x);
-                        } else if (e.keyCode == 13) {
-                        
-                            e.preventDefault();
-                            if (currentFocus > -1) {
-                            
-                                if (x) x[currentFocus].click();
-                            }
-                        }
-                    });
-                    function addActive(x) {
-                    
-                        if (!x) return false;
-
-                        removeActive(x);
-                        if (currentFocus >= x.length) currentFocus = 0;
-                        if (currentFocus < 0) currentFocus = (x.length - 1);
-
-                        x[currentFocus].classList.add("autocomplete-active");
-                    }
-                    function removeActive(x) {
-                    
-                        for (var i = 0; i < x.length; i++) {
-                            x[i].classList.remove("autocomplete-active");
-                        }
-                    
-                    }
-                    function closeAllLists(elmnt) {
-                    
-                      var x = document.getElementsByClassName("autocomplete-items");
-                    
-                      for (var i = 0; i < x.length; i++) {
-                    
-                        if (elmnt != x[i] && elmnt != inp) {
-                        x[i].parentNode.removeChild(x[i]);
-                        }
-                      }
-                    }
-                    document.addEventListener("click", function (e) {
-                        closeAllLists(e.target);
-                    });
-                })
-})
-}
+    cell1.setAttribute("class", "tableBody");
+    cell2.setAttribute("class", "tableBody");
+    cell3.setAttribute("class", "tableBody");
+    cell4.setAttribute("class", "tableBody");
+    cell5.setAttribute("class", "tableBody");
+    cell6.setAttribute("class", "tableBody");
+    cell7.setAttribute("class", "tableBody");
 }
 
 const resetForm = ()=> {
@@ -178,30 +96,31 @@ const updateRecord = (formData)=> {
     selectedRow.cells[5].innerHTML = formData.location;
 }
 
-const onDelete = (td)=> {
-    if (confirm('Are you sure to delete this record ?')) {
-        // rows = td.parentElement.parentElement;
-        row = td.getElementsByTagName("tr")
-        // document.getElementById("list").deleteRow(row.rowIndex);   
-        var id = document.getElementsByTagName('tbody').row[0].rows.value;     
-        // var id = row.val();
-        // resetForm();
+const onDelete = (id)=> {
 
-            window.location.reload();
+    // var idForDel = id 
+
+    if (confirm('Are you sure to delete this record ?')) {            
 
         var deletePersonnel = ()=> {
         
             $.ajax({
                 type: "GET",
-                url: `companydirectory/libs/php/deletePersonnelByID.php?id=${id}`,
+                url: `companydirectory/libs/php/deletePersonelByID.php?id=${id}`,
                 success: function(data) {
     
                     return data
                 
                     console.log(data)
+                },
+                error:  function(request,error) {
+                    console.log(request)                                   
                 }
             })
         }
+        deletePersonnel()
+
+        window.location.reload();
     }
 }
 
