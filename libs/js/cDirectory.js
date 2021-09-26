@@ -1,10 +1,6 @@
 const submitBtm = document.getElementById("submitBtm");
 
 const id_numberV = document.getElementById("id_number");
-const first_nameV = document.getElementById("first_name");
-const last_nameV = document.getElementById("last_name");
-const emailV = document.getElementById("email");
-const departmentV = document.getElementById("department");
 const locationV = document.getElementById("location");
 
 let selectedRow = null
@@ -35,10 +31,6 @@ const formSubmit = ()=> {
 // }
 
 const insertNewRecord = (data)=> {
-                
-    // console.log(justID)
-
-    // var id = data.id_number
 
     var table = document.getElementById("list").getElementsByTagName('tbody')[0];
     var newRow = table.insertRow(table.length);
@@ -96,9 +88,33 @@ const updateRecord = (formData)=> {
     selectedRow.cells[5].innerHTML = formData.location;
 }
 
-const onDelete = (id)=> {
+$('#submitBtm').on('click', () => {
 
-    // var idForDel = id 
+    var onSubmit = ()=> {
+
+    const first_nameV = document.getElementById("first_name").value;
+    const last_nameV = document.getElementById("last_name").value;
+    const emailV = document.getElementById("email").value;
+    const departmentV = document.getElementById("department").value;
+        
+        $.ajax({
+            type: "POST",
+            url: `companydirectory/libs/php/insertAll.php?first_name=${first_nameV}&last_name=${last_nameV}&email=${emailV}&departmentID=${departmentV}`,
+            success: function(data) {
+
+                // return data
+            
+                // console.log(data)
+            },
+            error:  function(request,error) {
+                console.log(request)                                   
+            }
+        })
+    }
+    onSubmit()
+})
+
+const onDelete = (id)=> {
 
     if (confirm('Are you sure to delete this record ?')) {            
 
@@ -196,61 +212,4 @@ window.onload = function () {
             })
         },
     })
-
-    var submitBtn = ()=> {
-                                
-        // event.preventDefault();
-    
-        var first_name = first_nameV.value;
-        var last_name = last_nameV.value;
-        var email = emailV.value;
-        var departmentID = departmentV.value;
-    
-        $.ajax({
-            type: "GET",
-            url: `companydirectory/libs/php/insertAll.php?first_name=${first_name}?last_name=${last_name}?email=${email}?departmentID=${departmentID}`,
-            success: function(data) {
-
-                return data
-            
-                console.log(data)
-            }
-        })
-    }
-    // $.ajax({
-    //     url: "companydirectory/libs/php/getAllPersonnel.php",
-    //     type: "GET",
-    //     dataType: "json",
-    //     success: function(result) {
-    //         // console.log(result)
-
-    //         let personal = result.data
-
-    //         let formData = {}
-
-    //         personal.forEach(data => {
-
-    //             let departmentID = data.departmentID
-    //             let departmentName = departmentArr.map(data => {
-
-    //                 if (data.id == departmentID) {
-    //                     return data.name
-    //                 }
-
-    //             })
-
-    //             // console.log(departmentName)
-
-    //             formData["id_number"] = data.id
-    //             formData["first_name"] = data.firstName
-    //             formData["last_name"] = data.lastName
-    //             formData["email"] = data.email
-    //             formData["department"] = departmentName
-    //             formData["location"] = data.location
-
-    //             insertNewRecord(formData)
-
-    //         })
-    //     },
-    // })
 }
