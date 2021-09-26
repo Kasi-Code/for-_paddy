@@ -736,7 +736,8 @@ window.onload = function () {
 
                 countriesForSearch.push({
                     name: country, 
-                    code: countryISO[i]})
+                    code: countryISO[i]
+                })
  
                 autocomplete(document.getElementById("myInput"), countriesForSearch.map(country => country.name).sort());
             

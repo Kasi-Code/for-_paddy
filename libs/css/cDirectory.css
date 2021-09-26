@@ -3,23 +3,33 @@
     margin: 0;
     padding: 0;
 }
-.heading {
-    text-align: center;
-    padding: 2%;
+body {
+    height: 98vh;
+    padding-bottom: 5%;
 }
 .main {
-    /* margin: auto; */
-    height: 80vh;
-    /* background-color: lightcoral; */
-    /* padding: auto; */
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
+    height: 100%;
 }
-
+.heading {
+    text-align: center;
+    padding: 2%;
+    width: 100%;
+    /* background-color: cornsilk; */
+}
 /* FORM SECTION */
 
+.inputDiv, .buttonDiv {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    min-height: 50px;
+}
 .formGroup {
     margin: 10px;
 }
@@ -28,20 +38,16 @@
 }
 .submitBtm, .doneBtm, .cancelBtm {
     padding: 3px;
-    /* background-color: skyblue; */
     border-radius: 5px;
     white-space: nowrap;
 }
-.editBtnForm {
+.editBtnForm, .id_number, .location {
     display: none;
 }
 .editDeleteBtm {
     font-size: 8px;
     margin: 2px;
     border-radius: 5px;
-}
-.resultHeading .tableTitle {
-    width: 200px;
 }
 .blankSpace {
     visibility: hidden;
@@ -58,19 +64,26 @@
     padding: 2px;
 }
 table {
+    position: relative;
     border-collapse: collapse;
 }
 tbody {
     padding-left: 10px;
 }
 th {
+    position: sticky;
+    top: 0;
     padding: 10px;
     text-align: left;
     background-color: cornsilk;
 }
+.tableHeader {
+    overflow: hidden;
+    position: fixed;
+}
 .inputBox {
     background-color: cornsilk;
-    width: 250px;
+    width: 100%;
 }
 .tableTitle {
     width: 200px;
@@ -78,12 +91,12 @@ th {
 .resultBox {
     background-color: cadetblue;
     white-space: nowrap;
-    height: 80vh;
+    height: 80%;
     overflow: scroll;
 }
 .list {
     /* background-color: gray; */
-    width: 700px;   
+    /* width: 700px;    */
     padding: 10px;
     /* margin: 10px; */
 }
@@ -95,13 +108,41 @@ tbody tr:nth-child(even){
 }
 tbody tr:hover {background-color: gray;}
 
+.searchStaffDiv, .inputButton {
+    display: none;
+}
+.searchStaffDiv {
+    height: 15vh;
+}
+
 /* FORM SECTION END */
+
+.options {
+    overflow: hidden;
+    position: fixed;
+    right: 0; 
+    bottom: 5%;
+    transform: translate(0, -50%);
+    z-index: 7;
+    max-height: 100%;
+    padding: 3px
+  }
+.selectSwitch:hover {
+    cursor: pointer;
+  }
+  .eachBtn {
+    background-color: white;  
+    margin-bottom: 5px;
+    border-radius: 50%;
+    box-shadow: 1px 2px 2px black;
+    padding: 5px;
+  }
 
 /* BOTTOM SECTION */
 
 .bottomPageSection {
     background: black;
-    /* position: sticky; */
+    /* display: none; */
     overflow: hidden;
     position: fixed;
     bottom: 0; 
@@ -127,65 +168,19 @@ tbody tr:hover {background-color: gray;}
   /* SCREEN SIZING */
 
   @media (max-width: 1142px) {
-    .inputBox {
-        display: flex;
-        justify-content: center;
-        background-color: cornsilk;
-        width: 100%;
-    }
-    .list {
-        width: 100%;
-        /* padding-bottom: 20px; */
-    }
-    .tableBody {
-        /* background-color: red; */
-    }
-    .tbody {
-        border-style: double;
-    }
-    .resultBox {
-        /* background-color: indianred; */
-        width: 100%;
-        height: 85%;
-    }
-    .formBox {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 100%;
-        position: relative;
-        padding-bottom: 30px;
-    }
-    .submitBtm {
-        position: absolute;
-        bottom: 0;
-        left: 40%;
-    }
-    th {
-        background-color: white;
-    }
     .main {
         font-size: 14px;
     }
 }
 
 @media (max-width: 550px) {
-    .inputBox {
-        display: flex;
-        justify-content: center;
-        background-color: cornsilk;
-        width: 100%;
-    }
     .formControl, .location, .department {
         width: 120px;
     }
     .list {
-        width: 100%;
+        /* width: 100%; */
     }
-    .editDeleteBtm {
-        font-size: 8px;
-    }
-    .submitBtm {
+    .submitBtm, .doneBtm, .cancelBtm, .editDeleteBtm {
         white-space: nowrap;
         font-size: 8px;
     }
@@ -198,9 +193,7 @@ tbody tr:hover {background-color: gray;}
     .tableBody {
         padding: 6px;
     }
-    .resultBox {
-        width: 100%;
-        height: 66vh;
-        overflow: scroll;
+    body {
+        padding-bottom: 60px;
     }
 }

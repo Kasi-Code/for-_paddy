@@ -9,72 +9,110 @@
     <link rel="stylesheet" href="libs/css/cDirectory.css">
 </head>
 <body>
-    <div class="heading">
-        <h2>Company Directory</h2>
-    </div>
     <div class="main">
+        <div class="heading">
+            <h2>Company Directory</h2>
+        </div>
+        <!-- RESULT -->
+        <div class="resultBox">
+            <table class="list" id="list">
+                <div class="tableHeader">
+                    <thead>
+                        <tr class="resultHeading">
+                            <th class="tableTitle">ID number</th>
+                            <th class="tableTitle">First name</th>
+                            <th class="tableTitle">Last name</th>
+                            <th class="tableTitle">Email</th>
+                            <th class="tableTitle">Department</th>
+                            <th class="tableTitle">Location</th>
+                            <th class="tableTitle editAndDelete"><span class="blankSpace">blank space</span></th>
+                        </tr>
+                    </thead>
+                </div>
+                <div class="listTable">
+                    <tbody id="id_data">
+                        
+                    </tbody>
+                </div>
+            </table>
+        </div>
+        <!-- INPUT -->
             <div class="inputBox">
                 <form class="formBox" autocomplete="off"> 
-                    <div class="formGroup apartFromBtn">
-                        <label class="label" for=""><p>ID number</p></label>
-                        <input  class="formControl id_number" type="number" placeholder="Search ID" id="id_number"/>
-                    </div><br>
-                    <div class="formGroup apartFromBtn">
-                        <label class="label" for=""><p>First name</p></label>
-                        <input required name="first_name" class="formControl first_name" type="text" placeholder="Enter first name" id="first_name"/>
-                    </div>
-                    <div class="formGroup apartFromBtn">
-                        <label class="label" for=""><p>Last name</p></label>
-                        <input required name="last_name" class="formControl last_name" type="text" placeholder="Enter last name" id="last_name"/>
-                    </div>
-                    <div class="formGroup apartFromBtn">
-                        <label class="label" for=""><p>Email</p></label>
-                        <input required name="email" class="formControl email" type="email" placeholder="Enter email" id="email"/>
-                    </div>
-                    <div class="formGroup apartFromBtn">
-                        <label class="label" for=""><p>Department</p></label>
-                        <select required name="departmentID" class="department" id="department" >
-                            <option value="" disabled selected>Select Department</option>
-                          </select>
-                    </div>
-                    <div class="formGroup apartFromBtn">
-                        <label class="label" for=""><p>Location</p></label>
-                        <select name="location locationID" class="location" id="location" >
-                            <option value="" disabled selected>Select Location</option>
-                          </select>
-                    </div>
-                    
-                    <div class="formGroup submitBtm">
-                        <button class="submitBtm" id="submitBtm" type="submit" name="submit">Submit</button>
-                        <div class="editBtnForm" id="editBtnForm">
-                            <button class="doneBtm" id="doneBtm" type="submit" name="done">Done</button>
-                            <button class="cancelBtm" id="cancelBtm" type="submit" name="cancel">Cancel</button>
-                        </div>
-                    </div>
+                    <div class="mainDivFormBox">
+                        <!-- ADD STAFF  -->
+                        <div class="addStaffDiv">
+                            <div class="inputDiv">
+                                <div class="formGroup apartFromBtn id_number">
+                                    <label class="label" for=""><p>ID number</p></label>
+                                    <input  class="formControl id_number" type="number" placeholder="Search ID" id="id_number"/>
+                                </div><br>
+                                <div class="formGroup apartFromBtn">
+                                    <label class="label" for=""><p>First name</p></label>
+                                    <input required name="first_name" class="formControl first_name" type="text" placeholder="Enter first name" id="first_name"/>
+                                </div>
+                                <div class="formGroup apartFromBtn">
+                                    <label class="label" for=""><p>Last name</p></label>
+                                    <input required name="last_name" class="formControl last_name" type="text" placeholder="Enter last name" id="last_name"/>
+                                </div>
+                                <div class="formGroup apartFromBtn">
+                                    <label class="label" for=""><p>Email</p></label>
+                                    <input required name="email" class="formControl email" type="email" placeholder="Enter email" id="email"/>
+                                </div>
+                                <div class="formGroup apartFromBtn">
+                                    <label class="label" for=""><p>Department</p></label>
+                                    <select required name="departmentID" class="department" id="department" >
+                                        <option value="" disabled selected>Select Department</option>
+                                      </select>
+                                </div>
+                                <div class="formGroup apartFromBtn location">
+                                    <label class="label" for=""><p>Location</p></label>
+                                    <select name="location locationID" class="location" id="location" >
+                                        <option value="" disabled selected>Select Location</option>
+                                      </select>
+                                </div>
+                            </div>
+    
+                            <div class="buttonDiv">
+                                <div class="formGroup submitBtm">
+                                    <button class="submitBtm" id="submitBtm" type="submit" name="submit">Submit</button>
+                                    <div class="editBtnForm" id="editBtnForm">
+                                        <button class="doneBtm" id="doneBtm" type="submit" name="done">Done</button>
+                                        <button class="cancelBtm" id="cancelBtm" type="submit" name="cancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>                  
+                    </div>                    
                 </form>
+                <!-- SEARCH STAFF  -->
+                <form class="formBox" autocomplete="off"> 
+                    <div class="searchStaffDiv">
+                        <div class="inputDiv">
+                            <div class="formGroup apartFromBtn">
+                                <label class="label" for=""><p>First name</p></label>
+                                <input required name="search_first_name" class="formControl search_first_name" type="text" placeholder="Enter first name" id="search_first_name"/>
+                            </div>
+                            <div class="formGroup apartFromBtn">
+                                <label class="label" for=""><p>Last name</p></label>
+                                <input required name="search_last_name" class="formControl search_last_name" type="text" placeholder="Enter last name" id="search_last_name"/>
+                            </div>
+                            <div class="formGroup apartFromBtn search_id_number">
+                                <label class="label" for=""><p>ID number</p></label>
+                                <input  class="formControl search_id_number" type="number" placeholder="Search ID" id="search_id_number"/>
+                            </div>
+                        </div>
+                    </div>  
+                </form>                
             </div>
-            <div class="resultBox">
-                <table class="list" id="list">
-                    <div class="tableHeader">
-                        <thead>
-                            <tr class="resultHeading">
-                                <th class="tableTitle">ID number</th>
-                                <th class="tableTitle">First name</th>
-                                <th class="tableTitle">Last name</th>
-                                <th class="tableTitle">Email</th>
-                                <th class="tableTitle">Department</th>
-                                <th class="tableTitle">Location</th>
-                                <th class="tableTitle editAndDelete"><span class="blankSpace">blank space</span></th>
-                            </tr>
-                        </thead>
-                    </div>
-                    <div class="listTable">
-                        <tbody id="id_data">
-                            <!-- <td id="id_data"></td> -->
-                        </tbody>
-                    </div>
-                </table>
-            </div>
+    </div>
+
+    <div class="options">
+        <div class="selectSwitch searchButton">
+            <div class="searchButton eachBtn"><p>🔍</p></div>
+        </div><div class="selectSwitch inputButton">
+            <div class="inputButton eachBtn"><p>🖋</p></div>
+        </div>
     </div>
     
     <div class="bottomPageSection">

@@ -4,6 +4,7 @@ const id_numberV = document.getElementById("id_number");
 const locationV = document.getElementById("location");
 
 let selectedRow = null
+let personnelForSearch = []
 
 // WHEN CLICKED DELETE BUTTON
 
@@ -15,14 +16,41 @@ $('tbody').on('click', '.deleteBtn', function(e){
 
 $('tbody').on('click', '.editBtn', function(e){
 
+    switchToInput()
+
     $("#submitBtm").css("display", "none")
     $("#editBtnForm").css("display", "block")
 
     onEdit(this, e.target.dataset.id)
 
     $('#cancelBtm').on('click', () => {
-        location.reload()
+        resetForm();
+        event.preventDefault();
+
+        $("#submitBtm").css("display", "block")
+        $("#editBtnForm").css("display", "none")
+        // location.reload()
     })
+})
+
+// SWITCHES SEARCH AND INPUT
+
+$('.searchButton').on('click', () => {
+
+    $(".searchStaffDiv").css("display", "block")
+    $(".addStaffDiv").css("display", "none")
+
+    $(".searchButton").css("display", "none")
+    $(".inputButton").css("display", "block")
+})
+
+$('.inputButton').on('click', switchToInput = () => {
+
+    $(".searchStaffDiv").css("display", "none")
+    $(".addStaffDiv").css("display", "block")
+
+    $(".searchButton").css("display", "block")
+    $(".inputButton").css("display", "none")
 })
 
 const formSubmit = ()=> {
@@ -163,11 +191,6 @@ const onEdit = (td, id)=> {
 
 window.onload = function () {
 
-    // let departmentArr = []
-    // let locationArr = []
-
-    // console.log(locationArr)
-
     $.ajax({
         url: "companydirectory/libs/php/getAll.php",
         type: "GET",
@@ -175,12 +198,10 @@ window.onload = function () {
         success: function(result) {
             // console.log(result)
 
-            let personal = result.data
+            let personnel = result.data
             let formData = {}
 
-            // console.log(personal)
-
-            personal.forEach(data => {
+            personnel.forEach(data => {
 
             formData["id_number"] = data.id
             formData["first_name"] = data.firstName
@@ -200,16 +221,9 @@ window.onload = function () {
         dataType: "json",
         success: function(result) {
 
-            // console.log(result)
-
             result["data"].forEach(department => {
                 
                 $(".department").append(`<option value="${department["id"]}">${department["name"]}</option>`);
-                // $(".deptEdit").html(`<option value="${department["id"]}">${department["name"]}</option>`);
-
-                // departmentArr.push({
-                //     id: department.id, 
-                //     name: department.name})
             })
         },
     })
@@ -219,16 +233,48 @@ window.onload = function () {
         dataType: "json",
         success: function(result) {
 
-            // console.log(result)
-
             result.data.forEach(location => {
                 
                 $(".location").append(`<option value="${location.id}">${location.name}</option>`);
-
-                // locationArr.push({
-                //     id: location.id, 
-                //     name: location.name})
             })
         },
     })
+    
+    // SEARCH INPUT
+
+    $("document").on('keydown', '.search_id_number', function(keyword) {
+   
+        $.ajax({
+            url: "companydirectory/libs/php/getAll.php",
+            type: "GET",
+            dataType: "json",
+            success: function(result) {
+
+                let personnel = result.data
+                let formData = {}
+    
+                personnel.forEach(data => {
+
+                    if (data.id.includes(keyword)) {
+
+                        formData["id_number"] = data.id
+                        formData["first_name"] = data.firstName
+                        formData["last_name"] = data.lastName
+                        formData["email"] = data.email
+                        formData["department"] = data.department
+                        formData["location"] = data.location
+            
+                        insertNewRecord(formData)
+
+                    }
+                    
+                    // $(".location").append(`<option value="${location.id}">${location.name}</option>`);
+                })
+            },
+        })
+
+    })
+        
+        
 }
+
