@@ -26,11 +26,14 @@
 .formControl, .department, .location {
     width: 100%;
 }
-.submitBtm {
+.submitBtm, .doneBtm, .cancelBtm {
     padding: 3px;
     /* background-color: skyblue; */
     border-radius: 5px;
     white-space: nowrap;
+}
+.editBtnForm {
+    display: none;
 }
 .editDeleteBtm {
     font-size: 8px;
