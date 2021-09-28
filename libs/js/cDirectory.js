@@ -3,8 +3,12 @@ const submitBtm = document.getElementById("submitBtm");
 const id_numberV = document.getElementById("id_number");
 const locationV = document.getElementById("location");
 
+const search_id_number = document.getElementById("search_id_number");
+
 let selectedRow = null
 let personnelForSearch = []
+
+let formData = {}
 
 // WHEN CLICKED DELETE BUTTON
 
@@ -67,7 +71,8 @@ const insertNewRecord = (data)=> {
     var table = document.getElementById("list").getElementsByTagName('tbody')[0];
     var newRow = table.insertRow(table.length);
     cell1 = newRow.insertCell(0);
-    cell1.innerHTML = data.id_number;
+    $(cell1).html(data.id_number);
+    // cell1.innerHTML = data.id_number;
     cell2 = newRow.insertCell(1);
     cell2.innerHTML = data.first_name;
     cell3 = newRow.insertCell(2);
@@ -191,29 +196,28 @@ const onEdit = (td, id)=> {
 
 window.onload = function () {
 
-    $.ajax({
-        url: "companydirectory/libs/php/getAll.php",
-        type: "GET",
-        dataType: "json",
-        success: function(result) {
-            // console.log(result)
+    // $.ajax({
+    //     url: "companydirectory/libs/php/getAll.php",
+    //     type: "GET",
+    //     dataType: "json",
+    //     success: function(result) {
+    //         // console.log(result)
 
-            let personnel = result.data
-            let formData = {}
+    //         let personnel = result.data
 
-            personnel.forEach(data => {
+    //         personnel.forEach(data => {
 
-            formData["id_number"] = data.id
-            formData["first_name"] = data.firstName
-            formData["last_name"] = data.lastName
-            formData["email"] = data.email
-            formData["department"] = data.department
-            formData["location"] = data.location
+    //         formData["id_number"] = data.id
+    //         formData["first_name"] = data.firstName
+    //         formData["last_name"] = data.lastName
+    //         formData["email"] = data.email
+    //         formData["department"] = data.department
+    //         formData["location"] = data.location
 
-            insertNewRecord(formData)
-            })
-        },
-    })
+    //         insertNewRecord(formData)
+    //         })
+    //     },
+    // })
 
     $.ajax({
         url: "companydirectory/libs/php/getAllDepartments.php",
@@ -242,38 +246,89 @@ window.onload = function () {
     
     // SEARCH INPUT
 
-    $("document").on('keydown', '.search_id_number', function(keyword) {
+    // $("document").on('keydown', '.search_id_number', function(keyword) {
    
-        $.ajax({
-            url: "companydirectory/libs/php/getAll.php",
-            type: "GET",
-            dataType: "json",
-            success: function(result) {
+    //     $.ajax({
+    //         url: "companydirectory/libs/php/getAll.php",
+    //         type: "GET",
+    //         dataType: "json",
+    //         success: function(result) {
 
-                let personnel = result.data
-                let formData = {}
+    //             let personnel = result.data
+    //             let formData = {}
     
-                personnel.forEach(data => {
+    //             personnel.forEach(data => {
 
-                    if (data.id.includes(keyword)) {
+    //                 if (data.id.includes(keyword)) {
 
-                        formData["id_number"] = data.id
-                        formData["first_name"] = data.firstName
-                        formData["last_name"] = data.lastName
-                        formData["email"] = data.email
-                        formData["department"] = data.department
-                        formData["location"] = data.location
+    //                     formData["id_number"] = data.id
+    //                     formData["first_name"] = data.firstName
+    //                     formData["last_name"] = data.lastName
+    //                     formData["email"] = data.email
+    //                     formData["department"] = data.department
+    //                     formData["location"] = data.location
             
-                        insertNewRecord(formData)
+    //                     insertNewRecord(formData)
 
-                    }
+    //                 }
                     
-                    // $(".location").append(`<option value="${location.id}">${location.name}</option>`);
-                })
-            },
+    //                 // $(".location").append(`<option value="${location.id}">${location.name}</option>`);
+    //             })
+    //         },
+    //     })
+
+    // })
+
+    const searchStates = async searchText => {
+        const res = await fetch("companydirectory/libs/php/getAll.php")
+        const states = await res.json()
+
+        // console.log(states.data)
+        let matches = states.data.filter(state => {
+            const regex = new RegExp(`^${searchText}`, "gi")
+
+            return state.id.match(regex)
         })
 
-    })
+        if (searchText.length === 0) {
+            matches = []
+
+            document.getElementById('id_data').deleteRow(r => r.forEach().length);
+            // table.deleteRow()
+            // cell1.innerHTML = ""
+            // cell2.innerHTML = ""
+            // cell3.innerHTML = ""
+            // cell4.innerHTML = ""
+            // cell5.innerHTML = ""
+            // cell6.innerHTML = ""
+        }
+
+        // console.log(matches)
+
+        outputHtml(matches)
+    }
+
+        const outputHtml = matches => {
+
+            if (matches.length > 0) {
+                
+                const html = matches.forEach(matched => {
+        
+                    formData["id_number"] = matched.id
+                    formData["first_name"] = matched.firstName
+                    formData["last_name"] = matched.lastName
+                    formData["email"] = matched.email
+                    formData["department"] = matched.department
+                    formData["location"] = matched.location
+            
+                    insertNewRecord(formData)
+                })
+
+            }
+        }
+
+
+    search_id_number.addEventListener("input", ()=> searchStates(search_id_number.value))
         
         
 }
