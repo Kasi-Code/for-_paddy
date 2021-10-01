@@ -19,9 +19,32 @@ $('tbody').on('click', '.deleteBtn', function(e){
     onDelete(e.target.dataset.id)
 })
 
+$('tbody').on('click', '.deleteLocationBtn', function(e){
+    deleteLocation(e.target.dataset.id)
+})
+
 // WHEN CLICKED EDIT BUTTON
 
 $('tbody').on('click', '.editBtn', function(e){
+
+    switchToInput()
+
+    $("#submitBtm").css("display", "none")
+    $("#editBtnForm").css("display", "block")
+
+    onEdit(this, e.target.dataset.id)
+
+    $('#cancelBtm').on('click', () => {
+        resetForm();
+        event.preventDefault();
+
+        $("#submitBtm").css("display", "block")
+        $("#editBtnForm").css("display", "none")
+        // location.reload()
+    })
+})
+
+$('tbody').on('click', '.editLocationBtn', function(e){
 
     switchToInput()
 
@@ -64,6 +87,21 @@ $('.inputButton').on('click', switchToInput = () => {
 
     $(".searchButton").css("display", "block")
     $(".inputButton").css("display", "none")
+})
+
+// SHOW BUTTON TO SELECT ADD LOCATION OR DEPARTMENT
+
+$('.addOfficeButton').on('click', () => {
+
+    resetTbody()
+    resetForm()
+
+    $(".addLocationOrDepartment").css("display", "block")
+
+    $(".addStaffDiv").css("display", "none")
+    $(".addLocationDiv").css("display", "none")
+    $(".addOfficeDiv").css("display", "none")
+    $(".searchStaffDiv").css("display", "none")
 })
 
 const formSubmit = ()=> {
@@ -114,6 +152,23 @@ const insertNewRecord = (data)=> {
     cell7.setAttribute("class", "tableBody");
 }
 
+const insertNewLocation = (data)=> {
+
+    var table = document.getElementById("locationList").getElementsByTagName('tbody')[0];
+    var newRow = table.insertRow(table.length);
+    cell1 = newRow.insertCell(0);
+    $(cell1).html(data.id_number);
+    cell2 = newRow.insertCell(1);
+    cell2.innerHTML = data.location;
+    cell3 = newRow.insertCell(2);
+    cell3.innerHTML = `<button class="editDeleteBtm editLocationBtn" data-id="${data.id_number}" id="editBtn-${data.id_number}">Edit</button>
+                       <button class="editDeleteBtm deleteLocationBtn" data-id="${data.id_number}" id="deleteBtn-${data.id_number}">Delete</button>`;
+
+    cell1.setAttribute("class", "tableBody");
+    cell2.setAttribute("class", "tableBody");
+    cell3.setAttribute("class", "tableBody");
+}
+
 const resetForm = ()=> {
     // document.getElementById("id_number").value = "";
     document.getElementById("first_name").value = "";
@@ -127,14 +182,6 @@ const resetForm = ()=> {
     document.getElementById("search_id_number").value = "";
     selectedRow = null;
 }
-// const updateRecord = (formData)=> {
-//     selectedRow.cells[0].innerHTML = formData.id_number;
-//     selectedRow.cells[1].innerHTML = formData.first_name;
-//     selectedRow.cells[2].innerHTML = formData.last_name;
-//     selectedRow.cells[3].innerHTML = formData.email;
-//     selectedRow.cells[4].innerHTML = formData.department;
-//     selectedRow.cells[5].innerHTML = formData.location;
-// }
 
 $('#submitBtm').on('click', onSubmit = () => {
 
@@ -148,6 +195,60 @@ $('#submitBtm').on('click', onSubmit = () => {
             url: `companydirectory/libs/php/insertAll.php?first_name=${first_nameV}&last_name=${last_nameV}&email=${emailV}&departmentID=${departmentV}`,
             success: function(data) {
 
+                $("#id_data").load(location.href + " #id_data");
+
+            },
+            error:  function(request,error) {
+                console.log(request)                                   
+            }
+        })
+    event.preventDefault();
+})
+
+$('.addLocation').on('click', () => {
+
+    resetTbody()
+    resetForm()
+    event.preventDefault();
+
+    $(".addLocationDiv").css("display", "block")
+    $(".list").css("display", "none")
+    $(".locationList").css("display", "block")
+
+        $.ajax({
+            url: "companydirectory/libs/php/getAllLocations.php",
+            type: "GET",
+            dataType: "json",
+            success: function(result) {
+    
+                 let location = result.data
+    
+                //  console.log(location)
+    
+                 location.forEach(data => {
+     
+                 formData["id_number"] = data.id
+                 formData["location"] = data.name
+     
+                 insertNewLocation(formData)
+                 })
+            },
+        })
+})
+
+$('#submitLocation').on('click', submitLocation = () => {
+
+    // event.preventDefault();
+
+    $("#id_data_list").load(location.href + " #id_data_list");
+
+    const locationV = document.getElementById("add_location").value;
+        
+        $.ajax({
+            type: "POST",
+            url: `companydirectory/libs/php/insertLocation.php?locationName=${locationV}`,
+            success: function(data) {
+
             },
             error:  function(request,error) {
                 console.log(request)                                   
@@ -157,27 +258,49 @@ $('#submitBtm').on('click', onSubmit = () => {
 
 const onDelete = (id)=> {
 
-    if (confirm('Are you sure to delete this record ?')) {            
-
-        var deletePersonnel = ()=> {
+    if (confirm('Are you sure to delete this record ?')) {     
         
             $.ajax({
                 type: "GET",
                 url: `companydirectory/libs/php/deletePersonnelByID.php?id=${id}`,
                 success: function(data) {
+                          
+
+                    // $("#id_data").load(location.href + " #id_data");
     
-                    return data
-                
-                    console.log(data)
+                    // return data
+                },
+                error:  function(request,error) {
+                    console.log(request)                                   
+                }
+            })
+      
+        // deletePersonnel()
+
+        window.location.reload();
+    }
+}
+
+const deleteLocation = (id)=> {
+
+    if (confirm('Are you sure to delete this record ?')) {            
+
+        var deleteLocation = ()=> {
+        
+            $.ajax({
+                type: "GET",
+                url: `companydirectory/libs/php/deleteLocationByID.php?id=${id}`,
+                success: function(data) {
+
                 },
                 error:  function(request,error) {
                     console.log(request)                                   
                 }
             })
         }
-        deletePersonnel()
+        deleteLocation()        
 
-        window.location.reload();
+        $("#id_data_list").load(location.href + " #id_data_list");
     }
 }
 
@@ -249,6 +372,7 @@ window.onload = function () {
             })
         },
     })
+
     $.ajax({
         url: "companydirectory/libs/php/getAllLocations.php",
         type: "GET",
@@ -313,11 +437,5 @@ window.onload = function () {
     
         input.addEventListener("input", ()=> searchStates(search_first_name.value, search_last_name.value, search_id_number.value))
 
-    })        
-
-    // search_first_name.addEventListener("input", ()=> searchStates(search_first_name.value))
-    // search_last_name.addEventListener("input", ()=> searchStates(search_last_name.value))
-    // search_id_number.addEventListener("input", ()=> searchStates(search_id_number.value))
-        
+    })                
 }
-

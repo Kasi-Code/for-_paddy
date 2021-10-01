@@ -14,7 +14,7 @@
             <h2>Company Directory</h2>
         </div>
         <!-- RESULT -->
-        <div class="resultBox">
+        <div class="resultBox" id="resultBox">
             <table class="list" id="list">
                 <div class="tableHeader">
                     <thead>
@@ -31,6 +31,23 @@
                 </div>
                 <div class="listTable">
                     <tbody id="id_data">
+                        
+                    </tbody>
+                </div>
+            </table>
+
+            <table class="locationList" id="locationList">
+                <div class="tableHeader locationTableHeader" id="locationTableHeader">
+                    <thead>
+                        <tr class="resultHeading">
+                            <th class="tableTitle">ID number</th>
+                            <th class="tableTitle">Location</th>
+                            <th class="tableTitle editAndDelete"><span class="blankSpace">blank space</span></th>
+                        </tr>
+                    </thead>
+                </div>
+                <div class="locationListTable" id="locationListTable">
+                    <tbody id="id_data_list">
                         
                     </tbody>
                 </div>
@@ -103,15 +120,78 @@
                             </div>
                         </div>
                     </div>  
-                </form>                
+                </form>      
+                <!-- ADD OFFICE  -->
+                <form class="formBox" autocomplete="off"> 
+                    <div class="addOfficeDiv">
+                        <div class="inputDiv">
+                            <div class="formGroup apartFromBtn">
+                                <label class="label" for=""><p>Department</p></label>
+                                <input name="add_location" class="formControl add_department" type="text" placeholder="Enter department" id="add_department"/>
+                            </div>
+                            <div class="formGroup apartFromBtn">
+                                <label class="label" for=""><p>Location</p></label>
+                                <input name="select_location" class="formControl select_location" type="text" placeholder="Enter location" id="select_location"/>
+                            </div>
+                            <div class="buttonDiv">
+                                <div class="formGroup submitBtm">
+                                    <button class="submitOffice" id="submitOffice" type="submit" name="submit">Submit</button>
+                                    <div class="editBtnForm" id="editBtnForm">
+                                        <button class="doneBtm" id="doneBtm" type="submit" name="done">Done</button>
+                                        <button class="cancelBtm" id="cancelBtm" type="submit" name="cancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>  
+                </form>    
+                <!-- ADD LOCATION  -->
+                <form class="formBox" autocomplete="off"> 
+                    <div class="addLocationDiv">
+                        <div class="inputDiv">
+                            <div class="formGroup apartFromBtn">
+                                <label class="label" for=""><p>Add Location</p></label>
+                                <input name="add_location" class="formControl add_location" type="text" placeholder="Enter location" id="add_location"/>
+                            </div>
+                            <div class="buttonDiv">
+                                <div class="formGroup submitBtm">
+                                    <button class="submitOffice" id="submitLocation" type="submit" name="submit">Submit</button>
+                                    <div class="editBtnForm" id="editBtnForm">
+                                        <button class="doneBtm" id="doneBtm" type="submit" name="done">Done</button>
+                                        <button class="cancelBtm" id="cancelBtm" type="submit" name="cancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>  
+                </form>         
+                 <!-- ADD LOCATION OR DEPARTMENT? -->
+                 <form class="formBox" autocomplete="off"> 
+                    <div class="addLocationOrDepartment">
+                        
+                            <div class="buttonDiv">
+                                <div class="formGroup submitBtm">
+
+                                        <button class="addLocation" id="addLocation" type="submit" name="done">• Add Location </button>
+                                        <button class="addDepartment" id="addDepartment" type="submit" name="cancel">• Add Department </button>
+                                    
+                                </div>
+                            </div> 
+                        
+                    </div>  
+                </form>            
             </div>
     </div>
 
     <div class="options">
         <div class="selectSwitch searchButton">
             <div class="searchButton eachBtn"><p>🔍</p></div>
-        </div><div class="selectSwitch inputButton">
+        </div>
+        <div class="selectSwitch inputButton">
             <div class="inputButton eachBtn"><p>🖋</p></div>
+        </div>
+        <div class="officeButton">
+            <div class="addOfficeButton eachBtn"><p>🏢</p></div>
         </div>
     </div>
     

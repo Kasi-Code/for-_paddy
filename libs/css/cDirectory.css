@@ -108,7 +108,7 @@ tbody tr:nth-child(even){
 }
 tbody tr:hover {background-color: gray;}
 
-.searchStaffDiv, .inputButton {
+.searchStaffDiv, .inputButton, .addOfficeDiv, .addLocationDiv, .locationList { /* <--- TAKE IT OFF WHEN DONE */
     display: none;
 }
 .searchStaffDiv {
@@ -121,13 +121,13 @@ tbody tr:hover {background-color: gray;}
     overflow: hidden;
     position: fixed;
     right: 0; 
-    bottom: 5%;
+    bottom: 1%;
     transform: translate(0, -50%);
     z-index: 7;
     max-height: 100%;
     padding: 3px
   }
-.selectSwitch:hover {
+.selectSwitch:hover, .officeButton:hover {
     cursor: pointer;
   }
   .eachBtn {
