@@ -267,8 +267,7 @@ window.onload = function () {
     const searchStates = async (FN, LN, ID) => {
         const res = await fetch("companydirectory/libs/php/getAll.php")
         const states = await res.json()
-
-        // console.log(states.data)
+        
         matches = states.data.filter(state => {
             const regexFN = new RegExp(`^${FN}`, "gi")
             const regexLN = new RegExp(`^${LN}`, "gi")
@@ -279,7 +278,7 @@ window.onload = function () {
             return state.firstName.match(regexFN) && state.lastName.match(regexLN) && state.id.match(regexID)
         })
 
-        if (FN.length === 0 && FN.length === 0 && ID.length === 0) {
+        if (FN.length === 0 && LN.length === 0 && ID.length === 0) {
 
             resetTbody()
 
