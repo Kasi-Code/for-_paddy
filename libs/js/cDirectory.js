@@ -3,12 +3,15 @@ const submitBtm = document.getElementById("submitBtm");
 const id_numberV = document.getElementById("id_number");
 const locationV = document.getElementById("location");
 
+const search_first_name = document.getElementById("search_first_name");
+const search_last_name = document.getElementById("search_last_name");
 const search_id_number = document.getElementById("search_id_number");
 
 let selectedRow = null
 let personnelForSearch = []
 
 let formData = {}
+let matches;
 
 // WHEN CLICKED DELETE BUTTON
 
@@ -41,6 +44,9 @@ $('tbody').on('click', '.editBtn', function(e){
 
 $('.searchButton').on('click', () => {
 
+    resetTbody()
+    resetForm()
+
     $(".searchStaffDiv").css("display", "block")
     $(".addStaffDiv").css("display", "none")
 
@@ -49,6 +55,9 @@ $('.searchButton').on('click', () => {
 })
 
 $('.inputButton').on('click', switchToInput = () => {
+
+    resetTbody()
+    window.onload()
 
     $(".searchStaffDiv").css("display", "none")
     $(".addStaffDiv").css("display", "block")
@@ -64,6 +73,15 @@ const formSubmit = ()=> {
         else
             updateRecord(formData);
         resetForm();
+}
+
+const resetTbody = ()=> {
+
+    matches = []
+
+    var tbody = document.getElementById('id_data')
+    tbody.innerHTML = ""
+
 }
 
 const insertNewRecord = (data)=> {
@@ -87,7 +105,6 @@ const insertNewRecord = (data)=> {
     cell7.innerHTML = `<button class="editDeleteBtm editBtn" data-id="${data.id_number}" id="editBtn-${data.id_number}">Edit</button>
                        <button class="editDeleteBtm deleteBtn" data-id="${data.id_number}" id="deleteBtn-${data.id_number}">Delete</button>`;
 
-
     cell1.setAttribute("class", "tableBody");
     cell2.setAttribute("class", "tableBody");
     cell3.setAttribute("class", "tableBody");
@@ -104,16 +121,20 @@ const resetForm = ()=> {
     document.getElementById("email").value = "";
     document.getElementById("department").value = "";
     document.getElementById("location").value = "";
+
+    document.getElementById("search_first_name").value = "";
+    document.getElementById("search_last_name").value = "";
+    document.getElementById("search_id_number").value = "";
     selectedRow = null;
 }
-const updateRecord = (formData)=> {
-    selectedRow.cells[0].innerHTML = formData.id_number;
-    selectedRow.cells[1].innerHTML = formData.first_name;
-    selectedRow.cells[2].innerHTML = formData.last_name;
-    selectedRow.cells[3].innerHTML = formData.email;
-    selectedRow.cells[4].innerHTML = formData.department;
-    selectedRow.cells[5].innerHTML = formData.location;
-}
+// const updateRecord = (formData)=> {
+//     selectedRow.cells[0].innerHTML = formData.id_number;
+//     selectedRow.cells[1].innerHTML = formData.first_name;
+//     selectedRow.cells[2].innerHTML = formData.last_name;
+//     selectedRow.cells[3].innerHTML = formData.email;
+//     selectedRow.cells[4].innerHTML = formData.department;
+//     selectedRow.cells[5].innerHTML = formData.location;
+// }
 
 $('#submitBtm').on('click', onSubmit = () => {
 
@@ -127,9 +148,6 @@ $('#submitBtm').on('click', onSubmit = () => {
             url: `companydirectory/libs/php/insertAll.php?first_name=${first_nameV}&last_name=${last_nameV}&email=${emailV}&departmentID=${departmentV}`,
             success: function(data) {
 
-                // return data
-            
-                // console.log(data)
             },
             error:  function(request,error) {
                 console.log(request)                                   
@@ -196,28 +214,28 @@ const onEdit = (td, id)=> {
 
 window.onload = function () {
 
-    // $.ajax({
-    //     url: "companydirectory/libs/php/getAll.php",
-    //     type: "GET",
-    //     dataType: "json",
-    //     success: function(result) {
-    //         // console.log(result)
-
-    //         let personnel = result.data
-
-    //         personnel.forEach(data => {
-
-    //         formData["id_number"] = data.id
-    //         formData["first_name"] = data.firstName
-    //         formData["last_name"] = data.lastName
-    //         formData["email"] = data.email
-    //         formData["department"] = data.department
-    //         formData["location"] = data.location
-
-    //         insertNewRecord(formData)
-    //         })
-    //     },
-    // })
+        $.ajax({
+            url: "companydirectory/libs/php/getAll.php",
+            type: "GET",
+            dataType: "json",
+            success: function(result) {
+                // console.log(result)
+    
+                let personnel = result.data
+    
+                personnel.forEach(data => {
+    
+                formData["id_number"] = data.id
+                formData["first_name"] = data.firstName
+                formData["last_name"] = data.lastName
+                formData["email"] = data.email
+                formData["department"] = data.department
+                formData["location"] = data.location
+    
+                insertNewRecord(formData)
+                })
+            },
+        })
 
     $.ajax({
         url: "companydirectory/libs/php/getAllDepartments.php",
@@ -246,73 +264,35 @@ window.onload = function () {
     
     // SEARCH INPUT
 
-    // $("document").on('keydown', '.search_id_number', function(keyword) {
-   
-    //     $.ajax({
-    //         url: "companydirectory/libs/php/getAll.php",
-    //         type: "GET",
-    //         dataType: "json",
-    //         success: function(result) {
-
-    //             let personnel = result.data
-    //             let formData = {}
-    
-    //             personnel.forEach(data => {
-
-    //                 if (data.id.includes(keyword)) {
-
-    //                     formData["id_number"] = data.id
-    //                     formData["first_name"] = data.firstName
-    //                     formData["last_name"] = data.lastName
-    //                     formData["email"] = data.email
-    //                     formData["department"] = data.department
-    //                     formData["location"] = data.location
-            
-    //                     insertNewRecord(formData)
-
-    //                 }
-                    
-    //                 // $(".location").append(`<option value="${location.id}">${location.name}</option>`);
-    //             })
-    //         },
-    //     })
-
-    // })
-
-    const searchStates = async searchText => {
+    const searchStates = async (FN, LN, ID) => {
         const res = await fetch("companydirectory/libs/php/getAll.php")
         const states = await res.json()
 
         // console.log(states.data)
-        let matches = states.data.filter(state => {
-            const regex = new RegExp(`^${searchText}`, "gi")
+        matches = states.data.filter(state => {
+            const regexFN = new RegExp(`^${FN}`, "gi")
+            const regexLN = new RegExp(`^${LN}`, "gi")
+            const regexID = new RegExp(`^${ID}`, "gi")
 
-            return state.id.match(regex)
+            resetTbody()
+
+            return state.firstName.match(regexFN) && state.lastName.match(regexLN) && state.id.match(regexID)
         })
 
-        if (searchText.length === 0) {
-            matches = []
+        if (FN.length === 0 && FN.length === 0 && ID.length === 0) {
 
-            document.getElementById('id_data').deleteRow(r => r.forEach().length);
-            // table.deleteRow()
-            // cell1.innerHTML = ""
-            // cell2.innerHTML = ""
-            // cell3.innerHTML = ""
-            // cell4.innerHTML = ""
-            // cell5.innerHTML = ""
-            // cell6.innerHTML = ""
+            resetTbody()
+
         }
-
-        // console.log(matches)
 
         outputHtml(matches)
     }
 
         const outputHtml = matches => {
 
-            if (matches.length > 0) {
+            if (matches) {
                 
-                const html = matches.forEach(matched => {
+                return matches.forEach(matched => {
         
                     formData["id_number"] = matched.id
                     formData["first_name"] = matched.firstName
@@ -320,16 +300,25 @@ window.onload = function () {
                     formData["email"] = matched.email
                     formData["department"] = matched.department
                     formData["location"] = matched.location
-            
+
                     insertNewRecord(formData)
+                    
                 })
 
+            
+                
             }
         }
 
+    [search_first_name, search_last_name, search_id_number].forEach(function(input) {
+    
+        input.addEventListener("input", ()=> searchStates(search_first_name.value, search_last_name.value, search_id_number.value))
 
-    search_id_number.addEventListener("input", ()=> searchStates(search_id_number.value))
-        
+    })        
+
+    // search_first_name.addEventListener("input", ()=> searchStates(search_first_name.value))
+    // search_last_name.addEventListener("input", ()=> searchStates(search_last_name.value))
+    // search_id_number.addEventListener("input", ()=> searchStates(search_id_number.value))
         
 }
 
