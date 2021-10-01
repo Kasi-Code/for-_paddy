@@ -274,8 +274,6 @@ const onDelete = (id)=> {
                     console.log(request)                                   
                 }
             })
-      
-        // deletePersonnel()
 
         window.location.reload();
     }
