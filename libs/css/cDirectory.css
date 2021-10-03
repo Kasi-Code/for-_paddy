@@ -22,7 +22,7 @@ body {
 }
 /* FORM SECTION */
 
-.inputDiv, .buttonDiv {
+.inputDiv, .buttonDiv, .departmentInput {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -48,20 +48,13 @@ body {
     font-size: 8px;
     margin: 2px;
     border-radius: 5px;
+    padding: 2px;
 }
 .blankSpace {
     visibility: hidden;
 }
 .editDeleteBtm:hover, .submitBtm:hover {
     cursor: pointer;
-}
-.editBtn {
-    /* background-color: gray; */
-    padding: 2px;
-}
-.deleteBtn {
-    /* background-color: red; */
-    padding: 2px;
 }
 table {
     position: relative;
@@ -108,11 +101,14 @@ tbody tr:nth-child(even){
 }
 tbody tr:hover {background-color: gray;}
 
-.searchStaffDiv, .inputButton, .addOfficeDiv, .addLocationDiv, .locationList { /* <--- TAKE IT OFF WHEN DONE */
+.searchStaffDiv, .inputButton, .addLocationDiv, .locationList, .addOfficeDiv, .departmentList, .addLocationOrDepartment, .homeButton, .editOfficeBtnForm, .editLocationBtnForm, .editOfficeBtnForm { /* <--- TAKE IT OFF WHEN DONE */
     display: none;
 }
 .searchStaffDiv {
     height: 15vh;
+}
+.addLocationOrDepartment {
+    text-align: center;
 }
 
 /* FORM SECTION END */
@@ -127,7 +123,7 @@ tbody tr:hover {background-color: gray;}
     max-height: 100%;
     padding: 3px
   }
-.selectSwitch:hover, .officeButton:hover {
+.selectSwitch:hover, .officeButton:hover, .homeButton:hover {
     cursor: pointer;
   }
   .eachBtn {
