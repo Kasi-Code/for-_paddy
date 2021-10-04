@@ -117,6 +117,9 @@ $('#inputButton').on('click', switchToInput = () => {
 
 $('#officeButton').on('click', () => {
 
+    resetTbody()
+    resetForm()
+
     $(".addLocationOrDepartment").css("display", "block")
     $(".homeButton").css("display", "block")
 
@@ -126,9 +129,6 @@ $('#officeButton').on('click', () => {
     $(".searchStaffDiv").css("display", "none")
     $(".searchButton").css("display", "none")
     $(".inputButton").css("display", "none")
-
-    resetTbody()
-    resetForm()
 })
 
 $('#homeButton').on('click', () => {
@@ -607,7 +607,7 @@ const getAllDepartments = ()=> {
 
 window.onload = ()=> {
 
-    getAll()
+    // getAll()
 
     getAllLocation()
 

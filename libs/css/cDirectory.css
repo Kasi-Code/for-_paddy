@@ -53,8 +53,12 @@ body {
 .blankSpace {
     visibility: hidden;
 }
-.editDeleteBtm:hover, .submitBtm:hover {
+.editDeleteBtm:hover, .submitBtm:hover, .addLocation:hover, .addDepartment:hover {
     cursor: pointer;
+}
+.addLocation, .addDepartment {
+    padding: 10px;
+    margin-top: 7px;
 }
 table {
     position: relative;
@@ -85,13 +89,11 @@ th {
     background-color: cadetblue;
     white-space: nowrap;
     height: 80%;
+    /* width: 100%; */
     overflow: scroll;
 }
 .list {
-    /* background-color: gray; */
-    /* width: 700px;    */
     padding: 10px;
-    /* margin: 10px; */
 }
 .tableBody {
     padding: 10px;
@@ -109,6 +111,7 @@ tbody tr:hover {background-color: gray;}
 }
 .addLocationOrDepartment {
     text-align: center;
+    width: 90%;
 }
 
 /* FORM SECTION END */
@@ -173,23 +176,18 @@ tbody tr:hover {background-color: gray;}
     .formControl, .location, .department {
         width: 120px;
     }
-    .list {
-        /* width: 100%; */
-    }
     .submitBtm, .doneBtm, .cancelBtm, .editDeleteBtm {
         white-space: nowrap;
         font-size: 8px;
     }
     .main {
         font-size: 12px;
+        height: 95%;
     }
     th {
         padding: 6px
     }
     .tableBody {
         padding: 6px;
-    }
-    body {
-        padding-bottom: 60px;
     }
 }     
