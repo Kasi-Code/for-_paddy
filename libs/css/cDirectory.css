@@ -66,6 +66,7 @@ table {
 }
 tbody {
     padding-left: 10px;
+    height: 10px;
 }
 th {
     position: sticky;
@@ -86,11 +87,17 @@ th {
     width: 200px;
 }
 .resultBox {
+    /* display: flex;
+    justify-content: center; */
     background-color: cadetblue;
     white-space: nowrap;
     height: 80%;
-    /* width: 100%; */
+    width: 100%;
     overflow: scroll;
+}
+.locationDIV, .departmentDIV {
+    display: flex;
+    justify-content: center;
 }
 .list {
     padding: 10px;
