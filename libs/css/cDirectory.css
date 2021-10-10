@@ -18,10 +18,25 @@ body {
     text-align: center;
     padding: 2%;
     width: 100%;
+    /* height: 5%; */
     /* background-color: cornsilk; */
 }
 /* FORM SECTION */
 
+.resultBox {
+    /* display: flex;
+    justify-content: center; */
+    background-color: cadetblue;
+    white-space: nowrap;
+    height: 80%;
+    width: 100%;
+    overflow: scroll;
+}
+.inputBox {
+    background-color: cornsilk;
+    width: 100%;
+    height: 25%;
+}
 .inputDiv, .buttonDiv, .departmentInput {
     display: flex;
     flex-wrap: wrap;
@@ -79,23 +94,10 @@ th {
     overflow: hidden;
     position: fixed;
 }
-.inputBox {
-    background-color: cornsilk;
-    width: 100%;
-}
 .tableTitle {
     width: 200px;
 }
-.resultBox {
-    /* display: flex;
-    justify-content: center; */
-    background-color: cadetblue;
-    white-space: nowrap;
-    height: 80%;
-    width: 100%;
-    overflow: scroll;
-}
-.locationDIV, .departmentDIV {
+.locationDIV, .departmentDIV, .resultDIV {
     display: flex;
     justify-content: center;
 }
@@ -118,7 +120,7 @@ tbody tr:hover {background-color: gray;}
 }
 .addLocationOrDepartment {
     text-align: center;
-    width: 90%;
+    height: 20px;
 }
 
 /* FORM SECTION END */
@@ -146,9 +148,8 @@ tbody tr:hover {background-color: gray;}
 
 /* BOTTOM SECTION */
 
-.bottomPageSection {
+/* .bottomPageSection {
     background: black;
-    /* display: none; */
     overflow: hidden;
     position: fixed;
     bottom: 0; 
@@ -161,13 +162,12 @@ tbody tr:hover {background-color: gray;}
     color: white;
     display: flex;
     justify-content: space-evenly;
-    /* z-index: 5; */
     margin-top: 10px;
   }
   a {
     text-decoration: none
   }
-  a:visited { text-decoration: none; color: white;}
+  a:visited { text-decoration: none; color: white;} */
   
   /* BOTTOM SECTION END */
 

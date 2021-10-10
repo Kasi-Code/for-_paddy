@@ -15,26 +15,28 @@
         </div>
         <!-- RESULT LIST -->
         <div class="resultBox" id="resultBox">
-            <table class="list" id="list">
-                <div class="tableHeader">
-                    <thead>
-                        <tr class="resultHeading">
-                            <th class="tableTitle">ID number</th>
-                            <th class="tableTitle">First name</th>
-                            <th class="tableTitle">Last name</th>
-                            <th class="tableTitle">Email</th>
-                            <th class="tableTitle">Department</th>
-                            <th class="tableTitle">Location</th>
-                            <th class="tableTitle editAndDelete"><span class="blankSpace">blank space</span></th>
-                        </tr>
-                    </thead>
-                </div>
-                <div class="listTable">
-                    <tbody id="id_data">
-                        
-                    </tbody>
-                </div>
-            </table>
+           <div class="resultDIV">
+				<table class="list" id="list">
+					<div class="tableHeader">
+						<thead>
+							<tr class="resultHeading">
+								<th class="tableTitle">ID number</th>
+								<th class="tableTitle">First name</th>
+								<th class="tableTitle">Last name</th>
+								<th class="tableTitle">Email</th>
+								<th class="tableTitle">Department</th>
+								<th class="tableTitle">Location</th>
+								<th class="tableTitle editAndDelete"><span class="blankSpace">blank space</span></th>
+							</tr>
+						</thead>
+					</div>
+					<div class="listTable">
+						<tbody id="id_data">
+							
+						</tbody>
+					</div>
+				</table>
+			</div>
             <!-- LOCATION LIST -->
             <div class="locationDIV">
                 <table class="locationList" id="locationList">
@@ -164,8 +166,7 @@
                                     </div>
                                 </div> 
                             </div>
-                        </div>  
-                    </form>    
+                    </form>
                     <!-- ADD LOCATION  -->
                     <form class="formBox" autocomplete="off"> 
                         <div class="addLocationDiv" id="addLocationDiv">
@@ -188,15 +189,17 @@
                             </div>
                         </div>  
                     </form>         
-                     <!-- ADD LOCATION OR DEPARTMENT? -->                     
-                                
-                    <div class="inputDiv formGroup addLocationOrDepartment" id="addLocationOrDepartment">
-                    
-                        <button class="addLocation" id="addLocation" type="submit" name="done"> Add Location </button>
-                        <button class="addDepartment" id="addDepartment" type="submit" name="cancel"> Add Department </button>
-                    
-                    </div>                       
-                </div>                        
+                     <!-- ADD LOCATION OR DEPARTMENT? -->  
+                     <form class="formBox" autocomplete="off">                           
+                        <div class="inputDiv formGroup addLocationOrDepartment formBox" id="addLocationOrDepartment">
+                        
+                            <button class="addLocation" id="addLocation" type="submit" name="done"> Add Location </button>
+                            <button class="addDepartment" id="addDepartment" type="submit" name="cancel"> Add Department </button>
+                        
+                        </div>    
+                    </form> 
+                </div>                 
+            </div>                        
         </div>
 
         <div class="options">
@@ -216,11 +219,11 @@
 
     </div>
     
-    <div class="bottomPageSection">
+    <!-- <div class="bottomPageSection">
         <div class="navBar">
             <a href="index.html" class="navBtn">Main Menu</a>
         </div>
-    </div>
+    </div> -->
     
     <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
     <script src="libs/js/cDirectory.js"></script>
