@@ -121,6 +121,7 @@ tbody tr:hover {background-color: gray;}
 .addLocationOrDepartment {
     text-align: center;
     height: 20px;
+    width: auto;
 }
 
 /* FORM SECTION END */
