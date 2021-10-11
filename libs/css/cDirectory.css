@@ -174,11 +174,6 @@ tbody tr:hover {background-color: gray;}
     .main {
         font-size: 14px;
     }
-    .resultBox {
-    display: flex;
-    justify-content: start;
-    align-items: flex-start;
-    }
 }
 
 @media (max-width: 550px) {
@@ -198,5 +193,10 @@ tbody tr:hover {background-color: gray;}
     }
     .tableBody {
         padding: 6px;
+    }
+    .resultBox {
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
     }
 }     

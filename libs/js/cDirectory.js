@@ -9,9 +9,23 @@ const search_id_number = document.getElementById("search_id_number");
 
 let selectedRow = null
 let personnelForSearch = []
+let arrOfLocation = []
+let arrOfDepartment = []
+
+// console.log(arrOfLocation)
+console.log(arrOfDepartment)
 
 let formData = {}
-let matches;
+let matches;              
+
+window.onload = ()=> {
+
+    getAll()
+
+    getAllLocation()
+
+    getAllDepartments()
+}
 
 // WHEN CLICKED DELETE BUTTON
 
@@ -84,6 +98,7 @@ $('tbody').on('click', '.editDepartmentBtn', function(e){
         event.preventDefault();
 
         $("#inputDivDepartment").load(location.href + " #inputDivDepartment");
+        getAllLocation()
     })
 })
 
@@ -117,7 +132,7 @@ $('#inputButton').on('click', switchToInput = () => {
 
 $('#officeButton').on('click', () => {
 
-    resetTbody()
+    // resetTbody()
     resetForm()
 
     $(".addLocationOrDepartment").css("display", "block")
@@ -133,10 +148,17 @@ $('#officeButton').on('click', () => {
 
 $('#homeButton').on('click', () => {
 
-    location.reload()
-
-    
+    location.reload()    
 })
+
+const refreshDepartmentAndLocation = () => {
+
+    $("#departmentInput").load(location.href + " #departmentInput")    
+    $("#location_data_list").load(location.href + " #location_data_list")
+    $("#department_data_list").load(location.href + " #department_data_list")
+    getAllLocation()
+    getAllDepartments()
+}
 
 const formSubmit = ()=> {
         const formData = readFormData();
@@ -241,6 +263,8 @@ const onEdit = (td, id)=> {
 
     selectedRow = td.parentElement.parentElement;
 
+    $(".addLocationOrDepartment").css("display", "none")
+
     // document.getElementById("id_number").value = selectedRow.cells[0].innerHTML;
     document.getElementById("first_name").value = selectedRow.cells[1].innerHTML;
     document.getElementById("last_name").value = selectedRow.cells[2].innerHTML;
@@ -261,11 +285,13 @@ const onEdit = (td, id)=> {
                 type: "POST",
                 url: `companydirectory/libs/php/updatePersonnelByID.php?first_name=${first_nameV}&last_name=${last_nameV}&email=${emailV}&departmentID=${departmentV}&id=${id}`,
                 success: function(data) {
+                    
+                    // $("#id_data").load(location.href + " #id_data");
+                    // $("#addStaffDiv").load(location.href + " #addStaffDiv");
+                    // getAll()
+                    // getAllDepartments()
 
-                    getAll()
-                    getAllDepartments()
-                    $("#id_data").load(location.href + " #id_data");
-                    $("#addStaffDiv").load(location.href + " #addStaffDiv");
+                    location.reload() 
 
                 },
                 error:  function(request,error) {
@@ -328,6 +354,7 @@ $('#submitBtm').on('click', onSubmit = () => {
 $('#addLocation').on('click', () => {
 
     event.preventDefault();
+    refreshDepartmentAndLocation()
     
     $("#addLocationOrDepartment").css("display", "none")
     $("#editLocationBtnForm").css("display", "none")
@@ -351,9 +378,7 @@ $('#submitLocation').on('click', submitLocation = () => {
             url: `companydirectory/libs/php/insertLocation.php?locationName=${locationV}`,
             success: function(data) {
 
-                getAllLocation()
-
-                $("#location_data_list").load(location.href + " #location_data_list");
+                refreshDepartmentAndLocation()
 
                 document.getElementById("add_location").value = "";
 
@@ -368,25 +393,57 @@ const deleteLocation = (id)=> {
 
     event.preventDefault();
 
-    if (confirm('Are you sure to delete this record ?')) {            
-        
-            $.ajax({
-                type: "GET",
-                url: `companydirectory/libs/php/deleteLocationByID.php?id=${id}`,
-                success: function(data) {
+    arrOfDepartment.forEach(dep => {
 
-                    getAllLocation()
+        if (id == dep.id) {
+            confirm("This location contains cyclic dependencies. Please make sure there are no dependencies attached before deleting!")
+        } else {
+            confirm('Are you sure to delete this record ?')            
+            
+                $.ajax({
+                    type: "GET",
+                    url: `companydirectory/libs/php/deleteLocationByID.php?id=${id}`,
+                    success: function(data) {
+    
+                        refreshDepartmentAndLocation()
+    
+                    },
+                    error:  function(request,error) {
+                        console.log(request)                                   
+                    }
+                })
+    
+                $("#location_data_list").load(location.href + " #location_data_list");
+            
+        } 
 
-                    $("#location_data_list").load(location.href + " #location_data_list");
+    })
 
-                },
-                error:  function(request,error) {
-                    console.log(request)                                   
-                }
-            })
+    for (i = 0; i < arrOfDepartment.length; i++) {
 
-        $("#location_data_list").load(location.href + " #location_data_list");
-    }
+        // if (id == arrOfDepartment[i].id) {
+        //     confirm("This location contains cyclic dependencies. Please make sure there are no dependencies attached before deleting!")
+        // } else {
+        //     confirm('Are you sure to delete this record ?')            
+            
+        //         $.ajax({
+        //             type: "GET",
+        //             url: `companydirectory/libs/php/deleteLocationByID.php?id=${id}`,
+        //             success: function(data) {
+    
+        //                 refreshDepartmentAndLocation()
+    
+        //             },
+        //             error:  function(request,error) {
+        //                 console.log(request)                                   
+        //             }
+        //         })
+    
+        //         $("#location_data_list").load(location.href + " #location_data_list");
+            
+        // } 
+
+    }   
 }
 
 const onEditLocation = (td, id)=> {
@@ -406,12 +463,13 @@ const onEditLocation = (td, id)=> {
                 url: `companydirectory/libs/php/updateLocationByID.php?location_name=${location_nameV}&id=${id}`,
                 success: function(data) {
 
-                    getAllLocation()
+                    resetTbody()
+                      
+                    $("#submitLocationDiv").css("display", "block")
+                    $("#editLocationBtnForm").css("display", "none")
 
-                    $("#location_data_list").load(location.href + " #location_data_list");     
-
-                    document.getElementById("add_location").value = "";
-                    $("#submitLocationBtnForm").load(location.href + " #submitLocationBtnForm");    
+                    document.getElementById("add_location").value = "";  
+                    refreshDepartmentAndLocation()   
                     
                 },
                 error:  function(request,error) {
@@ -426,6 +484,7 @@ const onEditLocation = (td, id)=> {
 $('#addDepartment').on('click', () => {
 
     event.preventDefault();
+    refreshDepartmentAndLocation()
 
     $("#addLocationOrDepartment").css("display", "none")
     $("#editLocationBtnForm").css("display", "none")
@@ -434,8 +493,8 @@ $('#addDepartment').on('click', () => {
     $(".locationList").css("display", "none")
     $(".departmentList").css("display", "block")
 
-    resetTbody()
-    resetForm()
+    // resetTbody()
+    // resetForm()
 })
 
 $('#submitOffice').on('click', submitDepartment = () => {
@@ -450,11 +509,9 @@ $('#submitOffice').on('click', submitDepartment = () => {
             url: `companydirectory/libs/php/insertDepartment.php?name=${departmentNameV}&locationID=${departmentLocationV}`,
             success: function(data) {
 
-                getAllDepartments()
+                refreshDepartmentAndLocation()
 
-                $("#department_data_list").load(location.href + " #department_data_list");
-
-                document.getElementById("add_department").value = "";
+                // document.getElementById("add_department").value = "";
 
             },
             error:  function(request,error) {
@@ -474,9 +531,7 @@ const deleteDepartment = (id)=> {
                 url: `companydirectory/libs/php/deleteDepartmentByID.php?id=${id}`,
                 success: function(data) {
 
-                    getAllDepartments()
-
-                    $("#department_data_list").load(location.href + " #department_data_list");
+                    refreshDepartmentAndLocation()
 
                 },
                 error:  function(request,error) {
@@ -503,14 +558,11 @@ const onEditDepartment = (td, id)=> {
             $.ajax({
                 type: "POST",
                 url: `companydirectory/libs/php/updateDepartmentByID.php?department_name=${department_nameV}&location_V=${location_V}&id=${id}`,
-                success: function(data) {                  
-            
-                    getAllDepartments()
+                success: function(data) {     
 
-                    $("#department_data_list").load(location.href + " #department_data_list");  
-                    $("#inputDivDepartment").load(location.href + " #inputDivDepartment"); 
+                    refreshDepartmentAndLocation()
 
-                    getAllLocation()
+                    $("#inputDivDepartment").load(location.href + " #inputDivDepartment");
 
                 },
                 error:  function(request,error) {
@@ -554,17 +606,15 @@ const getAllLocation = ()=> {
         type: "GET",
         dataType: "json",
         success: function(result) {
+        
+            let location = result.data
+
+            arrOfLocation.push(location)
 
             result.data.forEach(location => {
                 
                 $("#select_location").append(`<option value="${location.id}">${location.name}</option>`);
             })
-        
-            let location = result.data
-
-            getAll()
-
-            $("#id_data").load(location.href + " #id_data");
 
             location.forEach(data => {
 
@@ -586,12 +636,14 @@ const getAllDepartments = ()=> {
         dataType: "json",
         success: function(result) {
 
+            let department = result.data
+
+            arrOfDepartment.push(department)
+
             result["data"].forEach(department => {
                 
                 $(".department").append(`<option value="${department["id"]}">${department["name"]}</option>`);
             })
-
-            let department = result.data
 
             department.forEach(data => {
  
@@ -604,63 +656,54 @@ const getAllDepartments = ()=> {
         },
     })
 }
-
-window.onload = ()=> {
-
-    // getAll()
-
-    getAllLocation()
-
-    getAllDepartments()
     
-    // SEARCH INPUT
+// SEARCH INPUT
 
-    const searchStates = async (FN, LN, ID) => {
-        const res = await fetch("companydirectory/libs/php/getAll.php")
-        const states = await res.json()
-        
-        matches = states.data.filter(state => {
-            const regexFN = new RegExp(`^${FN}`, "gi")
-            const regexLN = new RegExp(`^${LN}`, "gi")
-            const regexID = new RegExp(`^${ID}`, "gi")
+const searchStates = async (FN, LN, ID) => {
+    const res = await fetch("companydirectory/libs/php/getAll.php")
+    const states = await res.json()
+    
+    matches = states.data.filter(state => {
+        const regexFN = new RegExp(`^${FN}`, "gi")
+        const regexLN = new RegExp(`^${LN}`, "gi")
+        const regexID = new RegExp(`^${ID}`, "gi")
 
-            resetTbody()
+        resetTbody()
 
-            return state.firstName.match(regexFN) && state.lastName.match(regexLN) && state.id.match(regexID)
-        })
+        return state.firstName.match(regexFN) && state.lastName.match(regexLN) && state.id.match(regexID)
+    })
 
-        if (FN.length === 0 && LN.length === 0 && ID.length === 0) {
+    if (FN.length === 0 && LN.length === 0 && ID.length === 0) {
 
-            resetTbody()
+        resetTbody()
 
-        }
-
-        outputHtml(matches)
     }
 
-        const outputHtml = matches => {
-
-            if (matches) {
-                
-                return matches.forEach(matched => {
-        
-                    formData["id_number"] = matched.id
-                    formData["first_name"] = matched.firstName
-                    formData["last_name"] = matched.lastName
-                    formData["email"] = matched.email
-                    formData["department"] = matched.department
-                    formData["location"] = matched.location
-
-                    insertNewRecord(formData)
-                    
-                })          
-
-            }
-        }
-
-    [search_first_name, search_last_name, search_id_number].forEach(function(input) {
-    
-        input.addEventListener("input", ()=> searchStates(search_first_name.value, search_last_name.value, search_id_number.value))
-
-    })                
+    outputHtml(matches)
 }
+
+    const outputHtml = matches => {
+
+        if (matches) {
+            
+            return matches.forEach(matched => {
+    
+                formData["id_number"] = matched.id
+                formData["first_name"] = matched.firstName
+                formData["last_name"] = matched.lastName
+                formData["email"] = matched.email
+                formData["department"] = matched.department
+                formData["location"] = matched.location
+
+                insertNewRecord(formData)
+                
+            })          
+
+        }
+    }
+
+[search_first_name, search_last_name, search_id_number].forEach(function(input) {
+
+    input.addEventListener("input", ()=> searchStates(search_first_name.value, search_last_name.value, search_id_number.value))
+
+})

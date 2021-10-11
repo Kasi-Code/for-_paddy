@@ -11,7 +11,7 @@
 <body>
     <div class="main">
         <div class="heading">
-            <h2>Companyedoedvofc Directory</h2>
+            <h2>Company Directory</h2>
         </div>
         <!-- RESULT LIST -->
         <div class="resultBox" id="resultBox">
@@ -146,11 +146,11 @@
                                 <div class="departmentInput" id="departmentInput">
                                     <div class="formGroup apartFromBtn">
                                         <label class="label" for=""><p>Department</p></label>
-                                        <input name="add_location" class="formControl add_department" type="text" placeholder="Enter department" id="add_department"/>
+                                        <input required name="add_location" class="formControl add_department" type="text" placeholder="Enter department" id="add_department"/>
                                     </div>
                                     <div class="formGroup apartFromBtn select_location">
                                         <label class="label" for=""><p>Location</p></label>
-                                        <select name="location select_location" class="select_location" id="select_location" >
+                                        <select required name="location select_location" class="select_location" id="select_location" >
                                             <option value="" disabled selected>Select Location</option>
                                           </select>
                                     </div>
@@ -224,6 +224,7 @@
     </div> -->
     
     <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+    <!-- <script type="application/javascript" src="libs/js/jquery-3.6.0.min.js"></script> -->
     <script src="libs/js/cDirectory.js"></script>
 
 </body>
