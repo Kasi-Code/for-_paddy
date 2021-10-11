@@ -177,6 +177,7 @@ tbody tr:hover {background-color: gray;}
     .resultBox {
     display: flex;
     justify-content: start;
+    align-items: flex-start;
     }
 }
 
