@@ -11,9 +11,7 @@ let selectedRow = null
 let personnelForSearch = []
 let arrOfLocation = []
 let arrOfDepartment = []
-
-// console.log(arrOfLocation)
-console.log(arrOfDepartment)
+let arrOfStaff = []
 
 let formData = {}
 let matches;              
@@ -34,11 +32,61 @@ $('tbody').on('click', '.deleteBtn', function(e){
 })
 
 $('tbody').on('click', '.deleteLocationBtn', function(e){
-    deleteLocation(e.target.dataset.id)
+
+    const selectedID = e.target.dataset.id
+
+    let convertIDtoName;
+    let depName;
+
+    for (i = 0; i < arrOfLocation.length; i++) {
+
+        if (selectedID == arrOfLocation[i].id) {
+            convertIDtoName = arrOfLocation[i].name
+
+            for (j = 0; j < arrOfDepartment.length; j++) {
+    
+                if (convertIDtoName == arrOfDepartment[j].location) {
+    
+                    depName = arrOfDepartment[j].location
+                }
+            }
+        }
+    }
+        
+    if (convertIDtoName == depName) {
+        alert("There's dependencie(s) to this location!")
+    } else {
+        deleteLocation(selectedID)
+    }
 })
 
 $('tbody').on('click', '.deleteDepartmentBtn', function(e){
-    deleteDepartment(e.target.dataset.id)
+    
+    const selectedID = e.target.dataset.id
+
+    let convertIDtoDept;
+    let findDept;
+
+    for (i = 0; i < arrOfDepartment.length; i++) {
+
+        if (selectedID == arrOfDepartment[i].id) {
+            convertIDtoDept = arrOfDepartment[i].name
+
+            for (j = 0; j < arrOfStaff.length; j++) {
+        
+                if (convertIDtoDept == arrOfStaff[j].department) {
+        
+                    findDept = arrOfStaff[j].department
+                }
+            }
+        }
+    }
+        
+    if (convertIDtoDept == findDept) {
+        alert("There's dependencie(s) to this department!")
+    } else {
+        deleteDepartment(selectedID)
+    }
 })
 
 // WHEN CLICKED EDIT BUTTON
@@ -50,9 +98,14 @@ $('tbody').on('click', '.editBtn', function(e){
     $(".addStaffDiv").css("display", "block")
     $("#submitBtm").css("display", "none")
     $("#editBtnForm").css("display", "block")
+    // $(".addLocationOrDepartment").css("display", "none")  
 
     $(".searchButton").css("display", "block")
     $(".inputButton").css("display", "none")
+
+    // if ($(".officeButton").is(":visible")) {
+    //     $(".officeButton").css("display", "none")  
+    // }
 
     onEdit(this, e.target.dataset.id)
 
@@ -98,7 +151,6 @@ $('tbody').on('click', '.editDepartmentBtn', function(e){
         event.preventDefault();
 
         $("#inputDivDepartment").load(location.href + " #inputDivDepartment");
-        getAllLocation()
     })
 })
 
@@ -132,7 +184,7 @@ $('#inputButton').on('click', switchToInput = () => {
 
 $('#officeButton').on('click', () => {
 
-    // resetTbody()
+    resetTbody()
     resetForm()
 
     $(".addLocationOrDepartment").css("display", "block")
@@ -148,17 +200,10 @@ $('#officeButton').on('click', () => {
 
 $('#homeButton').on('click', () => {
 
-    location.reload()    
+    location.reload()
+
+    
 })
-
-const refreshDepartmentAndLocation = () => {
-
-    $("#departmentInput").load(location.href + " #departmentInput")    
-    $("#location_data_list").load(location.href + " #location_data_list")
-    $("#department_data_list").load(location.href + " #department_data_list")
-    getAllLocation()
-    getAllDepartments()
-}
 
 const formSubmit = ()=> {
         const formData = readFormData();
@@ -176,6 +221,30 @@ const resetTbody = ()=> {
     var tbody = document.getElementById('id_data')
     tbody.innerHTML = ""
 
+    var tbodyL = document.getElementById('location_data_list')
+    tbodyL.innerHTML = ""
+
+    var tbodyD = document.getElementById('department_data_list')
+    tbodyD.innerHTML = ""
+
+}
+
+const resetForm = ()=> {
+    // document.getElementById("id_number").value = "";
+    document.getElementById("first_name").value = "";
+    document.getElementById("last_name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("department").value = "";
+    // document.getElementById("location").value = "";
+    document.getElementById("add_location").value = "";
+    document.getElementById("add_department").value = "";
+    document.getElementById("select_location").value = "";
+    
+
+    // document.getElementById("search_first_name").value = "";
+    // document.getElementById("search_last_name").value = "";
+    // document.getElementById("search_id_number").value = "";
+    selectedRow = null;
 }
 
 const insertNewRecord = (data)=> {
@@ -245,25 +314,9 @@ const insertDepartment = (data)=> {
     cell4.setAttribute("class", "tableBody");
 }
 
-const resetForm = ()=> {
-    // document.getElementById("id_number").value = "";
-    document.getElementById("first_name").value = "";
-    document.getElementById("last_name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("department").value = "";
-    // document.getElementById("location").value = "";
-
-    // document.getElementById("search_first_name").value = "";
-    // document.getElementById("search_last_name").value = "";
-    // document.getElementById("search_id_number").value = "";
-    selectedRow = null;
-}
-
 const onEdit = (td, id)=> {
 
     selectedRow = td.parentElement.parentElement;
-
-    $(".addLocationOrDepartment").css("display", "none")
 
     // document.getElementById("id_number").value = selectedRow.cells[0].innerHTML;
     document.getElementById("first_name").value = selectedRow.cells[1].innerHTML;
@@ -285,13 +338,12 @@ const onEdit = (td, id)=> {
                 type: "POST",
                 url: `companydirectory/libs/php/updatePersonnelByID.php?first_name=${first_nameV}&last_name=${last_nameV}&email=${emailV}&departmentID=${departmentV}&id=${id}`,
                 success: function(data) {
-                    
+
+                    location.reload()
                     // $("#id_data").load(location.href + " #id_data");
                     // $("#addStaffDiv").load(location.href + " #addStaffDiv");
                     // getAll()
                     // getAllDepartments()
-
-                    location.reload() 
 
                 },
                 error:  function(request,error) {
@@ -309,9 +361,9 @@ const onDelete = (id)=> {
                 type: "GET",
                 url: `companydirectory/libs/php/deletePersonnelByID.php?id=${id}`,
                 success: function(data) {
-    
-                    getAll()
 
+                    // location.reload()    
+                    getAll()
                     $("#id_data").load(location.href + " #id_data");
                    
                 },
@@ -336,11 +388,10 @@ $('#submitBtm').on('click', onSubmit = () => {
             url: `companydirectory/libs/php/insertAll.php?first_name=${first_nameV}&last_name=${last_nameV}&email=${emailV}&departmentID=${departmentV}`,
             success: function(data) {
 
-                getAll()
-
-                $("#id_data").load(location.href + " #id_data");
-
-                resetForm()
+                location.reload()
+                // getAll()
+                // $("#id_data").load(location.href + " #id_data");
+                // resetForm()
 
             },
             error:  function(request,error) {
@@ -354,7 +405,11 @@ $('#submitBtm').on('click', onSubmit = () => {
 $('#addLocation').on('click', () => {
 
     event.preventDefault();
-    refreshDepartmentAndLocation()
+    
+    resetTbody()
+    resetForm()
+    // $("#inputDiv").load(location.href + " #inputDiv");
+    getAllLocation()
     
     $("#addLocationOrDepartment").css("display", "none")
     $("#editLocationBtnForm").css("display", "none")
@@ -362,9 +417,6 @@ $('#addLocation').on('click', () => {
     $(".list").css("display", "none")
     $(".departmentList").css("display", "none")
     $(".locationList").css("display", "block")
-    
-    resetTbody()
-    resetForm()
 })
 
 $('#submitLocation').on('click', submitLocation = () => {
@@ -378,7 +430,9 @@ $('#submitLocation').on('click', submitLocation = () => {
             url: `companydirectory/libs/php/insertLocation.php?locationName=${locationV}`,
             success: function(data) {
 
-                refreshDepartmentAndLocation()
+                $("#location_data_list").load(location.href + " #location_data_list");
+
+                getAllLocation()
 
                 document.getElementById("add_location").value = "";
 
@@ -391,59 +445,26 @@ $('#submitLocation').on('click', submitLocation = () => {
 
 const deleteLocation = (id)=> {
 
-    event.preventDefault();
-
-    arrOfDepartment.forEach(dep => {
-
-        if (id == dep.id) {
-            confirm("This location contains cyclic dependencies. Please make sure there are no dependencies attached before deleting!")
-        } else {
-            confirm('Are you sure to delete this record ?')            
-            
-                $.ajax({
-                    type: "GET",
-                    url: `companydirectory/libs/php/deleteLocationByID.php?id=${id}`,
-                    success: function(data) {
+    event.preventDefault();         
     
-                        refreshDepartmentAndLocation()
-    
-                    },
-                    error:  function(request,error) {
-                        console.log(request)                                   
-                    }
-                })
-    
-                $("#location_data_list").load(location.href + " #location_data_list");
-            
-        } 
-
-    })
-
-    for (i = 0; i < arrOfDepartment.length; i++) {
-
-        // if (id == arrOfDepartment[i].id) {
-        //     confirm("This location contains cyclic dependencies. Please make sure there are no dependencies attached before deleting!")
-        // } else {
-        //     confirm('Are you sure to delete this record ?')            
-            
-        //         $.ajax({
-        //             type: "GET",
-        //             url: `companydirectory/libs/php/deleteLocationByID.php?id=${id}`,
-        //             success: function(data) {
-    
-        //                 refreshDepartmentAndLocation()
-    
-        //             },
-        //             error:  function(request,error) {
-        //                 console.log(request)                                   
-        //             }
-        //         })
-    
-        //         $("#location_data_list").load(location.href + " #location_data_list");
-            
-        // } 
-
-    }   
+        if (confirm('Are you sure to delete this record ?')) {            
+            $.ajax({
+                type: "GET",
+                url: `companydirectory/libs/php/deleteLocationByID.php?id=${id}`,
+                success: function(data) {
+                
+                    getAllLocation()
+                
+                    $("#location_data_list").load(location.href + " #location_data_list");
+                
+                },
+                error:  function(request,error) {
+                    console.log(request)                                   
+                }
+            })
+        
+            $("#location_data_list").load(location.href + " #location_data_list");
+        }   
 }
 
 const onEditLocation = (td, id)=> {
@@ -463,13 +484,12 @@ const onEditLocation = (td, id)=> {
                 url: `companydirectory/libs/php/updateLocationByID.php?location_name=${location_nameV}&id=${id}`,
                 success: function(data) {
 
-                    resetTbody()
-                      
-                    $("#submitLocationDiv").css("display", "block")
-                    $("#editLocationBtnForm").css("display", "none")
+                    getAllLocation()
 
-                    document.getElementById("add_location").value = "";  
-                    refreshDepartmentAndLocation()   
+                    $("#location_data_list").load(location.href + " #location_data_list");     
+
+                    document.getElementById("add_location").value = "";
+                    $("#submitLocationBtnForm").load(location.href + " #submitLocationBtnForm");    
                     
                 },
                 error:  function(request,error) {
@@ -482,9 +502,16 @@ const onEditLocation = (td, id)=> {
 // ADDING DEPARTMENT / OFFICE
 
 $('#addDepartment').on('click', () => {
+    
+    resetTbody()
+    getAllDepartments()
+    // resetForm()
+    $("#departmentInput").load(location.href + " #departmentInput");
+    getAllLocation()
+
+    
 
     event.preventDefault();
-    refreshDepartmentAndLocation()
 
     $("#addLocationOrDepartment").css("display", "none")
     $("#editLocationBtnForm").css("display", "none")
@@ -492,9 +519,6 @@ $('#addDepartment').on('click', () => {
     $(".list").css("display", "none")
     $(".locationList").css("display", "none")
     $(".departmentList").css("display", "block")
-
-    // resetTbody()
-    // resetForm()
 })
 
 $('#submitOffice').on('click', submitDepartment = () => {
@@ -509,9 +533,12 @@ $('#submitOffice').on('click', submitDepartment = () => {
             url: `companydirectory/libs/php/insertDepartment.php?name=${departmentNameV}&locationID=${departmentLocationV}`,
             success: function(data) {
 
-                refreshDepartmentAndLocation()
+                $("#department_data_list").load(location.href + " #department_data_list");
 
-                // document.getElementById("add_department").value = "";
+                getAllDepartments()
+
+                document.getElementById("add_department").value = "";
+                document.getElementById("select_location").value = "#$~";
 
             },
             error:  function(request,error) {
@@ -531,7 +558,9 @@ const deleteDepartment = (id)=> {
                 url: `companydirectory/libs/php/deleteDepartmentByID.php?id=${id}`,
                 success: function(data) {
 
-                    refreshDepartmentAndLocation()
+                    getAllDepartments()
+
+                    $("#department_data_list").load(location.href + " #department_data_list");
 
                 },
                 error:  function(request,error) {
@@ -558,11 +587,13 @@ const onEditDepartment = (td, id)=> {
             $.ajax({
                 type: "POST",
                 url: `companydirectory/libs/php/updateDepartmentByID.php?department_name=${department_nameV}&location_V=${location_V}&id=${id}`,
-                success: function(data) {     
+                success: function(data) {
 
-                    refreshDepartmentAndLocation()
+                    $("#department_data_list").load(location.href + " #department_data_list");  
+                    $("#inputDivDepartment").load(location.href + " #inputDivDepartment"); 
 
-                    $("#inputDivDepartment").load(location.href + " #inputDivDepartment");
+                    getAllLocation()                
+                    getAllDepartments()
 
                 },
                 error:  function(request,error) {
@@ -593,6 +624,8 @@ const getAll = ()=> {
             formData["location"] = data.location
 
             insertNewRecord(formData)
+
+            arrOfStaff.push(data)
             })
         },
     })
@@ -609,8 +642,6 @@ const getAllLocation = ()=> {
         
             let location = result.data
 
-            arrOfLocation.push(location)
-
             result.data.forEach(location => {
                 
                 $("#select_location").append(`<option value="${location.id}">${location.name}</option>`);
@@ -622,6 +653,8 @@ const getAllLocation = ()=> {
             formData["location"] = data.name
 
             insertNewLocation(formData)
+
+            arrOfLocation.push(data)
             })
         },
     })
@@ -638,8 +671,6 @@ const getAllDepartments = ()=> {
 
             let department = result.data
 
-            arrOfDepartment.push(department)
-
             result["data"].forEach(department => {
                 
                 $(".department").append(`<option value="${department["id"]}">${department["name"]}</option>`);
@@ -652,6 +683,8 @@ const getAllDepartments = ()=> {
              formData["location"] = data.location
  
              insertDepartment(formData)
+
+             arrOfDepartment.push(data)
              })
         },
     })
