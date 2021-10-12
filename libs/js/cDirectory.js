@@ -362,9 +362,9 @@ const onDelete = (id)=> {
                 url: `companydirectory/libs/php/deletePersonnelByID.php?id=${id}`,
                 success: function(data) {
 
-                    // location.reload()    
-                    getAll()
-                    $("#id_data").load(location.href + " #id_data");
+                    location.reload()    
+                    // getAll()
+                    // $("#id_data").load(location.href + " #id_data");
                    
                 },
                 error:  function(request,error) {
@@ -404,12 +404,14 @@ $('#submitBtm').on('click', onSubmit = () => {
 
 $('#addLocation').on('click', () => {
 
-    event.preventDefault();
+    // event.preventDefault();
+
+    window.onload()
     
     resetTbody()
     resetForm()
     // $("#inputDiv").load(location.href + " #inputDiv");
-    getAllLocation()
+    // getAllLocation()
     
     $("#addLocationOrDepartment").css("display", "none")
     $("#editLocationBtnForm").css("display", "none")
@@ -504,14 +506,13 @@ const onEditLocation = (td, id)=> {
 $('#addDepartment').on('click', () => {
     
     resetTbody()
-    getAllDepartments()
+    // getAllDepartments()
     // resetForm()
+    window.onload()
     $("#departmentInput").load(location.href + " #departmentInput");
-    getAllLocation()
+    // getAllLocation()
 
-    
-
-    event.preventDefault();
+    // event.preventDefault();
 
     $("#addLocationOrDepartment").css("display", "none")
     $("#editLocationBtnForm").css("display", "none")
@@ -687,7 +688,8 @@ const getAllDepartments = ()=> {
              arrOfDepartment.push(data)
              })
         },
-    })
+    }) 
+    
 }
     
 // SEARCH INPUT
