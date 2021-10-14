@@ -9,9 +9,9 @@ const search_id_number = document.getElementById("search_id_number");
 
 let selectedRow = null
 let personnelForSearch = []
-let arrOfLocation = []
-let arrOfDepartment = []
-let arrOfStaff = []
+// let arrOfLocation = []
+// let arrOfDepartment = []
+// let arrOfStaff = []
 
 let formData = {}
 let matches;              
@@ -34,59 +34,62 @@ $('tbody').on('click', '.deleteBtn', function(e){
 $('tbody').on('click', '.deleteLocationBtn', function(e){
 
     const selectedID = e.target.dataset.id
+    deleteLocation(selectedID)
 
-    let convertIDtoName;
-    let depName;
+    // let convertIDtoName;
+    // let depName;
 
-    for (i = 0; i < arrOfLocation.length; i++) {
+    // for (i = 0; i < arrOfLocation.length; i++) {
 
-        if (selectedID == arrOfLocation[i].id) {
-            convertIDtoName = arrOfLocation[i].name
+    //     if (selectedID == arrOfLocation[i].id) {
+    //         convertIDtoName = arrOfLocation[i].name
 
-            for (j = 0; j < arrOfDepartment.length; j++) {
+    //         for (j = 0; j < arrOfDepartment.length; j++) {
     
-                if (convertIDtoName == arrOfDepartment[j].location) {
+    //             if (convertIDtoName == arrOfDepartment[j].location) {
     
-                    depName = arrOfDepartment[j].location
-                }
-            }
-        }
-    }
+    //                 depName = arrOfDepartment[j].location
+    //             }
+    //         }
+    //     }
+    // }
         
-    if (convertIDtoName == depName) {
-        alert("There's dependencie(s) to this location!")
-    } else {
-        deleteLocation(selectedID)
-    }
+    // if (convertIDtoName == depName) {
+    //     alert("There's dependencie(s) to this location!")
+    // } else {
+    //     deleteLocation(selectedID)
+    // }
 })
 
 $('tbody').on('click', '.deleteDepartmentBtn', function(e){
     
     const selectedID = e.target.dataset.id
 
-    let convertIDtoDept;
-    let findDept;
+    deleteDepartment(selectedID)
 
-    for (i = 0; i < arrOfDepartment.length; i++) {
+    // let convertIDtoDept;
+    // let findDept;
 
-        if (selectedID == arrOfDepartment[i].id) {
-            convertIDtoDept = arrOfDepartment[i].name
+    // for (i = 0; i < arrOfDepartment.length; i++) {
 
-            for (j = 0; j < arrOfStaff.length; j++) {
+    //     if (selectedID == arrOfDepartment[i].id) {
+    //         convertIDtoDept = arrOfDepartment[i].name
+
+    //         for (j = 0; j < arrOfStaff.length; j++) {
         
-                if (convertIDtoDept == arrOfStaff[j].department) {
+    //             if (convertIDtoDept == arrOfStaff[j].department) {
         
-                    findDept = arrOfStaff[j].department
-                }
-            }
-        }
-    }
+    //                 findDept = arrOfStaff[j].department
+    //             }
+    //         }
+    //     }
+    // }
         
-    if (convertIDtoDept == findDept) {
-        alert("There's dependencie(s) to this department!")
-    } else {
-        deleteDepartment(selectedID)
-    }
+    // if (convertIDtoDept == findDept) {
+    //     alert("There's dependencie(s) to this department!")
+    // } else {
+    //     deleteDepartment(selectedID)
+    // }
 })
 
 // WHEN CLICKED EDIT BUTTON
@@ -454,18 +457,26 @@ const deleteLocation = (id)=> {
                 type: "GET",
                 url: `companydirectory/libs/php/deleteLocationByID.php?id=${id}`,
                 success: function(data) {
+
+                    const status = data.status.name
+
+                    if  (status == "forbidden") {
+
+                        alert(data.status.description)
+
+                    } else {
                 
-                    getAllLocation()
-                
-                    $("#location_data_list").load(location.href + " #location_data_list");
+                        getAllLocation()
+                    
+                        $("#location_data_list").load(location.href + " #location_data_list");
+
+                    }
                 
                 },
                 error:  function(request,error) {
                     console.log(request)                                   
                 }
             })
-        
-            $("#location_data_list").load(location.href + " #location_data_list");
         }   
 }
 
@@ -559,9 +570,19 @@ const deleteDepartment = (id)=> {
                 url: `companydirectory/libs/php/deleteDepartmentByID.php?id=${id}`,
                 success: function(data) {
 
-                    getAllDepartments()
+                    const status = data.status.name
 
-                    $("#department_data_list").load(location.href + " #department_data_list");
+                    if  (status == "forbidden") {
+
+                        alert(data.status.description)
+
+                    } else {
+
+                        getAllDepartments()
+    
+                        $("#department_data_list").load(location.href + " #department_data_list");
+
+                    }
 
                 },
                 error:  function(request,error) {
@@ -626,7 +647,7 @@ const getAll = ()=> {
 
             insertNewRecord(formData)
 
-            arrOfStaff.push(data)
+            // arrOfStaff.push(data)
             })
         },
     })
@@ -655,7 +676,7 @@ const getAllLocation = ()=> {
 
             insertNewLocation(formData)
 
-            arrOfLocation.push(data)
+            // arrOfLocation.push(data)
             })
         },
     })
@@ -685,7 +706,7 @@ const getAllDepartments = ()=> {
  
              insertDepartment(formData)
 
-             arrOfDepartment.push(data)
+            //  arrOfDepartment.push(data)
              })
         },
     }) 
