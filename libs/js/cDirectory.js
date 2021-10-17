@@ -342,11 +342,14 @@ const onEdit = (td, id)=> {
                 url: `companydirectory/libs/php/updatePersonnelByID.php?first_name=${first_nameV}&last_name=${last_nameV}&email=${emailV}&departmentID=${departmentV}&id=${id}`,
                 success: function(data) {
 
-                    location.reload()
+                    // location.reload()
+                    resetForm()
+                    $("#id_data").html("");
                     // $("#id_data").load(location.href + " #id_data");
-                    // $("#addStaffDiv").load(location.href + " #addStaffDiv");
-                    // getAll()
-                    // getAllDepartments()
+                    // resetTbody()
+                    getAll()
+                    $("#addStaffDiv").load(location.href + " #addStaffDiv");
+                    getAllDepartments()
 
                 },
                 error:  function(request,error) {
@@ -365,9 +368,11 @@ const onDelete = (id)=> {
                 url: `companydirectory/libs/php/deletePersonnelByID.php?id=${id}`,
                 success: function(data) {
 
-                    location.reload()    
-                    // getAll()
+                    // location.reload()
+                    $("#id_data").html("");
+                    getAll()
                     // $("#id_data").load(location.href + " #id_data");
+                    resetForm()
                    
                 },
                 error:  function(request,error) {
@@ -391,10 +396,11 @@ $('#submitBtm').on('click', onSubmit = () => {
             url: `companydirectory/libs/php/insertAll.php?first_name=${first_nameV}&last_name=${last_nameV}&email=${emailV}&departmentID=${departmentV}`,
             success: function(data) {
 
-                location.reload()
-                // getAll()
+                // location.reload()
+                $("#id_data").html("");
+                getAll()
                 // $("#id_data").load(location.href + " #id_data");
-                // resetForm()
+                resetForm()
 
             },
             error:  function(request,error) {
